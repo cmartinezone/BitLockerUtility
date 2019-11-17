@@ -1,0 +1,1098 @@
+; INF file for MegaRaid family of RAID controllers.
+;********************************************************************
+;                                                                    *
+;   Copyright 2013 LSI Corp., Inc. All rights reserved.              *
+;                                                                    *
+;   This file is property of LSI Corp., Inc. and is licensed for     *
+;   use as is.  The receipt of or possession of this file does not   *
+;   convey any rights to modify its contents, in whole, or in part,  *
+;   without the specific written consent of LSI Corp., Inc.          *
+;                                                                    *
+;********************************************************************
+
+[version]
+Signature   ="$Windows NT$"
+Class       = SCSIAdapter
+ClassGUID   = {4D36E97B-E325-11CE-BFC1-08002BE10318}
+Provider    = %LSI%
+CatalogFile = megasas2.cat
+DriverVer=03/13/2014,6.703.03.00
+
+[Manufacturer]
+%LSI% = LSI, NTx86, NTamd64
+
+[SourceDisksNames]
+1 = %DISK%
+
+[SourceDisksFiles]
+megasas2.sys = 1
+wdcfg.exe = 1
+DriverConfigParam.def = 1
+
+[DestinationDirs]
+DefaultDestDir = 12
+WDCFG_EXE_DEST = 11; \system32
+WDCFG_DEF_DEST = 24, ProgramData\LSI\WDCFG
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[Install_INT.NT]
+CopyFiles = @megasas2.sys
+CopyFiles = WDCFG_EXE_DEST
+CopyFiles = WDCFG_DEF_DEST
+CopyINF = nodev.inf
+
+[Install_INT.NT.HW]
+Include = machine.inf
+Needs   = PciIoSpaceNotRequired
+
+[Install_INT.NT.Services]
+AddService = megasas2, %SPSVCINST_ASSOCSERVICE%, Driver_Install, EventLog_Install
+
+[Install_MSI.NT]
+CopyFiles = @megasas2.sys
+CopyFiles = WDCFG_EXE_DEST
+CopyFiles = WDCFG_DEF_DEST
+
+[Install_MSI.NT.HW]
+Include = machine.inf
+Needs   = PciIoSpaceNotRequired
+AddReg  = Install_AddReg_HW
+
+[Install_AddReg_HW]
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MSISupported, %REG_DWORD%, %MSI_ENABLED%
+HKR, Interrupt Management\Affinity Policy, DevicePolicy, %REG_DWORD%, %AcrossAllProcessors%
+HKR, Interrupt Management\Affinity Policy, DevicePriority, %REG_DWORD%, %IrqPriorityHigh%
+HKR, Interrupt Management\Affinity Policy, GroupPolicy, %REG_DWORD%, 1
+
+[Install_MSI.NT.Services]
+AddService = megasas2, %SPSVCINST_ASSOCSERVICE%, Driver_Install, EventLog_Install
+
+[Driver_Install]
+ServiceType    = %SERVICE_KERNEL_DRIVER% 
+StartType      = %SERVICE_BOOT_START% 
+ErrorControl   = %SERVICE_ERROR_NORMAL% 
+ServiceBinary  = %12%\megasas2.sys
+LoadOrderGroup = SCSI Miniport
+AddReg         = Parms_AddReg
+
+[Parms_AddReg]
+HKR, "Parameters", %BUSTYPE_NAME%, %REG_DWORD%, %BUSTYPE_RAID%
+HKR, "Parameters\PnpInterface", %PCIBUS%, %REG_DWORD%, 1
+HKR, "Parameters\Device", DriverParameter, 0x00000000, "nobusywait=1"
+HKR, "Parameters\Device", %512eKey%, %REG_DWORD%, %ENABLED%
+HKLM,SYSTEM\CurrentControlSet\Control\Wdcfg,TargetDriver,0x00000000,"MEGASAS2"
+HKLM, "System\CurrentControlSet\Services\Disk", %TIMEOUT_VALUE%, %REG_DWORD%, %TIMEOUT_SECONDS%
+
+[EventLog_Install]
+AddReg = EventLog_AddReg
+
+[EventLog_AddReg]
+HKR,,EventMessageFile, %REG_EXPAND_SZ%, %%SystemRoot%%\System32\IoLogMsg.dll
+HKR,,TypesSupported, %REG_DWORD%, 7
+[WDCFG_EXE_DEST]
+wdcfg.exe
+[WDCFG_DEF_DEST]
+DriverConfigParam.def
+
+[LSI.NTx86]
+; Intel
+%IntelSrcSAS181.DeviceDesc%         = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10018086
+%IntelSrcSAS144E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10038086
+%IntelSrcSASPH16I.DeviceDesc%       = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10088086
+%IntelSromSAS18E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_34908086
+%IntelSromSAS18E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_35008086
+%IntelSromSAS18E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_35018086
+%IntelSromSAS18E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_35048086
+%IntelSromSAS18E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_35078086
+%IntelSrcSAS28EV.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_100A8086
+%IntelSrcSAS28EP.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10068086
+%IntelSrcSATA28E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10108086
+%IntelSrcSASBB8I.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10138086
+%IntelSrcSASLS4I.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10218086
+%IntelSromSAS28E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_34CC8086
+%IntelSromSAS28E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_34CD8086
+%IntelSROMBSASBN.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_34E48086
+%IntelSROMBSASMP2.DeviceDesc%       = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_35058086
+%IntelSROMBSASMR.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_35088086
+%IntelRMS2AF080.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_350C8086
+%IntelRMS2AF040.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_350D8086
+%IntelRS2WC080.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92408086
+%IntelRS2WC040.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92418086
+%IntelRMS2MH080.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_350B8086
+%IntelRS2BL080DE.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92568086
+%IntelRS2BL040.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92608086
+%IntelRS2BL080.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92618086
+%IntelRT3WB080.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92648086
+%IntelRS2VB040.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92678086
+%IntelRS2VB080.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92688086
+%IntelRS2PI008DE.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92758086
+%IntelRS2WG160.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92768086
+%IntelRS2PI008.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92808086
+%RS2MB044.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92828086
+%IntelRS2SG244.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92908086
+%IntelRMS25PB080.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_35108086
+%IntelRMS25PB040.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_35118086
+%IntelRMT3PB080.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_35128086
+%IntelRMS25CB080.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_35138086
+%IntelRMS25CB040.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_35148086
+%IntelRMT3CB080.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_35158086
+%IntelRS25DB080.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92658086
+%IntelRS25NB008.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92858086
+%IntelRS25AB080.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92688086
+%IntelRS25SB008.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92888086
+%IntelRS25PB080N.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_351C8086
+%IntelRS25CB080N.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_351D8086
+%IntelRCS25ZB040.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80818086
+%IntelRCS25ZB040LX.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80828086
+;Intel Invader Branding 
+%IntelDarkCanyon.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93608086
+%IntelDarkCanyon1.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93628086
+%IntelSunsetCanyon.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93808086
+%IntelMohaveCanyon.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93818086
+%IntelCoffeeCanyon.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_351E8086
+%IntelCoffeeCanyon1.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_351F8086
+;InteliMR- Invader
+%IntelWaimeaCanyon.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_93418086
+%IntelWaimeaCanyon1.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_93438086
+%IntelCottonWoodPass.DeviceDesc%    = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_35C98086
+%IntelHermosaCanyon.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_35208086
+
+; IBM
+%IBMMR10k.DeviceDesc%               = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_03631014
+%IBMMR10i.DeviceDesc%               = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_03641014
+%IBMAR10is.DeviceDesc%              = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_03651014
+%IBMMR10M.DeviceDesc%               = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_03791014
+%IBMMR10il.DeviceDesc%              = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_03A21014
+%IBMMR10ie.DeviceDesc%              = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_03AC1014
+%IBMM1015.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_03B11014
+%IBMM1115.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_040D1014
+%IBMM5015.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_03B21014
+%IBMM5025.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_03B31014
+%IBMM5014.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_03C71014
+%IBMM5016.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04491014
+%IBMM5110.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_040B1014
+%IBMM5120.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_040C1014
+%IBMM5110e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04121014
+%IBMM5110e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04131014
+%IBMM5110s.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04481014
+%IBMM5115.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_041D1014
+%IBMM5115.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04601014
+%IBMM5210.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_04541014
+%IBMM5215.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_04581014
+%IBMM5225.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_04551014
+%IBMM5210e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_045B1014
+%IBMM5210e1.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_045C1014
+%IBMM1215.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_04561014
+
+
+%IBMM52151.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_045A1014
+%IBMM1210e.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_04AC1014
+%IBMM1210e.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_04B31014
+%IBMM1210e.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_04B41014
+%IBMM5210e2.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_04B91014
+
+;NMR 
+%IBMNMRVero_200G.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04C31014
+%IBMNMR2Vero_800G.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04C41014
+
+; Supermicro
+%fscinternal2.DeviceDesc%           = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C08015D9
+%fscinternal2.DeviceDesc%           = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C18015D9
+%fscinternal2.DeviceDesc%           = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C28015D9
+%fscinternal2.DeviceDesc%           = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C38015D9
+%fscinternal2.DeviceDesc%           = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C48015D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C58015D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C68015D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C78015D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C88015D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C98015D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C01115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C11115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C21115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C31115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C41115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C51115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C61115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C71115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C81115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C91115D9
+%smc2008.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_040015D9
+%smc2108.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_070015D9
+%fscinternal3.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_069015D9
+%fscinternal4.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_080915D9
+%fscinternal5.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_072315D9
+
+; GigaByte
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10001458
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_21631FCA
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_000318A1
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_000418A1
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_000518A1
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_836E1033
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_001018A1
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_10001458
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_20001458
+
+; FSC/FTSD
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_82871033
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_835A1033
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10811734
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10a31734
+%fscLSIinternal.DeviceDesc%         = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10F91734
+%fscLSIinternal.DeviceDesc%         = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_11021734
+%fscLSIinternal.DeviceDesc%         = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_114B1734
+%FTSD2607.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_11771734
+
+%Lynx2WS.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_12131734
+
+%FTSD2616.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_11761734
+%MRSAS56SAS6G.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_11B31734
+%FTSD3116512MB.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11D21734
+%FTSD31161GB.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11D31734
+%FTSD2816.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11D41734
+%FTSD2837.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11D51734
+%FTSD3116C.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11E41734
+%FTSD2816C.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11E51734
+%FTSD2837C.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11E61734
+%FTSDD3216C.DeviceDesc%		    = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_11F61734
+%FTSEM400i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_12091734
+%FTSCM400i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_120B1734
+%FTSCP400i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_12111734
+%FTSEP420i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_12121734
+
+; Hitachi
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_30161054
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_30191054
+%mraidsas92408i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_30351054
+%mraidsas92618i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_30361054
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_30521054
+%iMRfury.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_306A1054
+
+; Inventec(IESC)
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_002F1170
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_00341170
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_00361170
+%LSI2208.Inventec.DeviceDesc%	    = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_005B1170
+
+; Asustek
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_824D1043
+%MRSASRoMB8i.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_843B1043
+%MRSASRoMB.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_84711043
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_84731043
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_84801043
+%Pike2208.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_85251043
+%AsustekPike2208.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_85A01043
+
+; Lenovo
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_6B7C17AA
+%lenovoraid520.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_105117AA
+%lenovoraid720.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_105217AA
+%lenovoraid720EXP.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_105317AA
+%Antares.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_103217AA
+%lenovo9364.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_936A1000
+
+; SanBlaze
+%mraidsas92808e.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_02001AE3
+
+;Quanta
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_898B152D
+%LSISyncroCS9271-8iQ.DeviceDesc%    = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_927B1000
+
+; Cisco
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0071&SUBSYS_00721137
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00721137
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00731137
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00C21137
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00C31137
+%MRSASRoMB-2i.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_008F1137
+%MRSASRoMB8i.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_00791137
+%MR9220-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92A01000
+%MR9240-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92A11000
+%MR9220-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92211000
+%MR9265-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_008D1137
+%UCSC-2008M-8i-C220.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00B01137
+%UCSC-2008M-8i-C240.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00B11137
+%UCSC-2008-8i-C220.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00B61137
+%UCSC-2008-8i-C240.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00B71137
+%MezzROMB.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_00DB1137
+%shellbeach.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_01281137
+%yosemite.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_01291137
+%UCSC-C3X60-RAID.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_012D1137
+%Candlestick-Carmel.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_01241137
+%Candlestick-Salinas.DeviceDesc%    = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_012F1137
+
+;MSI
+%MS3035.DeviceDesc%                 = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_00351462
+%MS91F2.DeviceDesc%                 = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_1F201462
+
+;Huawei
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_D20219E5
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_D20319E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_D20419E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_D20519E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_D20619E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_D20719E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_D20819E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_220819E5
+%mraidsas92608i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_D20819E5
+%mraidsas92608i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_D20919E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_D24019E5
+%fcsSAS3108.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_D20719E5
+%fcsSAS3108.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_D20C19E5
+
+; LSI - 1068 Series:
+%mraidsas8300xlp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0409&SUBSYS_10091000
+%mraidsas8408e.DeviceDesc%          = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10011000
+%mraidsas8480e.DeviceDesc%          = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10021000
+%mraidsas8344elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10031000
+%mraidsas8308elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10041000
+%mraidsas84016e.DeviceDesc%         = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10081000
+%mraidsas84012e.DeviceDesc%         = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_100C1000
+%mraidsata30016e.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_100D1000
+%mraidsata3008elp.DeviceDesc%       = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_20041000
+%mraidsas8304elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_20051000
+%mraidsas8300xlp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0413&SUBSYS_10051000
+
+; LSI - 1078 Series:
+%mraidsas8888elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10061000
+%mraidsas8708elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_100A1000
+%mraidsas8884E.DeviceDesc%          = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_100E1000
+%mraidsas8708E.DeviceDesc%          = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_100F1000
+%mraidsata350-8ELP.DeviceDesc%      = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10101000
+%mraidsata350-4ELP.DeviceDesc%      = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10111000
+%mraidsas8704ELP.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10121000
+%mraidsas8708em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10131000
+%mraidsas8808em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10141000
+%mraidsas8780em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10151000
+%mraidsas8880em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10161000
+%mraidsas8744em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10171000
+%mraidsas8844em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10181000
+%mraidsas8744elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10191000
+%mraidsas8844elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_101A1000
+%mraidsas8008em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_101B1000
+%mraidsas8704EM2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10211000
+
+; LSI - 2008 Series:
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00011BD4
+%mraidsas92408i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_10541000
+%mraidsas92408i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_14581002
+%mraidsas92408i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_10021458
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_822910F1
+%mraidsas92408i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92401000
+%mraidsas92404i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92411000
+%mraidsas92418i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92421000
+%mraidsas92414i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92431000
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92441000
+
+; LSI - 2108 Series:
+%mraidsas92608i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0078&SUBSYS_92511000
+%mraidsas92604idev.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_0078&SUBSYS_92501000
+%mraidsas92808e.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0078&SUBSYS_92701000
+%MRSASRoMB8i.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_00011BAA
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_00021BD4
+%mraidsas92608i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_8985152D
+%mraidsas92604iCBE.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92551000
+%mraidsas92608ix.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92561000
+%mraidsas92604i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92601000
+%mraidsas92608i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92611000
+%mraidsas92628i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92621000
+%mraidsas92618i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92631000
+%mraidsas92648i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92641000
+%mraidsas9260ss4i.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92671000
+%mraidsas9260ss8i.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92681000
+%mraidsas92808ex.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92751000
+%mraid926016i.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92761000
+%mraid928016i4e.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92771000
+%mraidsasS92808e.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92801000
+%mraidsas92818E.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92811000
+%mraidsas92804i4e.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92821000
+%mraidsas92828e.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92841000
+%mraidsas9280ss8e.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92881000
+%mraidsas9280ss4i4e.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92891000
+%mraid928024i4e.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92901000
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_00111425
+
+; LSI - 2208 Series:
+%MR9265-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92651000
+%MR9266-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92661000
+%MR9267-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92671000
+%MR9265CV-8i.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92681000
+%MR9266-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92691000
+%MR9270-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92701000
+%MR9271-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92711000
+%MR9272-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92721000
+%MR9270CV-8i.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92731000
+%MR9270-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92741000
+%MR9271-8iCC.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92751000
+%MR9271-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92761000
+%SyncroCS9271-8i.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_927A1000
+%MR9285-8e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92851000
+%MR9285CV-8e.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92881000
+%SyncroCS9286-8e.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_928A1000
+%MR9286-8e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92901000
+%MR9286CV-8e.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92911000
+%MR9286CV-8eCC.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92951000
+%NMR8100-4i.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80801000
+%NMR8110-4i.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80811000
+%NMR8120-4i.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80821000
+%NMR8110-4e.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80831000
+%NMR8120-4e.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80841000 
+%NMR9100-8i8e.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_90801000
+%NMR9110-8i8e.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_90811000 
+
+; LSI - 93xx Series:
+%MR9340-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_93401000
+%MR9341-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_93411000
+%MR9340-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_93421000
+%MR9341-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_93431000
+%MR9360-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93601000
+%MR9361-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93611000
+%MR9360-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93621000
+%MR9361-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93631000
+%MR9362-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93641000
+%MR9362-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93651000
+%MR9380-8e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93801000
+%MR9380-4i4e.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93811000
+%MR9361-8i.DeviceDescCC%            = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93661000
+%MR9380-8i.DeviceDescCC%            = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93821000
+%Inspur.DeviceDesc%                 = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_00071BD4
+%sugon.DeviceDesc%                  = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_22081CB8 
+%nec.DeviceDesc%                    = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_80511BCF 
+%sugon1.DeviceDesc%                 = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_22401CB8 
+%ASRockSAS3008iMR.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_30901849 
+%Softlayer.DeviceDesc%		    = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_1000936C
+
+[LSI.NTamd64]
+; Intel
+%IntelSrcSAS181.DeviceDesc%         = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10018086
+%IntelSrcSAS144E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10038086
+%IntelSrcSASPH16I.DeviceDesc%       = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10088086
+%IntelSromSAS18E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_34908086
+%IntelSromSAS18E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_35008086
+%IntelSromSAS18E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_35018086
+%IntelSromSAS18E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_35048086
+%IntelSromSAS18E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_35078086
+%IntelSrcSAS28EV.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_100A8086
+%IntelSrcSAS28EP.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10068086
+%IntelSrcSATA28E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10108086
+%IntelSrcSASBB8I.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10138086
+%IntelSrcSASLS4I.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10218086
+%IntelSromSAS28E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_34CC8086
+%IntelSromSAS28E.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_34CD8086
+%IntelSROMBSASBN.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_34E48086
+%IntelSROMBSASMP2.DeviceDesc%       = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_35058086
+%IntelSROMBSASMR.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_35088086
+%IntelRMS2AF080.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_350C8086
+%IntelRMS2AF040.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_350D8086
+%IntelRS2WC080.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92408086
+%IntelRS2WC040.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92418086
+%IntelRMS2MH080.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_350B8086
+%IntelRS2BL080DE.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92568086
+%IntelRS2BL040.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92608086
+%IntelRS2BL080.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92618086
+%IntelRT3WB080.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92648086
+%IntelRS2VB040.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92678086
+%IntelRS2VB080.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92688086
+%IntelRS2PI008DE.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92758086
+%IntelRS2WG160.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92768086
+%IntelRS2PI008.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92808086
+%RS2MB044.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92828086
+%IntelRS2SG244.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92908086
+%IntelRMS25PB080.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_35108086
+%IntelRMS25PB040.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_35118086
+%IntelRMT3PB080.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_35128086
+%IntelRMS25CB080.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_35138086
+%IntelRMS25CB040.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_35148086
+%IntelRMT3CB080.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_35158086
+%IntelRS25DB080.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92658086
+%IntelRS25NB008.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92858086
+%IntelRS25AB080.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92688086
+%IntelRS25SB008.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92888086
+%IntelRS25PB080N.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_351C8086
+%IntelRS25CB080N.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_351D8086
+%IntelRCS25ZB040.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80818086
+%IntelRCS25ZB040LX.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80828086
+;Intel Invader Branding 
+%IntelDarkCanyon.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93608086
+%IntelDarkCanyon1.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93628086
+%IntelSunsetCanyon.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93808086
+%IntelMohaveCanyon.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93818086
+%IntelCoffeeCanyon.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_351E8086
+%IntelCoffeeCanyon1.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_351F8086
+;InteliMR- Invader
+%IntelWaimeaCanyon.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_93418086
+%IntelWaimeaCanyon1.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_93438086
+%IntelCottonWoodPass.DeviceDesc%    = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_35C98086
+%IntelHermosaCanyon.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_35208086
+
+; IBM
+%IBMMR10k.DeviceDesc%               = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_03631014
+%IBMMR10i.DeviceDesc%               = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_03641014
+%IBMAR10is.DeviceDesc%              = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_03651014
+%IBMMR10M.DeviceDesc%               = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_03791014
+%IBMMR10il.DeviceDesc%              = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_03A21014
+%IBMMR10ie.DeviceDesc%              = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_03AC1014
+%IBMM1015.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_03B11014
+%IBMM1115.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_040D1014
+%IBMM5015.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_03B21014
+%IBMM5025.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_03B31014
+%IBMM5014.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_03C71014
+%IBMM5016.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04491014
+%IBMM5110.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_040B1014
+%IBMM5120.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_040C1014
+%IBMM5110e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04121014
+%IBMM5110e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04131014
+%IBMM5110s.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04481014
+%IBMM5115.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_041D1014
+%IBMM5115.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04601014
+%IBMM5210.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_04541014
+%IBMM5215.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_04581014
+%IBMM5225.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_04551014
+%IBMM5210e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_045B1014
+%IBMM5210e1.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_045C1014
+%IBMM1215.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_04561014
+
+%IBMM52151.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_045A1014
+%IBMM1210e.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_04AC1014
+%IBMM1210e.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_04B31014
+%IBMM1210e.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_04B41014
+%IBMM5210e2.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_04B91014
+;NMR 
+%IBMNMRVero_200G.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04C31014
+%IBMNMR2Vero_800G.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_04C41014
+
+
+; Supermicro
+%fscinternal2.DeviceDesc%           = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C08015D9
+%fscinternal2.DeviceDesc%           = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C18015D9
+%fscinternal2.DeviceDesc%           = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C28015D9
+%fscinternal2.DeviceDesc%           = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C38015D9
+%fscinternal2.DeviceDesc%           = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C48015D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C58015D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C68015D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C78015D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C88015D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C98015D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C01115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C11115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C21115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C31115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C41115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C51115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C61115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C71115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C81115D9
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_C91115D9
+%smc2008.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_040015D9
+%smc2108.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_070015D9
+%fscinternal3.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_069015D9
+%fscinternal4.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_080915D9
+%fscinternal5.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_072315D9
+
+; GigaByte
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10001458
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_21631FCA
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_000318A1
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_000418A1
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_000518A1
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_836E1033
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_001018A1
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_10001458
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_20001458
+
+; FSC/FTSD
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_82871033
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_835A1033
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10811734
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10a31734
+%fscLSIinternal.DeviceDesc%         = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10F91734
+%fscLSIinternal.DeviceDesc%         = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_11021734
+%fscLSIinternal.DeviceDesc%         = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_114B1734
+%FTSD2607.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_11771734
+%Lynx2WS.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_12131734
+%FTSD2616.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_11761734
+%MRSAS56SAS6G.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_11B31734
+%FTSD3116512MB.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11D21734
+%FTSD31161GB.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11D31734
+%FTSD2816.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11D41734
+%FTSD2837.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11D51734
+%FTSD3116C.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11E41734
+%FTSD2816C.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11E51734
+%FTSD2837C.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_11E61734
+%FTSDD3216C.DeviceDesc%		    = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_11F61734
+%FTSEM400i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_12091734
+%FTSCM400i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_120B1734
+%FTSCP400i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_12111734
+%FTSEP420i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_12121734
+
+; Hitachi
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_30161054
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_30191054
+%mraidsas92408i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_30351054
+%mraidsas92618i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_30361054
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_30521054
+%iMRfury.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_306A1054
+
+; Inventec(IESC)
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_002F1170
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_00341170
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_00361170
+%LSI2208.Inventec.DeviceDesc%	    = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_005B1170
+
+; Asustek
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_824D1043
+%MRSASRoMB8i.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_843B1043
+%MRSASRoMB.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_84711043
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_84731043
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_84801043
+%Pike2208.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_85251043
+%AsustekPike2208.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_85A01043
+
+; Lenovo
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_6B7C17AA
+%lenovoraid520.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_105117AA
+%lenovoraid720.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_105217AA
+%lenovoraid720EXP.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_105317AA
+%Antares.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_103217AA
+; SanBlaze
+%mraidsas92808e.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_02001AE3
+%lenovo9364.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_936A1000
+
+;Quanta
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_898B152D
+%LSISyncroCS9271-8iQ.DeviceDesc%    = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_927B1000
+
+; Cisco
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0071&SUBSYS_00721137
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00721137
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00731137
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00C21137
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00C31137
+%MRSASRoMB-2i.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_008F1137
+%MRSASRoMB8i.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_00791137
+%MR9220-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92A01000
+%MR9240-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92A11000
+%MR9220-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92211000
+%MR9265-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_008D1137
+%UCSC-2008M-8i-C220.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00B01137
+%UCSC-2008M-8i-C240.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00B11137
+%UCSC-2008-8i-C220.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00B61137
+%UCSC-2008-8i-C240.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00B71137
+%MezzROMB.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_00DB1137
+%shellbeach.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_01281137
+%yosemite.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_01291137
+%UCSC-C3X60-RAID.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_012D1137
+%Candlestick-Carmel.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_01241137
+%Candlestick-Salinas.DeviceDesc%    = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_012F1137
+
+;MSI
+%MS3035.DeviceDesc%                 = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_00351462
+%MS91F2.DeviceDesc%                 = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_1F201462
+
+;Huawei
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_D20219E5
+%fscinternal.DeviceDesc%            = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_D20319E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_D20419E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_D20519E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_D20619E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_D20719E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_D20819E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_220819E5
+%mraidsas92608i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_D20819E5
+%mraidsas92608i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_D20919E5
+%fscinternal.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_D24019E5
+%fcsSAS3108.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_D20719E5
+%fcsSAS3108.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_D20C19E5
+
+; LSI - 1068 Series:
+%mraidsas8300xlp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0409&SUBSYS_10091000
+%mraidsas8408e.DeviceDesc%          = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10011000
+%mraidsas8480e.DeviceDesc%          = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10021000
+%mraidsas8344elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10031000
+%mraidsas8308elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10041000
+%mraidsas84016e.DeviceDesc%         = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_10081000
+%mraidsas84012e.DeviceDesc%         = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_100C1000
+%mraidsata30016e.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_100D1000
+%mraidsata3008elp.DeviceDesc%       = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_20041000
+%mraidsas8304elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0411&SUBSYS_20051000
+%mraidsas8300xlp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0413&SUBSYS_10051000
+
+; LSI - 1078 Series:
+%mraidsas8888elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10061000
+%mraidsas8708elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_100A1000
+%mraidsas8884E.DeviceDesc%          = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_100E1000
+%mraidsas8708E.DeviceDesc%          = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_100F1000
+%mraidsata350-8ELP.DeviceDesc%      = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10101000
+%mraidsata350-4ELP.DeviceDesc%      = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10111000
+%mraidsas8704ELP.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10121000
+%mraidsas8708em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10131000
+%mraidsas8808em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10141000
+%mraidsas8780em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10151000
+%mraidsas8880em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10161000
+%mraidsas8744em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10171000
+%mraidsas8844em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10181000
+%mraidsas8744elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10191000
+%mraidsas8844elp.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_101A1000
+%mraidsas8008em2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_101B1000
+%mraidsas8704EM2.DeviceDesc%        = Install_INT, PCI\VEN_1000&DEV_0060&SUBSYS_10211000
+
+; LSI - 2008 Series:
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_00011BD4
+%mraidsas92408i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_10541000
+%mraidsas92408i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_14581002
+%mraidsas92408i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_10021458
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_822910F1
+%mraidsas92408i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92401000
+%mraidsas92404i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92411000
+%mraidsas92418i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92421000
+%mraidsas92414i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92431000
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0073&SUBSYS_92441000
+
+; LSI - 2108 Series:
+%mraidsas92608i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0078&SUBSYS_92511000
+%mraidsas92604idev.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_0078&SUBSYS_92501000
+%mraidsas92808e.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0078&SUBSYS_92701000
+%MRSASRoMB8i.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_00011BAA
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_00021BD4
+%mraidsas92608i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_8985152D
+%mraidsas92604iCBE.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92551000
+%mraidsas92608ix.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92561000
+%mraidsas92604i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92601000
+%mraidsas92608i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92611000
+%mraidsas92628i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92621000
+%mraidsas92618i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92631000
+%mraidsas92648i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92641000
+%mraidsas9260ss4i.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92671000
+%mraidsas9260ss8i.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92681000
+%mraidsas92808ex.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92751000
+%mraid926016i.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92761000
+%mraid928016i4e.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92771000
+%mraidsasS92808e.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92801000
+%mraidsas92818E.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92811000
+%mraidsas92804i4e.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92821000
+%mraidsas92828e.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92841000
+%mraidsas9280ss8e.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92881000
+%mraidsas9280ss4i4e.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92891000
+%mraid928024i4e.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_92901000
+%mraidgenericROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0079&SUBSYS_00111425
+
+; LSI - 2208 Series:
+%MR9265-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92651000
+%MR9266-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92661000
+%MR9267-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92671000
+%MR9265CV-8i.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92681000
+%MR9266-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92691000
+%MR9270-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92701000
+%MR9271-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92711000
+%MR9272-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92721000
+%MR9270CV-8i.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92731000
+%MR9270-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92741000
+%MR9271-8iCC.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92751000
+%MR9271-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92761000
+%SyncroCS9271-8i.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_927A1000
+%MR9285-8e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92851000
+%MR9285CV-8e.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92881000
+%SyncroCS9286-8e.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_928A1000
+%MR9286-8e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92901000
+%MR9286CV-8e.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92911000
+%MR9286CV-8eCC.DeviceDesc%          = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_92951000
+%NMR8100-4i.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80801000
+%NMR8110-4i.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80811000
+%NMR8120-4i.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80821000
+%NMR8110-4e.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80831000
+%NMR8120-4e.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_80841000 
+%NMR9100-8i8e.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_90801000
+%NMR9110-8i8e.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_90811000 
+
+; LSI - 93xx Series:
+%MR9340-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_93401000
+%MR9341-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_93411000
+%MR9340-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_93421000
+%MR9341-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_93431000
+%MR9360-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93601000
+%MR9361-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93611000
+%MR9360-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93621000
+%MR9361-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93631000
+%MR9362-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93641000
+%MR9362-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93651000
+%MR9380-8e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93801000
+%MR9380-4i4e.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93811000
+%MR9361-8i.DeviceDescCC%            = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93661000
+%MR9380-8i.DeviceDescCC%            = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_93821000
+%Inspur.DeviceDesc%                 = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_00071BD4
+%sugon.DeviceDesc%                  = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_22081CB8 
+%nec.DeviceDesc%                    = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_80511BCF 
+%sugon1.DeviceDesc%                 = Install_MSI, PCI\VEN_1000&DEV_005B&SUBSYS_22401CB8 
+%ASRockSAS3008iMR.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_005F&SUBSYS_30901849
+%Softlayer.DeviceDesc%		    = Install_MSI, PCI\VEN_1000&DEV_005D&SUBSYS_1000936C
+
+[Strings]
+;Localizable Strings needed for HBA naming in Windows UI
+
+LSI = "LSI Corp."
+DISK = "LSI MegaSAS Controller Driver"
+
+mraidsas8408e.DeviceDesc            = "LSI Logic MegaRAID SAS 8408E RAID Controller"
+mraidsas8480e.DeviceDesc            = "LSI Logic MegaRAID SAS 8480E RAID Controller"
+mraidsas8344elp.DeviceDesc          = "LSI Logic MegaRAID SAS 8344ELP RAID Controller"
+mraidsas8308elp.DeviceDesc          = "LSI Logic MegaRAID SAS 8308ELP RAID Controller"
+mraidsas8304elp.DeviceDesc          = "LSI Logic MegaRAID SATA 300-4ELP RAID Controller"
+mraidsas84012e.DeviceDesc           = "LSI Logic MegaRAID SATA 300-12E  RAID Controller"
+mraidsata30016e.DeviceDesc          = "LSI Logic MegaRAID SATA 300-16E  RAID Controller"
+mraidsas84016e.DeviceDesc           = "LSI Logic MegaRAID SAS 84016E RAID Controller"
+mraidsata3008elp.DeviceDesc         = "LSI Logic MegaRAID SATA 300-8ELP RAID Controller"
+mraidsas8300xlp.DeviceDesc          = "LSI Logic MegaRAID SAS 8300XLP RAID Controller"
+mraidsas8888elp.DeviceDesc          = "LSI Logic MegaRAID SAS 8888ELP RAID Controller"
+mraidsas8708elp.DeviceDesc          = "LSI Logic MegaRAID SAS 8708ELP RAID Controller"
+mraidsas8884E.DeviceDesc            = "LSI Logic MegaRAID SAS 8884E RAID Controller"
+mraidsas8708E.DeviceDesc            = "LSI Logic MegaRAID SAS 8708E RAID Controller"
+mraidsata350-8ELP.DeviceDesc        = "LSI Logic MegaRAID SATA 350-8ELP RAID Controller"
+mraidsata350-4ELP.DeviceDesc        = "LSI Logic MegaRAID SATA 350-4ELP RAID Controller"
+mraidsas8704elp.DeviceDesc          = "LSI Logic MegaRAID SAS 8704ELP RAID Controller"
+mraidsas8708em2.DeviceDesc          = "LSI Logic MegaRAID SAS 8708EM2 RAID Controller"
+mraidsas8808em2.DeviceDesc          = "LSI Logic MegaRAID SAS 8808EM2 RAID Controller"
+mraidsas8780em2.DeviceDesc          = "LSI Logic MegaRAID SAS 8780EM2 RAID Controller"
+mraidsas8880em2.DeviceDesc          = "LSI Logic MegaRAID SAS 8880EM2 RAID Controller"
+mraidsas8744em2.DeviceDesc          = "LSI Logic MegaRAID SAS 8744EM2 RAID Controller"
+mraidsas8844em2.DeviceDesc          = "LSI Logic MegaRAID SAS 8844EM2 RAID Controller"
+mraidsas8744elp.DeviceDesc          = "LSI Logic MegaRAID SAS 8744ELP RAID Controller"
+mraidsas8844elp.DeviceDesc          = "LSI Logic MegaRAID SAS 8844ELP RAID Controller"
+mraidsas8008em2.DeviceDesc          = "LSI Logic MegaRAID SAS 8008EM2 RAID Controller"
+IntelSrcSAS181.DeviceDesc           = "Intel(R) RAID Controller SRCSAS18E"
+IntelSrcSAS144E.DeviceDesc          = "Intel(R) RAID Controller SRCSAS144E"
+IntelSromSAS18E.DeviceDesc          = "Intel(R) RAID Controller SROMBSAS18E"
+IntelSrcSAS28EV.DeviceDesc          = "Intel(R) RAID Controller SRCSASRB"
+IntelSrcSAS28EP.DeviceDesc          = "Intel(R) RAID Controller SRCSASJV"
+IntelSrcSATA28E.DeviceDesc          = "Intel(R) RAID Controller SRCSATAWB"
+IntelSrcSASPH16I.DeviceDesc         = "Intel(R) RAID Controller SRCSASPH16I"
+IntelSrcSASBB8I.DeviceDesc          = "Intel(R) RAID Controller SRCSASBB8I"
+IntelSrcSASLS4I.DeviceDesc          = "Intel(R) RAID Controller SRCSASLS4I"
+IntelSromSAS28E.DeviceDesc          = "Intel(R) Integrated RAID Controller SROMBSASFC"
+IntelDarkCanyon.DeviceDesc  	    = "Intel(R) RAID Controller RS3DC080"
+IntelDarkCanyon1.DeviceDesc         = "Intel(R) RAID Controller RS3DC040"
+IntelSunsetCanyon.DeviceDesc        = "Intel(R) RAID Controller RS3SC008"
+IntelMohaveCanyon.DeviceDesc        = "Intel(R) RAID Controller RS3MC044"
+IntelWaimeaCanyon.DeviceDesc        = "Intel(R) RAID Controller RS3WC080"
+IntelWaimeaCanyon1.DeviceDesc       = "Intel(R) RAID Controller RS3WC040"
+fscinternal.DeviceDesc              = "LSI Logic MegaRAID SAS PCI Express ROMB"
+fscinternal2.DeviceDesc             = "SMC1078"
+fscinternal3.DeviceDesc             = "LSI 2208 MegaRAID"
+fscinternal5.DeviceDesc             = "LSI SAS2208 MEGARAID iMR ENTRY"
+fcsSAS3108.DeviceDesc               = "SAS3108"
+fscLSIinternal.DeviceDesc           = "RAID 5/6 SAS based on LSI MegaRAID"
+fscinternal4.DeviceDesc             = "LSI 3108 MegaRAID "      
+iMRfury.DeviceDesc                  = "HITACHI SAS 3004 iMR ROMB"
+IBMMR10i.DeviceDesc                 = "IBM ServeRAID-MR10i SAS/SATA Controller"
+IBMMR10il.DeviceDesc                = "IBM ServeRAID-MR10il SAS/SATA Controller"
+IBMMR10M.DeviceDesc                 = "IBM ServeRAID-MR10M SAS/SATA Controller"
+IBMMR10k.DeviceDesc                 = "IBM ServeRAID-MR10k SAS/SATA Controller"
+IBMAR10is.DeviceDesc                = "IBM ServeRAID-MR10is SAS/SATA Controller"
+IBMMR10ie.DeviceDesc                = "IBM ServeRAID-MR10ie SAS/SATA Controller"
+IBMM1015.DeviceDesc                 = "IBM ServeRAID M1015 SAS/SATA Controller"
+IBMM1115.DeviceDesc                 = "IBM ServeRAID M1115 SAS/SATA Controller"
+IBMM5014.DeviceDesc                 = "IBM ServeRAID M5014 SAS/SATA Controller"
+IBMM5015.DeviceDesc                 = "IBM ServeRAID M5015 SAS/SATA Controller"
+IBMM5016.DeviceDesc                 = "IBM ServeRAID M5016 SAS/SATA Controller"
+IBMM5025.DeviceDesc                 = "IBM ServeRAID M5025 SAS/SATA Controller"
+IBMM5110.DeviceDesc                 = "IBM ServeRAID M5110 SAS/SATA Controller"
+IBMM5110e.DeviceDesc                = "IBM ServeRAID M5110e SAS/SATA Controller"
+IBMM5110s.DeviceDesc                = "IBM Flex System Storage Expansion Node"
+IBMM5115.DeviceDesc                 = "IBM ServeRAID M5115 SAS/SATA Controller"
+IBMM5120.DeviceDesc                 = "IBM ServeRAID M5120 SAS/SATA Controller"
+IBMM5210.DeviceDesc                 = "IBM ServeRAID M5210 SAS/SATA Controller"
+IBMM5215.DeviceDesc                 = "IBM ServeRAID M5215 SAS/SATA Controller"
+IBMM5225.DeviceDesc                 = "IBM ServeRAID M5225 SAS/SATA Controller"
+IBMM5210e.DeviceDesc                = "IBM ServeRAID M5210e SAS/SATA Controller"
+IBMM5210e1.DeviceDesc               = "IBM ServeRAID M5210e SAS/SATA Controller"  
+IBMM1215.DeviceDesc                 = "IBM ServeRAID M1215 SAS/SATA Controller"
+
+IBMM52151.DeviceDesc                 = "IBM ServeRAID M5215 SAS/SATA Controller"  
+IBMM1210e.DeviceDesc                = "IBM ServeRAID M1210e SAS/SATA Controller"
+IBMM5210e2.DeviceDesc                = "IBM ServeRAID M5210e SAS/SATA Controller"
+
+
+IntelSROMBSASMP2.DeviceDesc         = "Intel(R) Integrated RAID Controller SROMBSASMP2"
+mraidsas92604i.DeviceDesc           = "LSI MegaRAID SAS 9260-4i"
+mraidsas92604idev.DeviceDesc        = "LSI MegaRAID SAS 9260-4i"
+mraidsas92604iCBE.DeviceDesc        = "LSI MegaRAID SAS 9260-4ix"
+mraidsas92608i.DeviceDesc           = "LSI MegaRAID SAS 9260-8i"
+mraidsas92608ix.DeviceDesc          = "LSI MegaRAID SAS 9260-8ix"
+mraidsasS92808e.DeviceDesc          = "LSI MegaRAID SAS 9280-8e"
+mraidsas92808e.DeviceDesc           = "LSI MegaRAID SAS 9280-8e"
+mraidsas92808ex.DeviceDesc          = "LSI MegaRAID SAS 9280-8ex"
+mraidsasGeneric.DeviceDesc          = "LSI MegaRAID SAS Adapter"
+IntelSROMBSASBN.DeviceDesc          = "Intel(R) RAID Controller SROMBSASBN"
+mraidsas8704EM2.DeviceDesc          = "LSI MegaRAID SAS 8704EM2 RAID Controller"
+IntelSROMBSASMR.DeviceDesc          = "Intel(R) Integrated RAID Controller SROMBSASMR"
+mraidsas92414i.DeviceDesc           = "LSI MegaRAID SAS 9241-4i"
+mraidsas92418i.DeviceDesc           = "LSI MegaRAID SAS 9241-8i"
+mraidsas92818E.DeviceDesc           = "LSI MegaRAID SAS 9281-8E"
+mraidsas92618i.DeviceDesc           = "LSI MegaRAID SAS 9261-8i"
+mraidsas92628i.DeviceDesc           = "LSI MegaRAID SAS 9262-8i"
+mraidsas92408i.DeviceDesc           = "LSI MegaRAID SAS 9240-8i"
+mraidsas92404i.DeviceDesc           = "LSI MegaRAID SAS 9240-4i"
+mraidsas92648i.DeviceDesc           = "LSI MegaRAID SAS 9264-8i"
+mraidsas92804i4e.DeviceDesc         = "LSI MegaRAID SAS 9280-4i4e"
+FTSD2607.DeviceDesc                 = "RAID Ctrl SAS 6G 0/1 (D2607)"
+FTSD2616.DeviceDesc                 = "RAID Ctrl SAS 6G 5/6 512MB (D2616)"
+FTSD2816.DeviceDesc                 = "SAS RAID HDD Module (D2816)"
+FTSD2837.DeviceDesc                 = "SAS RAID HDD Module w/o cache (D2837)"
+FTSD3116512MB.DeviceDesc            = "RAID Ctrl SAS 6G 512MB (D3116)"
+FTSD31161GB.DeviceDesc              = "RAID Ctrl SAS 6G 1GB (D3116)"
+FTSD3116C.DeviceDesc                = "RAID Ctrl SAS 6G 1GB (D3116C)"            
+FTSD2816C.DeviceDesc                = "SAS RAID HDD Module (D2816C)"
+FTSD2837C.DeviceDesc                = "SAS RAID HDD Module w/o cache (D2837C)"
+FTSDD3216C.DeviceDesc               = "PRAID EP400i"
+FTSEM400i.DeviceDesc                = "PRAID EM400i"
+FTSCM400i.DeviceDesc                = "PRAID CM400i"
+FTSCP400i.DeviceDesc                = "PRAID CP400i"
+FTSEP420i.DeviceDesc                = "PRAID EP420i"
+mraidgenericROMB.DeviceDesc         = "LSI MegaRAID SAS PCI Express ROMB"
+MRSASRoMB8i.DeviceDesc              = "LSI MRSASRoMB-8i"
+MRSASRoMB-2i.DeviceDesc             = "LSI MegaRAID SAS 2002 ROMB"
+RS2MB044.DeviceDesc                 = "Intel(R) RAID Controller RS2MB044"
+mraid928024i4e.DeviceDesc           = "LSI MegaRAID SAS 9280-24i4e"
+mraid928016i4e.DeviceDesc           = "LSI MegaRAID SAS 9280-16i4e"
+mraid926016i.DeviceDesc             = "LSI MegaRAID SAS 9260-16i"
+MS91F2.DeviceDesc                   = "MS-91F2 RAID Controller"
+MS3035.DeviceDesc                   = "MS-3035 RAID Controller"
+IntelRMS2AF040.DeviceDesc           = "Intel(R) Integrated RAID Module RMS2AF040"
+IntelRMS2AF080.DeviceDesc           = "Intel(R) Integrated RAID Module RMS2AF080"
+IntelRMS2MH080.DeviceDesc           = "Intel(R) Integrated RAID Module RMS2MH080"
+mraidsas92828e.DeviceDesc           = "LSI MegaRAID SAS 9282-8e"
+IntelRS2WG160.DeviceDesc            = "Intel(R) RAID Controller RS2WG160"
+IntelRS2SG244.DeviceDesc            = "Intel(R) RAID Controller RS2SG244"
+MRSASRoMB.DeviceDesc                = "LSI MRSASRoMB-8i"
+MRSAS56SAS6G.DeviceDesc             = "PY SAS RAID Mezz Card 6Gb 512MB"
+UCSC-2008M-8i-C220.DeviceDesc       = "Cisco UCSC RAID SAS 2008-8i for C220 with RAID 0/1/10/5/50"
+UCSC-2008M-8i-C240.DeviceDesc       = "Cisco UCSC RAID SAS 2008-8i for C240 with RAID 0/1/10/5/50"
+UCSC-2008-8i-C220.DeviceDesc        = "Cisco UCSC RAID SAS 2008-8i for C220 with RAID 0/1/10" 
+UCSC-2008-8i-C240.DeviceDesc        = "Cisco UCSC RAID SAS 2008-8i for C240 with RAID 0/1/10" 
+MezzROMB.DeviceDesc                 = "Cisco 12G SAS Modular Raid Controller"
+shellbeach.DeviceDesc               = "Cisco 12G SAS Modular Raid Controller for C460"
+yosemite.DeviceDesc                 = "LSI MegaRAID SAS 3008 ROMB"
+UCSC-C3X60-RAID.DeviceDesc          = "Cisco RAID controller for UCS C3X60 Storage Server"
+Candlestick-Carmel.DeviceDesc       = "Cisco FlexStorage 12G SAS RAID Controller"
+Candlestick-Salinas.DeviceDesc      = "Cisco FlexStorage 12G SAS RAID Controller w/2GB FBWC"
+mraidsas9260ss4i.DeviceDesc         = "LSI MegaRAID SAS 9260CV-4i"
+mraidsas9280ss4i4e.DeviceDesc       = "LSI MegaRAID SAS 9280CV-4i4e"
+mraidsas9260ss8i.DeviceDesc         = "LSI MegaRAID SAS 9260CV-8i"
+mraidsas9280ss8e.DeviceDesc         = "LSI MegaRAID SAS 9280CV-8e"
+MR9220-4i.DeviceDesc                = "LSI MegaRAID SAS 9220-4i"
+MR9220-8i.DeviceDesc                = "LSI MegaRAID SAS 9220-8i"
+MR9240-8i.DeviceDesc                = "LSI MegaRAID SAS 9240-8i"
+MR9265-8i.DeviceDesc                = "LSI MegaRAID SAS 9265-8i"
+MR9265CV-8i.DeviceDesc              = "LSI MegaRAID SAS 9265CV-8i"
+MR9266-4i.DeviceDesc                = "LSI MegaRAID SAS 9266-4i"
+MR9266-8i.DeviceDesc                = "LSI MegaRAID SAS 9266-8i"
+MR9267-8i.DeviceDesc                = "LSI MegaRAID SAS 9267-8i"
+MR9270-4i.DeviceDesc                = "LSI MegaRAID SAS 9270-4i"
+MR9270-8i.DeviceDesc                = "LSI MegaRAID SAS 9270-8i"
+MR9270CV-8i.DeviceDesc              = "LSI MegaRAID SAS 9270CV-8i"
+MR9271-4i.DeviceDesc                = "LSI MegaRAID SAS 9271-4i"
+MR9271-8i.DeviceDesc                = "LSI MegaRAID SAS 9271-8i"
+MR9271-8iCC.DeviceDesc              = "LSI MegaRAID SAS 9271-8iCC"
+SyncroCS9271-8i.DeviceDesc          = "LSI Syncro CS 9271-8i"
+LSISyncroCS9271-8iQ.DeviceDesc      = "LSI Syncro CS 9271-8iQ" 
+MR9272-8i.DeviceDesc                = "LSI MegaRAID SAS 9272-8i"
+MR9285-8e.DeviceDesc                = "LSI MegaRAID SAS 9285-8e"
+MR9285CV-8e.DeviceDesc              = "LSI MegaRAID SAS 9285CV-8e"
+MR9286-8e.DeviceDesc                = "LSI MegaRAID SAS 9286-8e"
+SyncroCS9286-8e.DeviceDesc          = "LSI Syncro CS 9286-8e"
+MR9286CV-8e.DeviceDesc              = "LSI MegaRAID SAS 9286CV-8e"
+MR9286CV-8eCC.DeviceDesc            = "LSI MegaRAID SAS 9286CV-8eCC"
+MR9340-8i.DeviceDesc                = "LSI MegaRAID SAS 9340-8i"
+MR9341-8i.DeviceDesc                = "LSI MegaRAID SAS 9341-8i"
+MR9340-4i.DeviceDesc                = "LSI MegaRAID SAS 9340-4i"
+MR9341-4i.DeviceDesc                = "LSI MegaRAID SAS 9341-4i"
+MR9360-8i.DeviceDesc                = "LSI MegaRAID SAS 9360-8i"
+MR9361-8i.DeviceDesc                = "LSI MegaRAID SAS 9361-8i"
+MR9360-4i.DeviceDesc                = "LSI MegaRAID SAS 9360-4i"
+MR9361-4i.DeviceDesc                = "LSI MegaRAID SAS 9361-4i"
+MR9362-8i.DeviceDesc                = "LSI MegaRAID SAS 9362-8i"
+MR9362-4i.DeviceDesc                = "LSI MegaRAID SAS 9362-4i"
+MR9380-8e.DeviceDesc                = "LSI MegaRAID SAS 9380-8e"
+MR9380-4i4e.DeviceDesc              = "LSI MegaRAID SAS 9380-4i4e"
+MR9361-8i.DeviceDescCC              = "LSI MegaRAID SAS 9361-8iCC"
+MR9380-8i.DeviceDescCC              = "LSI MegaRAID SAS 9380-8eCC"
+IntelRMS25PB080.DeviceDesc          = "Intel(R) Integrated RAID Module RMS25PB080"
+IntelRMS25PB040.DeviceDesc          = "Intel(R) Integrated RAID Module RMS25PB040"
+IntelRMT3PB080.DeviceDesc           = "Intel(R) Integrated RAID Module RMT3PB080"
+IntelRMS25CB080.DeviceDesc          = "Intel(R) Integrated RAID Module RMS25CB080"
+IntelRMS25CB040.DeviceDesc          = "Intel(R) Integrated RAID Module RMS25CB040"
+IntelRMT3CB080.DeviceDesc           = "Intel(R) Integrated RAID Module RMT3CB080"
+IntelRS25AB080.DeviceDesc           = "Intel(R) RAID Controller RS25AB080"
+IntelRS25SB008.DeviceDesc           = "Intel(R) RAID Controller RS25SB008"
+IntelRS2BL040.DeviceDesc            = "Intel(R) RAID Controller RS2BL040"
+IntelRS2BL080.DeviceDesc            = "Intel(R) RAID Controller RS2BL080"
+IntelRS2BL080DE.DeviceDesc          = "Intel(R) RAID Controller RS2BL080DE"
+IntelRS2PI008.DeviceDesc            = "Intel(R) RAID Controller RS2PI008"
+IntelRS2PI008DE.DeviceDesc          = "Intel(R) RAID Controller RS2PI008DE"
+IntelRS2WC040.DeviceDesc            = "Intel(R) RAID Controller RS2WC040"
+IntelRS2WC080.DeviceDesc            = "Intel(R) RAID Controller RS2WC080"
+IntelRS25DB080.DeviceDesc           = "Intel(R) RAID Controller RS25DB080"
+IntelRS25NB008.DeviceDesc           = "Intel(R) RAID Controller RS25NB008"
+IntelRT3WB080.DeviceDesc            = "Intel(R) RAID Controller RT3WB080"
+IntelRS2VB040.DeviceDesc            = "Intel(R) RAID Controller RS2VB040"
+IntelRS2VB080.DeviceDesc            = "Intel(R) RAID Controller RS2VB080"
+IntelRS25CB080N.DeviceDesc          = "Intel(R) Integrated RAID Module RS25CB080N"
+IntelRS25PB080N.DeviceDesc          = "Intel(R) Integrated RAID Module RS25PB080N"
+IntelRCS25ZB040.DeviceDesc          = "Intel(R) RAID SSD Cache Controller RCS25ZB040"
+IntelRCS25ZB040LX.DeviceDesc        = "Intel(R) RAID SSD Cache Controller RCS25ZB040LX"
+IntelCoffeeCanyon.DeviceDesc        = "Intel(R) Integrated RAID Module RMS3CC080"
+IntelCoffeeCanyon1.DeviceDesc       = "Intel(R) Integrated RAID Module RMS3CC040"
+IntelCottonWoodPass.DeviceDesc      = "Intel(R) Integrated RAID RS3YC"
+IntelHermosaCanyon.DeviceDesc       = "Intel(R) Integrated RAID Module RMS3HC080"
+Pike2208.DeviceDesc                 = "Pike 2208"
+AsustekPike2208.DeviceDesc          = "Asustek pike 2208"
+NMR8100-4i.DeviceDesc               = "Nytro MegaRAID8100-4i"
+NMR8110-4i.DeviceDesc               = "Nytro MegaRAID8110-4i"
+NMR8120-4i.DeviceDesc               = "Nytro MegaRAID8120-4i"
+NMR8110-4e.DeviceDesc               = "Nytro MegaRAID8110-4e"
+NMR8120-4e.DeviceDesc               = "Nytro MegaRAID8120-4e" 
+NMR9100-8i8e.DeviceDesc             = "Nytro MegaRAID8115-8i8e"
+NMR9110-8i8e.DeviceDesc             = "Nytro MegaRAID8140-8i8e" 
+Inspur.DeviceDesc                   = "Inspur"
+sugon.DeviceDesc                    = "Sugon"
+lenovoraid520.DeviceDesc            = "Lenovo ThinkServer RAID 510i AnyRAID Adapter"
+lenovoraid720.DeviceDesc            = "Lenovo ThinkServer RAID 720i AnyRAID Adapter"
+lenovoraid720EXP.DeviceDesc         = "Lenovo ThinkServer RAID 720ix AnyRAID Adapter"
+Antares.DeviceDesc                  = "ThinkStation FLEX RAID Adapter"
+sugon1.DeviceDesc                   = "SL8-US"
+;NMR 
+IBMNMRVero_200G.DeviceDesc          = "ServeRAID F5115-200GB SAS/SATA Controller for IBM System x"
+IBMNMR2Vero_800G.DeviceDesc         = "ServeRAID F5115-800GB SAS/SATA Controller for IBM System x"
+nec.DeviceDesc                      = "LSI SAS 3008 iMR RoMB"
+ASRockSAS3008iMR.DeviceDesc         = "ASRock SAS3008iMR"
+lenovo9364.DeviceDesc               = "LSI MegaRAID SAS 9364-8i"
+smc2008.DeviceDesc                  = "LSI 2008 MegaRAID" 
+smc2108.DeviceDesc                  = "LSI 2108 MegaRAID"
+LSI2208.Inventec.DeviceDesc	    = "LSI2208"
+Lynx2WS.DeviceDesc                  = "RAID Ctrl SAS 6G WS"
+Softlayer.DeviceDesc		    = "LSI MegaRAID SAS 9361-8i"
+
+;*******************************************
+;Non-Localizable strings
+
+SPSVCINST_ASSOCSERVICE = 0x00000002
+SERVICE_KERNEL_DRIVER  = 1
+SERVICE_BOOT_START     = 0
+SERVICE_ERROR_NORMAL   = 1
+REG_EXPAND_SZ          = 0x00020000
+REG_DWORD              = 0x00010001
+
+PCIBUS                  = 5
+TIMEOUT_SECONDS         = 60
+TIMEOUT_VALUE           = "TimeoutValue"
+BUSTYPE_NAME            = "BusType"
+BUSTYPE_RAID            = 8
+
+MSI_ENABLED             = 1
+AcrossAllProcessors     = 5
+IrqPriorityHigh         = 3
+
+512eKey 		= "EnableQueryAccessAlignment"
+ENABLED 		= 1
+DISABLED		= 0

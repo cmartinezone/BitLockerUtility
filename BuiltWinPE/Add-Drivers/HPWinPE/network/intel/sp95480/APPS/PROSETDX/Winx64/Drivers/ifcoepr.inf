@@ -1,0 +1,205 @@
+;/******************************************************************************
+;**                                                                           **
+;** INTEL CONFIDENTIAL                                                        **
+;**                                                                           **
+;** Copyright 2006-2013 Intel Corporation All Rights Reserved.                **
+;**                                                                           **
+;** The source code contained or described herein and all documents related   **
+;** to the source code ("Material") are owned by Intel Corporation or its     **
+;** suppliers or licensors.  Title to the Material remains with Intel         **
+;** Corporation or its suppliers and licensors.  The Material contains trade  **
+;** secrets and proprietary and confidential information of Intel or its      **
+;** suppliers and licensors.  The Material is protected by worldwide          **
+;** copyright and trade secret laws and treaty provisions.  No part of the    **
+;** Material may be used, copied, reproduced, modified, published, uploaded,  **
+;** posted, transmitted, distributed, or disclosed in any way without Intel's **
+;** prior express written permission.                                         **
+;**                                                                           **
+;** No license under any patent, copyright, trade secret or other             **
+;** intellectual property right is granted to or conferred upon you by        **
+;** disclosure or delivery of the Materials, either expressly, by             **
+;** implication, inducement, estoppel or otherwise.  Any license under such   **
+;** intellectual property rights must be express and approved by Intel in     **
+;** writing.                                                                  **
+;**                                                                           **
+;/*****************************************************************************/
+
+;/******************************************************************************
+;* $Id$
+;* $Source$
+;******************************************************************************/
+
+;-------------------------------------------------------------------------
+; IFCoEProt.INF -- Intel(R) FCoE Protocol Driver
+;
+;-------------------------------------------------------------------------
+
+[version]
+Signature   = "$Windows NT$"
+Class       = NetTrans
+ClassGUID   = {4d36e975-e325-11ce-bfc1-08002be10318}
+Provider    = %Intel%
+CatalogFile = ifcoepr.cat
+DriverVer=10/07/2016,1.19.22.0
+
+[Manufacturer]
+%Intel%     = Intel, NTAMD64.6.0, NTAMD64.6.2
+
+[Intel]
+
+;Install on 2008/R2.
+
+[Intel.NTAMD64.6.0]
+%IFCoEProt_Desc%=Install_2k8x64, IFCoEProt
+
+; Block on 2012.
+
+[Intel.NTAMD64.6.2]
+
+
+;-------------------------------------------------------------------------
+; Installation Section
+;-------------------------------------------------------------------------
+
+[Install_2k8x64]
+AddReg=Install.Ndi
+Characteristics=0x20 ;NCF_NOT_USER_REMOVABLE 
+CopyFiles=CopyFiles_2k8x64
+[CopyFiles_2k8x64]
+ifp60x64.sys,,,2
+
+[SourceDisksNames]
+1 = %DiskId1%,,,
+
+[SourceDisksFiles]
+ifp60x64.sys = 1,,
+
+[DestinationDirs]
+DefaultDestDir    = 12    ; DIRID_DRIVERS
+
+;-------------------------------------------------------------------------
+; Ndi installation support
+;-------------------------------------------------------------------------
+[Install.Ndi]
+HKR,    Ndi,                Service,,       "IFCoEProt"
+HKR,    Ndi,                HelpText,,      %IFCoEProt_Desc%
+HKR,    Ndi\Interfaces,     "UpperRange",,  noupper
+HKR,    "Ndi\Interfaces",   "LowerRange",,  IFCoE
+;HKR,   "Ndi\Interfaces",   "LowerRange",,  "ndis5,ndis6"
+HKR,    Ndi,                ClsID,,         {9C38842E-F63A-426b-A707-40DC9EEEA178}
+HKR,    Ndi,                ComponentDll,,  "FCNTObj.dll"
+
+
+;-------------------------------------------------------------------------
+; Service installation support
+;-------------------------------------------------------------------------
+[Install_2k8x64.Services]
+AddService=IFCoEProt,,Install_2k8x64.Service, Install_2k8x64.EventLog
+
+;-----------------------------------------------------------------------------
+; Event Log settings
+;-----------------------------------------------------------------------------
+[Install_2k8x64.EventLog]
+AddReg=Install_2k8x64.AddEventLog
+DelReg=Install_2k8x64.DelEventLog
+
+[Install_2k8x64.AddEventLog]
+HKR,, EventMessageFile, 0x00020000,  %EventLogMessageDllPathA%
+HKR,, TypesSupported,   0x00010001, 7
+
+[Install_2k8x64.DelEventLog]
+HKR,, EventMessageFile
+HKR,, TypesSupported
+
+
+;SERVICE_BOOT_START         (0x0)
+;SERVICE_SYSTEM_START       (0x1)
+;SERVICE_AUTO_START         (0x2) 
+;SERVICE_DEMAND_START       (0x3) 
+
+[Install_2k8x64.Service]
+;LoadOrderGroup = NDIS ; Comes from VB instead
+StartType       = 3 ; SERVICE_DEMAND_START 
+ErrorControl    = 1 ; SERVICE_ERROR_NORMAL
+ServiceType     = 1 ; SERVICE_KERNEL_DRIVER
+ServiceBinary   = %12%\ifp60X64.sys
+Description     = %IFCoEProt_Desc%
+DisplayName     = %IFCoEProt_DisplayName%
+
+
+[Strings]
+Intel			         = "Intel"
+EventLogMessageDllPathA   = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\drivers\ifP60X64.sys" ;for x64
+DiskId1			         = "Intel(R) FCoE Installation Disk"
+IFCoEProt_Desc		     = "Intel(R) Ethernet FCoE Protocol Driver"
+IFCoEProt_DisplayName	 = "Intel(R) Ethernet FCoE Protocol Driver"
+
+[Strings.0804] ; Chinese (Simplified)
+Intel			         = "Intel"
+EventLogMessageDllPathA   = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\FCoEMsg.dll" ;for x64
+DiskId1			         = "Intel(R) FCoE Installation Disk"
+IFCoEProt_Desc		     = "Intel(R) Ethernet FCoE Protocol Driver"
+IFCoEProt_DisplayName	 = "Intel(R) Ethernet FCoE Protocol Driver"
+
+[Strings.0404] ; Chinese (Traditional)
+Intel			         = "Intel"
+EventLogMessageDllPathA   = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\FCoEMsg.dll" ;for x64
+DiskId1			         = "Intel(R) FCoE Installation Disk"
+IFCoEProt_Desc		     = "Intel(R) Ethernet FCoE Protocol Driver"
+IFCoEProt_DisplayName	 = "Intel(R) Ethernet FCoE Protocol Driver"
+
+[Strings.0407] ; German (Germany)
+Intel			         = "Intel"
+EventLogMessageDllPathA   = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\FCoEMsg.dll" ;for x64
+DiskId1			         = "Intel(R) FCoE Installation Disk"
+IFCoEProt_Desc		     = "Intel(R) Ethernet FCoE Protocol Driver"
+IFCoEProt_DisplayName	 = "Intel(R) Ethernet FCoE Protocol Driver"
+
+[Strings.0C0A] ; Spanish (Spain)
+Intel			         = "Intel"
+EventLogMessageDllPathA   = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\FCoEMsg.dll" ;for x64
+DiskId1			         = "Intel(R) FCoE Installation Disk"
+IFCoEProt_Desc		     = "Intel(R) Ethernet FCoE Protocol Driver"
+IFCoEProt_DisplayName	 = "Intel(R) Ethernet FCoE Protocol Driver"
+
+[Strings.040C] ; French (France)
+Intel			         = "Intel"
+EventLogMessageDllPathA   = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\FCoEMsg.dll" ;for x64
+DiskId1			         = "Intel(R) FCoE Installation Disk"
+IFCoEProt_Desc		     = "Intel(R) Ethernet FCoE Protocol Driver"
+IFCoEProt_DisplayName	 = "Intel(R) Ethernet FCoE Protocol Driver"
+
+[Strings.0410] ; Italian (Italy)
+Intel			         = "Intel"
+EventLogMessageDllPathA   = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\FCoEMsg.dll" ;for x64
+DiskId1			         = "Intel(R) FCoE Installation Disk"
+IFCoEProt_Desc		     = "Intel(R) Ethernet FCoE Protocol Driver"
+IFCoEProt_DisplayName	 = "Intel(R) Ethernet FCoE Protocol Driver"
+
+[Strings.0411] ; Japanese (Japan)
+Intel			         = "Intel"
+EventLogMessageDllPathA   = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\FCoEMsg.dll" ;for x64
+DiskId1			         = "Intel(R) FCoE Installation Disk"
+IFCoEProt_Desc		     = "Intel(R) Ethernet FCoE Protocol Driver"
+IFCoEProt_DisplayName	 = "Intel(R) Ethernet FCoE Protocol Driver"
+
+[Strings.0412] ; Korean (Korea)
+Intel			         = "Intel"
+EventLogMessageDllPathA   = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\FCoEMsg.dll" ;for x64
+DiskId1			         = "Intel(R) FCoE Installation Disk"
+IFCoEProt_Desc		     = "Intel(R) Ethernet FCoE Protocol Driver"
+IFCoEProt_DisplayName	 = "Intel(R) Ethernet FCoE Protocol Driver"
+
+[Strings.0416] ; Portuguese (Brazil)
+Intel			         = "Intel"
+EventLogMessageDllPathA   = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\FCoEMsg.dll" ;for x64
+DiskId1			         = "Intel(R) FCoE Installation Disk"
+IFCoEProt_Desc		     = "Intel(R) Ethernet FCoE Protocol Driver"
+IFCoEProt_DisplayName	 = "Intel(R) Ethernet FCoE Protocol Driver"
+
+[Strings.0C04] ; Chinese (Traditional)
+Intel			         = "Intel"
+EventLogMessageDllPathA   = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\FCoEMsg.dll" ;for x64
+DiskId1			         = "Intel(R) FCoE Installation Disk"
+IFCoEProt_Desc		     = "Intel(R) Ethernet FCoE Protocol Driver"
+IFCoEProt_DisplayName	 = "Intel(R) Ethernet FCoE Protocol Driver"

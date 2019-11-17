@@ -1,0 +1,119 @@
+; Copyright (c) 2010-2018 Intel Corporation
+; ****************************************************************************
+; ****************************************************************************
+; **     Filename:  iaVROC.inf
+; **     Abstract:  Windows* INF File for Intel(R) RSTe NVMe Storage Devices
+; ****************************************************************************
+;
+
+[Version]
+Signature="$Windows NT$"
+Provider=%INTEL%
+ClassGUID={4D36E97B-E325-11CE-BFC1-08002BE10318}
+Class=SCSIAdapter
+DriverVer=02/28/2018,5.4.0.1462
+CatalogFile=iaVROC.cat
+
+[PackageInfo]
+Name=VROC
+
+[Manufacturer]
+%INTEL% = INTEL_VROC, NTamd64.6.3, NTamd64.10.0, NTamd64.10.0...14393
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[DestinationDirs]
+DefaultDestDir   = 12
+
+[vroc_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\iaVROC.sys
+LoadOrderGroup = SCSI miniport
+AddReg         = pnpsafe_pci_addreg
+AddReg         = Parameters
+AddReg         = led_addreg
+
+[vroc_EventLog_Inst]
+AddReg = vroc_EventLog_AddReg
+
+[vroc_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+[pnpsafe_pci_addreg]
+HKR, "Parameters\PnpInterface", "5", %REG_DWORD%, 0x00000001
+HKR, "Parameters", "BusType", %REG_DWORD%, 0x00000008
+
+[msi_addreg]
+HKR, Interrupt Management,,0x00000010
+HKR, Interrupt Management\MessageSignaledInterruptProperties,,0x00000010
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MSISupported,       %REG_DWORD%,   1
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MessageNumberLimit, %REG_DWORD%,   64
+HKR, Interrupt Management\Affinity Policy, 0x00000010
+HKR, Interrupt Management\Affinity Policy, DevicePolicy, %REG_DWORD%, 5 ;IrqPolicySpreadMessagesAcrossAllProcessors
+
+[Parameters]
+HKR, Parameters\Device, DisableDAS,           %REG_DWORD%, 0x00000000
+HKR, Parameters\Device, StripeSizeBytes,      %REG_DWORD%, 0x00000000
+HKR, Parameters\Device, MaxSplitCmds,         %REG_DWORD%, 0x00000002
+HKR, Parameters\Device, Threads,              %REG_DWORD%, 0x0000000A
+
+;******************************************************************************
+;*
+;* 64-BIT X86 ARCHITECTURE
+;*
+;* This section specifies the 64-bit architecture specific INF file entries
+;* required to install a driver as a 64-bit compatible driver.
+;*
+;******************************************************************************
+
+[SourceDisksFiles.amd64]
+iaVROC.sys = 1,,,
+
+[INTEL_VROC.NTamd64.6.3]
+%PCI\VEN_8086&DEV_201D.DeviceDesc% = vroc_inst_8, PCI\VEN_8086&DEV_201D
+
+[INTEL_VROC.NTamd64.10.0]
+;windows_10_64-bit to windows 10_64_14393
+%PCI\VEN_8086&DEV_201D.DeviceDesc% = vroc_inst_8, PCI\VEN_8086&DEV_201D
+[INTEL_VROC.NTamd64.10.0...14393]
+;windows 10_64_14393 and later
+%PCI\VEN_8086&DEV_201D.DeviceDesc% = vroc_inst_8, PCI\VEN_8086&DEV_201D
+;
+[vroc_inst_8.ntamd64]
+CopyFiles=@iaVROC.sys
+
+[vroc_inst_8.ntamd64.HW]
+AddReg = msi_addreg
+
+[vroc_inst_8.ntamd64.Services]
+AddService = iaVROC, 0x00000002 , vroc_Service_Inst, vroc_EventLog_Inst
+
+[Strings]
+;Localizable
+diskId1 = "VROC Installation Disk"
+PCI\VEN_8086&DEV_201D.DeviceDesc = "Intel(R) Volume Management Device NVMe RAID Controller"
+INTEL="Intel Corporation"
+;
+;*******************************************
+;Non-Localizable
+REG_EXPAND_SZ  = 0x00020000
+REG_DWORD      = 0x00010001
+SERVICE_KERNEL_DRIVER  = 1
+SERVICE_BOOT_START     = 0
+SERVICE_ERROR_NORMAL   = 1
+SERVICE_FILE_SYSTEM_DRIVER = 2
+SERVICE_DEMAND_START = 3
+SERVICE_SYSTEM_START = 1
+SPSVCINST_STARTSERVICE = 0x00000800
+
+[led_addreg]
+;;; Custimizable LED management
+HKLM, System\CurrentControlSet\Services\iaVROC\Parameters\Device, LedLocateTimeout, %REG_DWORD%, 0x0000000C
+HKLM, System\CurrentControlSet\Services\iaVROC\Parameters\Device, LedFaultOnEmptyPortBehavior, %REG_DWORD%, 0x00000000
+HKLM, System\CurrentControlSet\Services\iaVROC\Parameters\Device, LedBehaviorForInitilazing, %REG_DWORD%, 0x00000001
+HKLM, System\CurrentControlSet\Services\iaVROC\Parameters\Device, LedBehaviorForRebuilding, %REG_DWORD%, 0x00000000
+HKLM, System\CurrentControlSet\Services\iaVROC\Parameters\Device, LedBehaviorForMigrating, %REG_DWORD%, 0x00000001

@@ -1,0 +1,164 @@
+;////////////////////////////////////////////////////////////////////////////////////////////////////////
+;//
+;//    Avago Technologies is a trademark of Avago Technologies in the United States and other countries.
+;//
+;//    Copyright © 2015-2017 Avago Technologies
+;//    All rights reserved
+;//
+;////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = System
+ClassGuid   = {4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider    = %LSI%
+CatalogFile = megasas35.cat
+DriverVer=05/18/2017,7.702.12.00
+
+[Manufacturer]
+%LSI% = LSI, NTx86, NTamd64
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[Install.NT]
+AddReg = Parms_AddReg
+
+[Parms_AddReg]
+HKR, "Parameters\virtualraid", "level", %REG_DWORD%, 1
+
+[Install.NT.Services]
+AddService = , %SPSVCINST_ASSOCSERVICE%
+
+[LSI.NTx86]
+%NULL.DeviceDesc%         = Install, SCSI\Other__RAID___DummyDevice____0001    
+%LSISHEAENCLOSURE%        = Install, SCSI\EnclosureLSILOGIC_____SYM3600-SAS
+%IBM_EXP2512.DeviceDesc%  = Install, SCSI\EnclosureIBM_____EXP2512_________
+%IBM_EXP2424.DeviceDesc%  = Install, SCSI\EnclosureIBM_____EXP2424_________
+%IBMSHEAENCLOSURE%        = Install, SCSI\EnclosureIBM-ESXSEXP3000_________
+%IBMSHEAENCLOSURE1%       = Install, SCSI\EnclosureIBM_____SAS_SES-2_DEVICE
+%IBMSAS_ESXS%             = Install, SCSI\EnclosureIBM-ESXSVSC7160_________
+%IBMSAS_EXPBP%            = Install, SCSI\EnclosureIBM-ESXS_SAS_EXP_BP_____
+%SAS_JBOD_1.DeviceDesc%   = Install, SCSI\EnclosureSUN_____BLADE_DISK______
+%SAS_JBOD_2.DeviceDesc%   = Install, SCSI\EnclosureSUN_____NEM_PLUS________
+%SAS_JBOD_3.DeviceDesc%   = Install, SCSI\EnclosureSUN_____16Disk_Backplane
+%SAS_JBOD_4.DeviceDesc%   = Install, SCSI\EnclosureSUN_____SS_J4200________
+%SAS_JBOD_5.DeviceDesc%   = Install, SCSI\EnclosureSUN_____Storage_J4200___
+%SAS_JBOD_6.DeviceDesc%   = Install, SCSI\EnclosureSUN_____SS_J4300________
+%SAS_JBOD_7.DeviceDesc%   = Install, SCSI\EnclosureSUN_____Storage_J4300___
+%SAS_JBOD_8.DeviceDesc%   = Install, SCSI\EnclosureSUN_____SS_J4400________
+%SAS_JBOD_9.DeviceDesc%   = Install, SCSI\EnclosureSUN_____Storage_J4400___
+%SAS_JBOD_10.DeviceDesc%  = Install, SCSI\EnclosureSUN_____SS_J4500________
+%SAS_JBOD_11.DeviceDesc%  = Install, SCSI\EnclosureSUN_____Storage_J4500___
+%SAS_JBOD_12.DeviceDesc%  = Install, SCSI\EnclosureSUN_____NEM_P_10GbE_x10_
+%SAS_JBOD_13.DeviceDesc%  = Install, SCSI\EnclosureSUN_____NEM_P_10GbE_x12_
+%SAS_JBOD_14.DeviceDesc%  = Install, SCSI\EnclosureSUN_____NEMHydra_C10____
+%SAS_JBOD_15.DeviceDesc%  = Install, SCSI\EnclosureSUN_____Storage_F5100___
+%SAS_JBOD_16.DeviceDesc%  = Install, SCSI\EnclosureSUN_____Blade_Storage_II
+%SAS_JBOD_17.DeviceDesc%  = Install, SCSI\EnclosureSUN_____NEM_Hydra_II____
+%SAS_JBOD_18.DeviceDesc%  = Install, SCSI\EnclosureSUN_____C4_NEM__________
+%SAS_JBOD_19.DeviceDesc%  = Install, SCSI\EnclosureSUN_____Switch_24p_10GE_
+%SAS_JBOD_20.DeviceDesc%  = Install, SCSI\EnclosureSUN_____HYDE12__________
+%SAS_JBOD_21.DeviceDesc%  = Install, SCSI\EnclosureSUN_____HYDE24__________
+%SAS_JBOD_22.DeviceDesc%  = Install, SCSI\EnclosureSUN_____T4_Storage______
+%SAS_JBOD_23.DeviceDesc%  = Install, SCSI\EnclosureSUN_____Storage_J4310___
+%SAS_JBOD_24.DeviceDesc%  = Install, SCSI\EnclosureSUN_____Storage_J4410___
+%SAS_JBOD_25.DeviceDesc%  = Install, SCSI\EnclosureSUN_____NEM_Hydra_IIOpus
+%LSIEbbets.DeviceDesc%    = Install, SCSI\EnclosureLSI_____DE1600-SAS______
+%LSICamden.DeviceDesc%    = Install, SCSI\EnclosureLSI_____DE5600-SAS______
+%LSIDE5300.DeviceDesc%    = Install, SCSI\Enclosure_____LSI______DE5300-SAS
+%INTEL_JBOD_1.DeviceDesc% = Install, SCSI\EnclosureIntel___RES2SV240_______
+%INTEL_JBOD_2.DeviceDesc% = Install, SCSI\EnclosureIntel___RES2CV360_______
+%INTEL_JBOD_3.DeviceDesc% = Install, SCSI\EnclosureIntel___RES2CV240_______
+
+
+[LSI.NTamd64]
+%NULL.DeviceDesc%         = Install, SCSI\Other__RAID___DummyDevice____0001    
+%LSISHEAENCLOSURE%        = Install, SCSI\EnclosureLSILOGIC_____SYM3600-SAS
+%IBM_EXP2512.DeviceDesc%  = Install, SCSI\EnclosureIBM_____EXP2512_________
+%IBM_EXP2424.DeviceDesc%  = Install, SCSI\EnclosureIBM_____EXP2424_________
+%IBMSHEAENCLOSURE%        = Install, SCSI\EnclosureIBM-ESXSEXP3000_________
+%IBMSHEAENCLOSURE1%       = Install, SCSI\EnclosureIBM_____SAS_SES-2_DEVICE
+%IBMSAS_ESXS%             = Install, SCSI\EnclosureIBM-ESXSVSC7160_________
+%IBMSAS_EXPBP%            = Install, SCSI\EnclosureIBM-ESXS_SAS_EXP_BP_____
+%SAS_JBOD_1.DeviceDesc%   = Install, SCSI\EnclosureSUN_____BLADE_DISK______
+%SAS_JBOD_2.DeviceDesc%   = Install, SCSI\EnclosureSUN_____NEM_PLUS________
+%SAS_JBOD_3.DeviceDesc%   = Install, SCSI\EnclosureSUN_____16Disk_Backplane
+%SAS_JBOD_4.DeviceDesc%   = Install, SCSI\EnclosureSUN_____SS_J4200________
+%SAS_JBOD_5.DeviceDesc%   = Install, SCSI\EnclosureSUN_____Storage_J4200___
+%SAS_JBOD_6.DeviceDesc%   = Install, SCSI\EnclosureSUN_____SS_J4300________
+%SAS_JBOD_7.DeviceDesc%   = Install, SCSI\EnclosureSUN_____Storage_J4300___
+%SAS_JBOD_8.DeviceDesc%   = Install, SCSI\EnclosureSUN_____SS_J4400________
+%SAS_JBOD_9.DeviceDesc%   = Install, SCSI\EnclosureSUN_____Storage_J4400___
+%SAS_JBOD_10.DeviceDesc%  = Install, SCSI\EnclosureSUN_____SS_J4500________
+%SAS_JBOD_11.DeviceDesc%  = Install, SCSI\EnclosureSUN_____Storage_J4500___
+%SAS_JBOD_12.DeviceDesc%  = Install, SCSI\EnclosureSUN_____NEM_P_10GbE_x10_
+%SAS_JBOD_13.DeviceDesc%  = Install, SCSI\EnclosureSUN_____NEM_P_10GbE_x12_
+%SAS_JBOD_14.DeviceDesc%  = Install, SCSI\EnclosureSUN_____NEMHydra_C10____
+%SAS_JBOD_15.DeviceDesc%  = Install, SCSI\EnclosureSUN_____Storage_F5100___
+%SAS_JBOD_16.DeviceDesc%  = Install, SCSI\EnclosureSUN_____Blade_Storage_II
+%SAS_JBOD_17.DeviceDesc%  = Install, SCSI\EnclosureSUN_____NEM_Hydra_II____
+%SAS_JBOD_18.DeviceDesc%  = Install, SCSI\EnclosureSUN_____C4_NEM__________
+%SAS_JBOD_19.DeviceDesc%  = Install, SCSI\EnclosureSUN_____Switch_24p_10GE_
+%SAS_JBOD_20.DeviceDesc%  = Install, SCSI\EnclosureSUN_____HYDE12__________
+%SAS_JBOD_21.DeviceDesc%  = Install, SCSI\EnclosureSUN_____HYDE24__________
+%SAS_JBOD_22.DeviceDesc%  = Install, SCSI\EnclosureSUN_____T4_Storage______
+%SAS_JBOD_23.DeviceDesc%  = Install, SCSI\EnclosureSUN_____Storage_J4310___
+%SAS_JBOD_24.DeviceDesc%  = Install, SCSI\EnclosureSUN_____Storage_J4410___
+%SAS_JBOD_25.DeviceDesc%  = Install, SCSI\EnclosureSUN_____NEM_Hydra_IIOpus
+%LSIEbbets.DeviceDesc%    = Install, SCSI\EnclosureLSI_____DE1600-SAS______
+%LSICamden.DeviceDesc%    = Install, SCSI\EnclosureLSI_____DE5600-SAS______
+%LSIDE5300.DeviceDesc%    = Install, SCSI\Enclosure_____LSI______DE5300-SAS
+%INTEL_JBOD_1.DeviceDesc% = Install, SCSI\EnclosureIntel___RES2SV240_______
+%INTEL_JBOD_2.DeviceDesc% = Install, SCSI\EnclosureIntel___RES2CV360_______
+%INTEL_JBOD_3.DeviceDesc% = Install, SCSI\EnclosureIntel___RES2CV240_______
+
+[strings]
+;Localizable Strings needed for HBA naming in Windows UI
+
+LSI                       = "LSI Corp."
+NULL.DeviceDesc           = "LSI MegaRAID Virtual Device"
+LSISHEAENCLOSURE          = "LSI Logic SYM3600-SAS Enclosure"
+IBMSHEAENCLOSURE          = "IBM-ESXS_EXP3000 Enclosure Device"
+IBMSHEAENCLOSURE1         = "IBM SAS SES-2 Device"
+IBMSAS_ESXS               = "IBM-ESXS VSC7160"
+IBMSAS_EXPBP              = "IBM-ESXS SAS EXP BKPLN"
+IBM_EXP2512.DeviceDesc    = "IBM EXP2512"
+IBM_EXP2424.DeviceDesc    = "IBM EXP2424"
+SAS_JBOD_1.DeviceDesc     = "Sun Blade 6000 Disk Module"
+SAS_JBOD_2.DeviceDesc     = "Sun Blade 6000 Network Express Module Plus"
+SAS_JBOD_3.DeviceDesc     = "Sun SES Enclosure Device"
+SAS_JBOD_4.DeviceDesc     = "Sun Storage J4200"
+SAS_JBOD_5.DeviceDesc     = "Sun Storage J4200"
+SAS_JBOD_6.DeviceDesc     = "Sun Storage J4300"
+SAS_JBOD_7.DeviceDesc     = "Sun Storage J4300"
+SAS_JBOD_8.DeviceDesc     = "Sun Storage J4400"
+SAS_JBOD_9.DeviceDesc     = "Sun Storage J4400"
+SAS_JBOD_10.DeviceDesc    = "Sun Storage J4500"
+SAS_JBOD_11.DeviceDesc    = "Sun Storage J4500"
+SAS_JBOD_12.DeviceDesc    = "Sun Blade 6000 Network Express Module 10-Port 10GbE"
+SAS_JBOD_13.DeviceDesc    = "Sun Blade 6000 Network Express Module 12-Port 10GbE"
+SAS_JBOD_14.DeviceDesc    = "Sun Blade 6000 10GbE Virtualized Multi-Fabric Network Express Module"
+SAS_JBOD_15.DeviceDesc    = "Sun Storage F5100 Flash Array"
+SAS_JBOD_16.DeviceDesc    = "Sun Blade Storage Module M2"
+SAS_JBOD_17.DeviceDesc    = "Sun Blade 6000 Virtualized Multi-Fabric 10GE Network Express Module M2"
+SAS_JBOD_18.DeviceDesc    = "Sun SES Enclosure Device"
+SAS_JBOD_19.DeviceDesc    = "Sun Blade 6000 Ethernet Switched NEM 24p 10GE"
+SAS_JBOD_20.DeviceDesc    = "Sun SES Enclosure Device"
+SAS_JBOD_21.DeviceDesc    = "Sun SES Enclosure Device"
+SAS_JBOD_22.DeviceDesc    = "Sun SES Enclosure Device"
+SAS_JBOD_23.DeviceDesc    = "Sun Storage J4310"
+SAS_JBOD_24.DeviceDesc    = "Sun Storage J4410"
+SAS_JBOD_25.DeviceDesc    = "Sun Blade 6000 Switched Network Express Module 24p 10GbE"
+LSIEbbets.DeviceDesc      = "LSI 630J JBOD Storage Enclosure" 
+LSICamden.DeviceDesc      = "LSI 620J JBOD Storage Enclosure"
+LSIDE5300.DeviceDesc      = "LSI DE5300-SAS Enclosure"
+INTEL_JBOD_1.DeviceDesc   = "Intel(R) RAID Expander RS2SV240"
+INTEL_JBOD_2.DeviceDesc   = "Intel(R) RAID Expander RS2CV360"
+INTEL_JBOD_3.DeviceDesc   = "Intel(R) RAID Expander RS2CV240" 
+
+;*******************************************
+;Non-Localizable strings
+
+SPSVCINST_ASSOCSERVICE = 0x00000002
+REG_DWORD              = 0x00010001

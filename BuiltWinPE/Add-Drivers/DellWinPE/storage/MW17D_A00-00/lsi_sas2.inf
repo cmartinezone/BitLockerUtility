@@ -1,0 +1,238 @@
+;
+; LSI_SAS2.INF - version W8.1 (Windows 8.1)
+;
+; This is the INF file for Windows 8.1 for the LSI_SAS2
+; based PCI MPT environment (Serial Attached SCSI devices)
+;
+; ********************************************************************
+;                                                                    *
+;   Copyright 2012 LSI Corporation. All rights reserved.             *
+;                                                                    *
+;   This file is property of LSI Corporation and is licensed for     *
+;   use as is.  The receipt of or possession of this file does not   *
+;   convey any rights to modify its contents, in whole, or in part,  *
+;   without the specific written consent of LSI Corporation.         *
+;                                                                    *
+; ********************************************************************
+
+[version]
+signature="$Windows NT$"
+Class=SCSIAdapter
+ClassGUID={4D36E97B-E325-11CE-BFC1-08002BE10318}
+Provider=%LSI%
+DriverVer=09/05/2013,2.00.66.02
+CatalogFile.ntamd64=lsi_sas2.cat
+
+[DestinationDirs]
+DefaultDestDir = 12 ; DIRID_DRIVERS
+LSI_EXE_CopyFiles = 11 ; %SystemDrive%\windows\system32
+LSI_CFGDEF_CopyFiles = 24, ProgramData\LSI\Wdcfg
+
+[SourceDisksFiles.amd64]
+lsi_sas2.sys = 1
+lsinodrv.inf = 1
+wdcfg.exe = 1
+DriverConfigParam.def = 1
+
+[SourceDisksNames]
+1 = %DiskDesc%,,
+
+[Manufacturer]
+%LSI%=LSI, NTamd64
+%DELL%=DELL, NTamd64
+%INTEL%=INTEL, NTamd64
+%HP%=HP, NTamd64
+
+[LSI.NTamd64]
+%DevDesc1% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0064
+%DevDesc2% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0065
+%DevDesc3% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0070
+%DevDesc4% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0072
+%DevDesc5% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0074
+%DevDesc6% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0076
+%DevDesc7% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0077
+%DevDesc8% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0080
+%DevDesc8% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0081
+%DevDesc8% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0082
+%DevDesc8% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0083
+%DevDesc8% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0084
+%DevDesc8% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0085
+%DevDesc9% = LSI_SAS_Inst, PCI\VEN_1000&DEV_006E
+%DevDesc9% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0086
+%DevDesc9% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0087
+%DevDescSMC1% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0072&SUBSYS_040015D9
+
+[DELL.NTamd64]
+%DevDescD1% = LSI_SAS_Dell_Inst, PCI\VEN_1000&DEV_0072&SUBSYS_1F1C1028
+%DevDescD2% = LSI_SAS_Dell_Inst, PCI\VEN_1000&DEV_0072&SUBSYS_1F1D1028
+%DevDescD3% = LSI_SAS_Dell_Inst, PCI\VEN_1000&DEV_0072&SUBSYS_1F1E1028
+%DevDescD4% = LSI_SAS_Dell_Inst, PCI\VEN_1000&DEV_0072&SUBSYS_1F1F1028
+%DevDescD5% = LSI_SAS_Dell_Inst, PCI\VEN_1000&DEV_0072&SUBSYS_1F201028
+%DevDescD6% = LSI_SAS_Dell_Inst, PCI\VEN_1000&DEV_0072&SUBSYS_1F211028
+%DevDescD7% = LSI_SAS_Dell_Inst, PCI\VEN_1000&DEV_0072&SUBSYS_1F221028
+
+[INTEL.NTamd64]
+%DevDescI1% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0072&SUBSYS_350E8086
+%DevDescI2% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0072&SUBSYS_350F8086
+%DevDescI3% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0087&SUBSYS_30008086
+%DevDescI4% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0072&SUBSYS_37008086
+%DevDescI5% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0087&SUBSYS_35168086
+%DevDescI6% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0087&SUBSYS_35178086
+%DevDescI7% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0087&SUBSYS_35188086
+%DevDescI8% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0087&SUBSYS_35198086
+%DevDescI9% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0087&SUBSYS_30608086
+%DevDescI10% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0087&SUBSYS_351A8086
+%DevDescI11% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0087&SUBSYS_351B8086
+
+[HP.NTamd64]
+%DevDescH1% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0087&SUBSYS_00411590
+%DevDescH2% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0087&SUBSYS_00421590
+%DevDescH3% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0087&SUBSYS_00431590
+%DevDescH4% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0087&SUBSYS_00441590
+%DevDescH5% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0070&SUBSYS_00461590
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[LSI_SAS_Inst]
+CopyFiles = LSI_SAS_CopyFiles
+CopyFiles = LSI_EXE_CopyFiles
+CopyFiles = LSI_CFGDEF_CopyFiles
+AddReg = LSI_SAS_AddReg
+AddReg = LSI_WDCFG_AddReg
+CopyINF = lsinodrv.inf
+
+[LSI_SAS_Inst.HW]
+AddReg = Shutdown_addreg
+DelReg = LegacyScsiportValues
+AddReg = InterruptMgmtValues
+Include = machine.inf
+Needs = PciIoSpaceNotRequired
+
+[LSI_SAS_Inst.Services]
+AddService = LSI_SAS2, %SPSVCINST_ASSOCSERVICE%, LSI_SAS_Service_Inst, Miniport_EventLog_Inst
+
+[LSI_SAS_AddReg]
+HKLM,SYSTEM\CurrentControlSet\Services\Lsi_sas2\Parameters\Device,DriverParameter,0x00000002,"PlaceHolder=0;"
+HKLM,SYSTEM\CurrentControlSet\Services\Lsi_sas2\Parameters\Device,EnableQueryAccessAlignment,0x00010001,1
+
+[LSI_SAS_Dell_Inst]
+CopyFiles = LSI_SAS_CopyFiles
+CopyFiles = LSI_EXE_CopyFiles
+CopyFiles = LSI_CFGDEF_CopyFiles
+AddReg = LSI_SAS_Dell_AddReg
+AddReg = LSI_WDCFG_AddReg
+
+[LSI_SAS_Dell_Inst.HW]
+AddReg = Shutdown_addreg
+DelReg = LegacyScsiportValues
+AddReg = InterruptMgmtValues
+Include = machine.inf
+Needs = PciIoSpaceNotRequired
+
+[LSI_SAS_Dell_Inst.Services]
+AddService = LSI_SAS2, %SPSVCINST_ASSOCSERVICE%, LSI_SAS_Service_Inst, Miniport_EventLog_Inst
+
+[LSI_SAS_Dell_AddReg]
+HKLM,SYSTEM\CurrentControlSet\Services\Lsi_sas2\Parameters\Device,DriverParameter,0x00000002,"PlaceHolder=0;"
+HKLM,SYSTEM\CurrentControlSet\Services\Lsi_sas2\Parameters\Device,EnableQueryAccessAlignment,0x00010001,1
+HKLM,SYSTEM\CurrentControlSet\Services\Disk,TimeOutValue,0x00010001,0x00000041
+
+[LSI_WDCFG_AddReg]
+HKLM,SYSTEM\CurrentControlSet\Control\Wdcfg,TargetDriver,0x00000000,"LSI_SAS2"
+
+[LSI_SAS_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\lsi_sas2.sys
+LoadOrderGroup = SCSI Miniport
+AddReg         = pnpsafe_pci_addreg
+AddReg         = bus_type_sas
+
+[LSI_SAS_CopyFiles]
+lsi_sas2.sys,,,1
+
+[LSI_EXE_CopyFiles]
+wdcfg.exe,,,2
+
+[LSI_CFGDEF_CopyFiles]
+DriverConfigParam.def,,,2
+
+[Shutdown_addreg]
+HKR,"ScsiPort","NeedsSystemShutdownNotification",0x00010001,1
+
+[LegacyScsiportValues]
+HKR,Scsiport,BusNumber
+HKR,Scsiport,LegacyInterfaceType
+HKR,Scsiport,SlotNumber
+
+[InterruptMgmtValues] 
+HKR,"Interrupt Management",0x00000010 
+HKR,"Interrupt Management\MessageSignaledInterruptProperties",0x00000010 
+HKR,"Interrupt Management\MessageSignaledInterruptProperties",MSISupported,0x00010001,1 
+HKR, "Interrupt Management\Affinity Policy", DevicePriority, 0x00010001, 3 
+HKR, "Interrupt Management\Affinity Policy", DevicePolicy, 0x00010001, 5  
+HKR, "Interrupt Management\Affinity Policy", GroupPolicy, 0x00010001, 1  
+
+[pnpsafe_pci_addreg]
+HKR, "Parameters\PnpInterface", "5", 0x00010001, 0x00000001
+
+[bus_type_sas]
+HKR, "Parameters", "BusType", 0x00010001, 0x0000000A
+
+[Miniport_EventLog_Inst]
+AddReg = Miniport_EventLog_AddReg
+
+[Miniport_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+[Strings]
+LSI = "LSI Corporation"
+DELL = "Dell Inc."
+INTEL = "Intel Corporation"
+HP = "Hewlett Packard Corporation"
+DiskDesc = "LSI PCI Fusion-MPT SAS2 Driver Install Disk"
+DevDesc1 = "LSI Adapter, SAS2 2116 Meteor ROC(E)"
+DevDesc2 = "LSI Adapter, SAS2 2116 Meteor ROC"
+DevDesc3 = "LSI Adapter, SAS2 2004 Spitfire"
+DevDesc4 = "LSI Adapter, SAS2 2008 Falcon"
+DevDesc5 = "LSI Adapter, SAS2 2108 Liberator"
+DevDesc6 = "LSI Adapter, SAS2 2108 Liberator ROC(E)"
+DevDesc7 = "LSI Adapter, SAS2 2108 Liberator ROC"
+DevDesc8 = "LSI Adapter, SAS2 2208 Thunderbolt ROC"
+DevDesc9 = "LSI Adapter, SAS2 2308 Mustang"
+DevDescSMC1 = "Supermicro SMC2008"
+DevDescD1 = "Dell 6Gbps SAS HBA"
+DevDescD2 = "Dell PERC H200 Adapter"
+DevDescD3 = "Dell PERC H200 Integrated"
+DevDescD4 = "Dell PERC H200 Modular"
+DevDescD5 = "Dell PERC H200 Embedded"
+DevDescD6 = "Dell PERC H200"
+DevDescD7 = "Dell Internal Tape Adapter"
+DevDescI1 = "Intel Integrated RAID Module RMS2LL080"
+DevDescI2 = "Intel Integrated RAID Module RMS2LL040"
+DevDescI3 = "Intel(R) RAID Controller RS25GB008"
+DevDescI4 = "Intel(R) SSD 910 Series"
+DevDescI5 = "Intel(R) Integrated RAID Module RMS25JB080"
+DevDescI6 = "Intel(R) Integrated RAID Module RMS25JB040"
+DevDescI7 = "Intel(R) Integrated RAID Module RMS25KB080"
+DevDescI8 = "Intel(R) Integrated RAID Module RMS25KB040"
+DevDescI9 = "Intel(R) RAID Controller RS25FB044"
+DevDescI10 = "Intel(R) Integrated RAID Module RMS25LB040"
+DevDescI11 = "Intel(R) Integrated RAID Module RMS25LB080"
+DevDescH1 = "HP H220 Host Bus Adapter"
+DevDescH2 = "HP H221 Host Bus Adapter"
+DevDescH3 = "HP H222 Host Bus Adapter"
+DevDescH4 = "HP H220i Host Bus Adapter"
+DevDescH5 = "HP H210i Host Bus Adapter"
+
+;*******************************************
+;Handy macro substitutions (non-localizable)
+SPSVCINST_ASSOCSERVICE = 0x00000002
+SERVICE_KERNEL_DRIVER  = 1
+SERVICE_BOOT_START     = 0
+SERVICE_ERROR_NORMAL   = 1
+REG_EXPAND_SZ          = 0x00020000
+REG_DWORD              = 0x00010001

@@ -1,0 +1,1846 @@
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+//                                    LSI                                    //
+//                      Driver Configuration Parameter                       //
+//                               Definiton File                              //
+//                                                                           //
+//     This file contains a list of records, each defining a single          //
+//     configuration parameter used to control operation of a LSI device     //
+//     driver.                                                               //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="PlaceHolder"
+MinValue=0
+MaxValue=0
+StabilityImpact=0
+LSI_SAS=1
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=1
+LSI_FC=1
+LSI_SSS=1
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+This parameter is used for a placeholder when all actual driver configuration
+parameters are set to their default values."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="NumberOfReplyBuffers"
+MinValue=1
+MaxValue=200
+StabilityImpact=1
+LSI_SAS=1
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=1
+LSI_FC=1
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+Number of reply buffers to allocate at start of day.  Driver will always
+allocate at least 1 to be used with initialization and exception handling
+cases.  The user should be aware that selecting too small a number may limit
+performance due to resource contention within the IOCl  The driver will insure
+the value used is not greater than the IOC's reported reply FIFO depth."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="NumberOfRequestMessageBuffers"
+MinValue=10
+MaxValue=9999999
+StabilityImpact=1
+LSI_SAS=1
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=1
+LSI_FC=1
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+Number of request message buffers to allocate at SOD.  The driver will insure
+the value used is not greater than the IOCs reported request FIFO depth.  The
+default value is the number of F/W Global Credits issued by firmware to the
+host driver.
+
+The user should be extremely careful when changing this parameter because
+it can cause starvation of I/O resources at lower levels, adversely affecting
+storage system operation.  The user also needs to be careful with the maximum
+because if it exceeds the F/W credits, requests will get dropped on the floor."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="LogExceptionEvents"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=1
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=1
+LSI_FC=1
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+This parameter controls whether or not the driver logs extra exception
+information to the system error log.
+
+0 = Do not log extra information.
+
+1 = Log extra information."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="ResetType"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=1
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+This parameter can cause the driver to issue all Scsi Task Management bus
+reset messages using the TargetReset option, as opposed to the LIPReset
+option.
+
+0 = Use the TargetReset option.
+
+1 = Use the LIPReset option"
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="DisableRescan"
+MinValue=0
+MaxValue=1
+StabilityImpact=1
+LSI_SAS=1
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=1
+LSI_FC=1
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+If non-zero the driver will not report a BusChangeDetected event back to the
+OS when a BusRescan notification is received from the F/W.  With some LSI RAID
+configurations, an automatic rescan of devices will cause a RAID controller
+fail-over to not complete successfully.
+
+Turning this parameter off will cause devices to NOT be detected as being
+removed or added.  This parameter can adversely affect storage system
+operation."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="DisableDomainValidation"
+MinValue=0
+MaxValue=1
+StabilityImpact=1
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=1
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+If non-zero the driver will not perform Domain Validation testing.  This
+applies only to parallel SCSI devices.  Be extremely careful when modifying
+this parameter.
+
+Turning this parameter off can cause a device which is detected by Domain
+Validation as not supporting higher parallel SCSI speeds to be run at those
+higher speeds anyway, which can cause bus hangs, timeouts, etc.  This
+parameter can adversely affect storage system operation."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="DisableFwQueueFullHandling"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=1
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+If non-zero the F/W will not handle Queue Full returns and throttling of I/Os
+to a device at the F/W level.  All Queue Full returns from the target device
+will be sent back to the OS.  This applies only to SAS devices.  For all other
+device types, all Queue Full returns are sent back to the OS."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="Enable160IU"
+MinValue=0
+MaxValue=1
+StabilityImpact=1
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=1
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to parallel SCSI.
+If non-zero the driver will negotiate for packetized (information unit – IU)
+operation at Ultra160 speed.  By default, the driver will NOT negotiate for
+packetized at Ultra160 speed.  This applies only to parallel SCSI devices.
+Be careful using this parameter.
+
+Enabling IU for U160 is problematic because there are lots of U160 devices
+that advertise they support IU, but don't."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="Enable160QAS"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=1
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to parallel SCSI.
+If non-zero the driver will negotiate for the Quick Arbitrate and Select (QAS)
+feature at Ultra160 speed (improving SCSI bus utilization).  By default, the
+driver will NOT negotiate for QAS at Ultra160 speed.
+
+Enabling QAS for U160 is problematic because there are lots of U160 devices
+that advertise they support QAS, but don't."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="Disable320QAS"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=1
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to parallel SCSI.
+If non-zero the driver will NOT negotiate for the Quick Arbitrate and Select
+(QAS) feature at Ultra320 speed.  By default, the driver will negotiate for
+QAS (improving SCSI bus utilization) for Ultra320 data rate."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="MPIOMode"
+MinValue=0
+MaxValue=2
+StabilityImpact=1
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=1
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+MPIOMode is used for support of multi-pathing configurations, where a multi-
+pathing filter driver is installed.  MPIOMode should be set as follows.
+
+  0 = No multi-pathing support installed (Default).
+  
+  1 = This setting is for the LSI MyStorage multi-pathing filter driver.
+  
+  2 = This setting is for the Microsoft MPIO multi-pathing filter driver.
+  
+This parameter is more of a needed registry entry (with the proper mode)
+rather than something that is optional."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="LUN_Pers"
+MinValue=0
+MaxValue=1
+StabilityImpact=1
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=1
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+If zero then driver based LUN persistency will be disabled.  The default state
+is LUN persistency enabled.  This allows a Fiber Channel controller to be hard
+reset but still keep existing device mappings.  Device mappings are NOT
+retained across a system reboot.
+
+Be extremely careful using this parameter.
+
+Turning this off means that on a hard reset of the FC adapter, the bus/target
+ID can change, leading to data corruption.  This parameter can result in
+adverse storage system operation, including data corruption on storage
+devices."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="MaximumTargetQueueDepth"
+MinValue=1
+MaxValue=254
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=1
+LSI_FC=1
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+The maximum number of concurrent I/Os that will be issued to a single target
+ID.  The default setting of 63 works well with U320 devices.  A setting of 31
+may need to be used with U160 devices.  This setting prevents multiple Queue
+Full returns back to the OS, which can cause Event 11 and Event 15 to appear
+in the Windows Event Log.  The minimum value that can be specified is 1.
+
+The default is 64 for Fibre Channel and 63 for SCSI because that is what most
+drives currently shipping can support, and it is large enough to provide good
+performance for random I/O.
+
+Any value above 254 will be forced to 20 by StorPort, so the maximum value of
+254 has been established.
+
+Setting this parameter to anything larger than the maximum target queue depth
+currently in-use by target devices will cause Queue Full status returns.
+
+Note that the maximum target queue depth in-use by target devices is a very
+nebulous number, which changes dynamically over time based upon the present
+mixture of IO sizes, current workload and resources available in the target
+device.
+
+While this parameter affects storage system performance, it should NOT have
+an impact upon storage system stability."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="MaxSASQueueDepth"
+MinValue=1
+MaxValue=254
+StabilityImpact=0
+LSI_SAS=1
+LSI_SAS2=1
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+The maximum number of concurrent I/Os that will be issued to a single target
+ID for SAS devices.  The default setting is 64.  Making this setting too high
+can cause multiple Queue Full returns back to the OS, which can cause Event
+11 and Event 15 to appear in the Windows Event Log.  
+
+The minimum value that can be specified is 1.  A value of 0 will result in a
+queue depth of 1.  
+
+Any value above 254 will be forced to 20 by StorPort, so the maximum value of
+254 has been established.
+
+Setting this parameter to anything larger than the maximum target queue depth
+currently in-use by target devices will cause Queue Full status returns.
+
+Note that the maximum target queue depth in-use by target devices is a very
+nebulous number, which changes dynamically over time based upon the present
+mixture of IO sizes, current workload and resources available in the target
+device.
+
+While this parameter affects storage system performance, it should NOT have
+an impact upon storage system stability."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="MaxSATAQueueDepth"
+MinValue=1
+MaxValue=254
+StabilityImpact=0
+LSI_SAS=1
+LSI_SAS2=1
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+The maximum number of concurrent I/Os that will be issued to a single target
+ID for SATA devices.  The default setting is 32.  Making this setting too high
+can cause multiple Queue Full returns back to the OS, which can cause Event 11
+and Event 15 to appear in the Windows Event Log.  
+
+The minimum value that can be specified is 1.  A value of 0 will result in a
+queue depth of 1.  
+
+Any value above 254 will be forced to 20 by StorPort, so the maximum value of
+254 has been established.
+
+Setting this parameter to anything larger than the maximum target queue depth
+currently in-use by targert devices will cause Queue Full status returns.
+
+Note that the maximum target queue depth in-use by target devices is a very
+nebulous number, which changes dynamically over time based upon the present
+mixture of IO sizes, current workload and resources available in the target
+device.
+
+While this parameter affects storage system performance, it should NOT have
+an impact upon storage system stability."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="DisableSASPersClear"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=1
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+If non-zero then the driver will NOT clear the persistency settings for non-
+present devices if a full SAS F/W persistency table is detected.  This can
+result is attached SAS devices not being accessible to the OS.  
+
+Worst case, this parameter can cause a newly attached target to NOT be seen
+by the OS.  No other adverse side effects are associated with this parameter."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="StopOnBusReset"
+MinValue=0
+MaxValue=1
+StabilityImpact=1
+LSI_SAS=1
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=1
+LSI_FC=1
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+If this parameter is non-zero the driver will blue screen (BSOD) the system
+if a request to perform a bus reset is received.  The bus reset is not issued.
+
+NOTE:  This is to be used ONLY for debug of F/W issues by preventing the
+system from resetting the adapter.  Do not use this parameter during normal
+system operation, because it can easily freeze an operational storage system
+by not allowing 'normal' bus resets to occur.  Bus resets are part of the
+StorPort recovery action initiated when IOs timeout."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="StopOnDiagReset"
+MinValue=0
+MaxValue=1
+StabilityImpact=1
+LSI_SAS=1
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=1
+LSI_FC=1
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+If non-zero then the driver will blue screen the system if it attempt to diag
+(hard) reset the adapter.  The diag reset will not be issued.
+
+NOTE:  This is to be used ONLY for debug of F/W issues by preventing the
+system from resetting the adapter.  Do not use this parameter during normal
+system operation, because it can easily freeze an operational storage system
+by not allowing 'normal' diag (hardware) resets to occur.  Diag resets are
+done by the driver whenever it needs to recover rhe adapter hardware (e.g.
+when the adapter issues a fault), and this parameter will cause the system to
+hang when one needs to be done."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="HWFaultLimit"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=1
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+If non-zero then this will detect certain F/W faults which indicate a H/W
+SRAM failure condition, and will log an error event then count down the
+limit.  This was implemented for certain FC adapters that contained SRAM
+modules that would degrade over time."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="EEDP_T10_Enable"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=1
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+If non-zero then EEDP (End-to-End Data Protection) is enabled."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="ResumeDelay"
+MinValue=1
+MaxValue=60
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+Specifies the resume delay in seconds.  Default is 10 seconds."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="EnaDiag"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+This parameter is set to 1 to activate diag buffer handling within the driver,
+or to 0 to disable diag buffer handling within the driver.  Once enabled, there
+are 3 types of firmware diag buffers: Snapshot, Trace and Extended. 
+
+Each type has a number of parameters which control it, as follows.
+
+SNAPSHOT: 
+SSBUffSize = specifies BufferLength
+SSImmed    = If set to non-zero it causes the immediate flag to be set TRUE
+ 
+TRACE:  
+TBuffSize  = specifies BufferLength
+TImmed     = If set to non-zero it causes the immediate flag to be set TRUE
+TPS0-TPS9  = specify Trace Product Specific values (10 of them possible)
+ 
+EXTENDED:
+EXBuffSize = specifies BufferLength
+EXImmed    = If set to non-zero it causes the immediate flag to be set TRUE
+EXType     = specifies the ExtendedBufferType
+
+NOTE:  If the sum of the specified enabled diag buffer sizes is too large for
+the memory to be allocated in the driver NonCached Extension, the buffers will
+not be allocated, diag buffers will be disabled, and an event (AD01002B) will
+be logged in the System event log.  However, the driver/adapter will still
+initialize and be operational."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="SSBuffSize"
+MinValue=10240
+MaxValue=9999999
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+SSBUffSize specifies BufferLength for a Snapshot diag buffer."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="SSImmed"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+If set to 1 it causes the immediate flag to be set TRUE for a Snapshot disg
+buffer."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="TBuffSize"
+MinValue=10240
+MaxValue=9999999
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+TBuffSize specifies BufferLength for a Trace diag buffer."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="TImmed"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+If set to 1 it causes the immediate flag to be set TRUE for a Trace diag buffer."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="TPS0"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter specifies Trace Product Specific values for Trace diag buffers
+(10 of them are possible, TPS0-TPS9).  The valuse used here are firmwar
+specific."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="TPS1"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter specifies Trace Product Specific values for Trace diag buffers
+(10 of them are possible, TPS0-TPS9).  The valuse used here are firmwar
+specific."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="TPS2"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter specifies Trace Product Specific values for Trace diag buffers
+(10 of them are possible, TPS0-TPS9).  The valuse used here are firmwar
+specific."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="TPS3"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter specifies Trace Product Specific values for Trace diag buffers
+(10 of them are possible, TPS0-TPS9).  The valuse used here are firmwar
+specific."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="TPS4"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter specifies Trace Product Specific values for Trace diag buffers
+(10 of them are possible, TPS0-TPS9).  The valuse used here are firmwar
+specific."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="TPS5"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter specifies Trace Product Specific values for Trace diag buffers
+(10 of them are possible, TPS0-TPS9).  The valuse used here are firmwar
+specific."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="TPS6"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter specifies Trace Product Specific values for Trace diag buffers
+(10 of them are possible, TPS0-TPS9).  The valuse used here are firmwar
+specific."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="TPS7"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter specifies Trace Product Specific values for Trace diag buffers
+(10 of them are possible, TPS0-TPS9).  The valuse used here are firmwar
+specific."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="TPS8"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter specifies Trace Product Specific values for Trace diag buffers
+(10 of them are possible, TPS0-TPS9).  The valuse used here are firmwar
+specific."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="TPS9"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter specifies Trace Product Specific values for Trace diag buffers
+(10 of them are possible, TPS0-TPS9).  The valuse used here are firmwar
+specific."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="EXBuffSize"
+MinValue=10240
+MaxValue=9999999
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+Specifies BufferLength for an Extended diag buffer."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="EXImmed"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+If set to 1 it causes the immediate flag to be set TRUE for an Extended diag
+buffer."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="EXType"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=1
+SRAMPT3=1
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+Specifies the ExtendedBufferType.  The value used here is firmware specific."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="MaxSGList"
+MinValue=17
+MaxValue=513
+StabilityImpact=0
+LSI_SAS=1
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=1
+LSI_FC=1
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+The MaxSGList parameter controls the maximum size of an IO handled by the
+driver.  The minimum setting of 17 results in a maximum 64 KB IO size, while
+the maximum setting of 513 results in a maximum 2 MB IO Size (the largest 
+possible).  A setting of 33 would provide a maximum 128 KB IO size.  The
+setting of this parameter can have a significant impact on storage system
+performance, which can be tuned to optimize for specific IO sizes.  The default
+setting is 257 (0x101), resulting in a maximum 1 MB IO size, shown to provide
+good performance with varing IO demands (normally the situation)."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="RTTraceBufferSize"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=1
+LSI_GEN2=1
+SAS2XP86=1
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=1
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+Specifies the size, in bytes, of the RTTrace event log buffer allocated for
+each adapter by the driver during initialization.  This buffer is used as a
+circular buffer, wherein older event logs are replaced with newer ones once
+the buffer wraps.  The larger this buffer, the more event logs the driver
+can capture, but the larger the driver's memory foot print within the system.
+Default value is 10,240."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="NoBoardReset"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=1
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Fibre Channel.
+The NoBoardReset parameter was implemented to intentionally cause a system
+crash (Windows Blue Screen) under very specific circumstances, instead of
+resetting the adapter.  Modifying this parameter causes system crashes.
+NoBoardReset should not be modified."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="MaxInBandBuffers"
+MinValue=4
+MaxValue=255
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=1
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Fibre Channel.
+MaxInBandBuffers controls the number of InBand Management buffers that will be
+allocated by the driver.  Default is 16."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="IntCoalDepth"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=1
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=1
+LSI_FC=1
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+Number of completed I/O operations to coalesce before issuing an interrupt to
+the OS.  If this number of I/O operations doesn’t complete before the interrupt
+coalescing timeout is hit, the F/W will immediately generate an interrupt.
+To disable interrupt coalescing, set the following entries:
+      IntCoalTimeout=0; IntCoalDepth=1;
+Default is set per NVRAM on the adapter.
+"
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="IntCoalTimeout"
+MinValue=0
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=1
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=1
+LSI_FC=1
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=1
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=1
+SRATAPE2=1
+SRATAPE3=1
+Description="
+Number of microseconds before an interrupt coalescing timeout.  This is the
+amount of time from the first interrupt that is coalesced until the timeout if
+the interrupt coalescing depth is not reached.  If the timeout is hit, an
+interrupt will be immediately generated by the F/W.
+To disable interrupt coalescing, set the following entries:
+      IntCoalTimeout=0; IntCoalDepth=1;
+Default is set per NVRAM on the adapter.
+"
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="CheckFcLinkSpeed"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=1
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Fibre Channel.
+This is a Boolean (on or off, default off) that when set will check the Fibre
+Channel link speed, and if that speed changes an event will be logged to the
+Windows system event log."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="ScsiMaxLunLimit"
+MinValue=1
+MaxValue=255
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=1
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to parallel SCSI.
+ScsiMaxLunLimit sets the number of LUNs the miniport driver notifies the OS it
+supports.  This parameter may be useful for a target which doen't handle being
+scanned for LUNs above some maximum number.
+The default is 32 LUNs."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="UseLinkReset"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=1
+LSI_SSS=0
+MEGASAS2=0
+PERCSAS2=0
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Fibre Channel.
+This is a Boolean (on or off, default off) that when set will use a FC link
+reset to do a bus reset, rather than sending a Task Management bus reset to
+the adapter (which would then send target resets to all targets since FC has
+no 'bus').  Some FC configurations work better on error recovery using a link
+reset rather than a bunch of target resets."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="balancecount"
+MinValue=1
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+Max IO count on Raid1 arm before switch to other arm"
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="busywaitcount"
+MinValue=1
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+Indicates the number of requests that the adapter must complete before
+resuming I/O requests to the miniport driver, in a queue full state"
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="coalescedepth"
+MinValue=1
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+Indicates max IOs that can be coalesced"
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="coalescestart"
+MinValue=2
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+Indicates minimum number of IOs before the driver starts coalescing"
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="debuglevel"
+MinValue=0
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+Enable or disable verbose debugging level"
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="dump"
+MinValue=1
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+If the parameter is present, load the driver in hibernation\crashdump mode."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="extimeout"
+MinValue=1
+MaxValue=180
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+Extended timeout for IOs in seconds."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="fastpathoff"
+MinValue=1
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+Disable the fastpath IO algorithm for all IOs. If the parameter is there,
+fastpath will be off."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="limitsges"
+MinValue=1
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+If the parameter is present, maximum number of SGEs for MPT frames will be
+limited."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="maxnumrequests"
+MinValue=1
+MaxValue=1024
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+Set the maximum number of requests from the Operating System."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="maxtransfersize"
+MinValue=1
+MaxValue=4294967295
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+Sets the maximum number of bytes to transfer."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="msiqueues"
+MinValue=1
+MaxValue=16
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+Sets the maximum number MSI queues."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="nobusywait"
+MinValue=1
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+If this parameter is present, driver will return the queue full status back to
+storport and not use StorportBusyWait mechanism."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="nonuma"
+MinValue=1
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+If this parameter is present, NUMA support will be disabled in the driver."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="nosrbflush"
+MinValue=1
+MaxValue=1
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+If this parameter is present, SRB_FUNCTION_FLUSH command will be issued to the
+firmware, when received from the OS.  By default this command is not passed to
+the firmware and completed back to the OS by the driver. Enabling this will
+cause significant performance drop."
+
+
+///////////////////////////////////////////////////////////////////////////////
+Name="qdepth"
+MinValue=1
+MaxValue=254
+StabilityImpact=0
+LSI_SAS=0
+LSI_SAS2=0
+LSI_GEN2=0
+SAS2XP86=0
+LSI_SCSI=0
+LSI_FC=0
+LSI_SSS=0
+MEGASAS2=1
+PERCSAS2=1
+SRAMPT=0
+SRAMPT2=0
+SRAMPT3=0
+SRATAPE=0
+SRATAPE2=0
+SRATAPE3=0
+Description="
+This parameter only applies to Megasas2\Percsas2.
+Set queue depth for the deivce."

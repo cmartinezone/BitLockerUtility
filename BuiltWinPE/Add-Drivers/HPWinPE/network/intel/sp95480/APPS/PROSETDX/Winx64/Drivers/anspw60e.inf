@@ -1,0 +1,723 @@
+;;------------------------------------------------------------------------------
+;;
+;; INTEL CONFIDENTIAL
+;;
+;; Copyright 1999-2018 Intel Corporation All Rights Reserved.
+;;
+;; The source code contained or described herein and all documents related
+;; to the source code ("Material") are owned by Intel Corporation or its
+;; suppliers or licensors. Title to the Material remains with Intel
+;; Corporation or its suppliers and licensors. The Material contains trade
+;; secrets and proprietary and confidential information of Intel or its
+;; suppliers and licensors. The Material is protected by worldwide
+;; copyright and trade secret laws and treaty provisions. No part of the
+;; Material may be used, copied, reproduced, modified, published, uploaded,
+;; posted, transmitted, distributed, or disclosed in any way without Intel's
+;; prior express written permission.
+;;
+;; No license under any patent, copyright, trade secret or other
+;; intellectual property right is granted to or conferred upon you by
+;; disclosure or delivery of the Materials, either expressly, by
+;; implication, inducement, estoppel or otherwise. Any license under such
+;; intellectual property rights must be express and approved by Intel in
+;; writing.
+;;
+;;------------------------------------------------------------------------------
+
+
+[Version]
+Signature               = "$Windows NT$"
+Provider                = %V_Intel%
+DriverVer               = 09/07/2018,9.9.0.59
+Class                   = NetTrans
+ClassGUID               = {4D36E975-E325-11CE-BFC1-08002BE10318}
+CatalogFile             = iansw60e.cat
+
+;*******************************************************************************
+;
+; ANSPW60.INF
+;
+; Intel(R) Advanced Network Services Transport
+;
+;*******************************************************************************
+
+[Manufacturer]
+%V_Intel%               = Intel, NTamd64.6.0
+
+[ControlFlags]
+ExcludeFromSelect =  *
+
+[Intel]
+
+[Intel.NTamd64.6.0]
+%iANSProtocol.Desc%     =   iANSProtocol.ndi.NTamd64.6.0, iANSProtocol
+
+;[Intel.NTamd64.6.0]
+;----------------------------------------------------------------------------
+;----------------------------------------------------------------------------
+[iANSProtocol.ndi.NTamd64.6.0]
+AddReg          = iANSProtocol.ndi.AddReg.w60
+Characteristics = 0x00
+CopyFiles       = iANSProtocol.ndi.CopyFiles.w60
+*IfType         = 6		; IF_TYPE_ETHERNET_CSMACD
+*MediaType      = 0		; NdisMedium802_3
+*PhysicalMediaType = 0		;NdisPhysicalMediumUnspecified
+
+[iANSProtocol.ndi.CopyFiles.w60]
+iansw60e.sys,,,2
+iansmsg.dll,,,2
+
+[iANSProtocol.ndi.AddReg.w60]
+HKR, Ndi,            ClsId,       , {B9849E51-3495-11D3-883A-0004AC066F24}
+HKR, Ndi,            ComponentDll,,  "PRONtObj.dll"
+
+HKR, Ndi,            HelpText,    , %iANSProtocol_HELP%
+HKR, Ndi,            Service,     ,"iANSProtocol"
+
+HKR, Ndi\Interfaces, UpperRange,  , "tdi"
+HKR, Ndi\Interfaces, LowerRange,  , "ndis5,ndisatm"
+
+[iANSProtocol.ndi.NTamd64.6.0.Services]
+AddService              = iANSProtocol, 0, Install.AddService.iANSProtocol.w60,  NetEventLog.w60
+
+[Install.AddService.iANSProtocol.w60]
+DisplayName             = %iANSProtocol.Desc%
+ServiceType             = %SERVICE_KERNEL_DRIVER%
+StartType               = %SERVICE_DEMAND_START%
+ErrorControl            = %SERVICE_ERROR_NORMAL%
+ServiceBinary           = %12%\iansw60e.sys
+LoadOrderGroup          = NDIS
+AddReg                  = iANSProtocol.AddService.AddReg.w60
+Description             = %iANSProtocol.Desc%
+
+[iANSProtocol.AddService.AddReg.w60]
+HKR,Parameters\Adapters,,%FLG_ADDREG_KEYONLY%
+HKR,Parameters\Interfaces,,%FLG_ADDREG_KEYONLY%
+HKR,,"TextModeFlags",%REG_DWORD%,0x0001
+
+; [Event Log] sections.
+;****************************************************************************
+[NetEventLog.w60]
+AddReg = NetEventLog.AddReg.w60
+
+[NetEventLog.AddReg.w60]
+HKR,,EventMessageFile,0x00020000, %CustomizedEventMessageFile_w60e%
+HKR,,TypesSupported,0x00010001,7
+
+[iANSProtocol.ndi.NTamd64.6.0.Remove.Services]
+DelService = iANSProtocol
+;----------------------------------------------------------------------------
+;----------------------------------------------------------------------------
+
+;----------------------------------------------------------------------------
+[DestinationDirs]
+DefaultDestDir        = 11
+iANSProtocol.ndi.CopyFiles.w60  = 12
+
+[SourceDisksNames]
+1 = %DISKNAME%,,,
+
+[SourceDisksFiles]
+iansw60e.sys = 1 
+iansmsg.dll = 1
+;-----------------------------------------------------------------------------
+
+; Empty section to exclude installation of Intel
+[No_DRV] 
+;
+
+;-------------------------------------------------------------------------------------
+;****************************************************************************
+; Localizable Strings
+;****************************************************************************
+
+;------------------------------------------------------------------------------------
+[Strings]
+CustomizedEventMessageFile_w2k  = "%SystemRoot%\System32\drivers\iansw2k.sys"
+CustomizedEventMessageFile_wxp  = "%SystemRoot%\System32\drivers\ianswxp.sys"
+CustomizedEventMessageFile_w32e = "%SystemRoot%\System32\drivers\iansw32e.sys"
+CustomizedEventMessageFile_w64  = "%SystemRoot%\System32\drivers\iansw64.sys"
+CustomizedEventMessageFile_w60  = "%SystemRoot%\System32\drivers\iansw60.sys"
+CustomizedEventMessageFile_w60e = "%SystemRoot%\System32\drivers\iansw60e.sys"
+CustomizedEventMessageFile_6064 = "%SystemRoot%\System32\drivers\ians6064.sys"
+iANSProtocol_HELP="Intel(R) Advanced Network Services Protocol is used for advanced features like teaming and virtual LAN"
+DISKNAME         ="Intel(R) Advanced Network Services CD-ROM or floppy disk"
+
+V_Intel="Intel"
+iANSProtocol.Desc="Intel(R) Advanced Network Services Protocol"
+; ServiceType values
+
+SERVICE_KERNEL_DRIVER       = 0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  = 0x00000002
+SERVICE_ADAPTER             = 0x00000004
+SERVICE_RECOGNIZER_DRIVER   = 0x00000008
+SERVICE_WIN32_OWN_PROCESS   = 0x00000010
+SERVICE_WIN32_SHARE_PROCESS = 0x00000020
+SERVICE_INTERACTIVE_PROCESS = 0x00000100
+SERVICE_INTERACTIVE_SHARE_PROCESS = 0x00000120
+
+; StartType values
+SERVICE_BOOT_START          = 0x00000000
+SERVICE_SYSTEM_START        = 0x00000001
+SERVICE_AUTO_START          = 0x00000002
+SERVICE_DEMAND_START        = 0x00000003
+SERVICE_DISABLED            = 0x00000004
+
+; ErrorControl values
+SERVICE_ERROR_IGNORE        = 0x00000000
+SERVICE_ERROR_NORMAL        = 0x00000001
+SERVICE_ERROR_SEVERE        = 0x00000002
+SERVICE_ERROR_CRITICAL      = 0x00000003
+
+; Characteristic flags
+NCF_VIRTUAL                 = 0x0001
+NCF_WRAPPER                 = 0x0002
+NCF_PHYSICAL                = 0x0004
+NCF_HIDDEN                  = 0x0008
+NCF_NO_SERVICE              = 0x0010
+NCF_NOT_USER_REMOVABLE      = 0x0020
+NCF_HAS_UI                  = 0x0080
+NCF_MODEM                   = 0x0100
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_EXPAND_SZ               = 0x20000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_TAGTOFRONT        = 0x1
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+FLG_ADDREG_KEYONLY          = 0x00000010
+
+;------------------------------------------------------------------------------------
+[Strings.0804] ; Chinese (Simplified)
+CustomizedEventMessageFile_w2k  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_6064 ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSProtocol_HELP="”¢Ãÿ∂˚(R) ∏ﬂº∂Õ¯¬Á∑˛ŒÒ–≠“È”√”⁄∑÷◊È∫Õ–Èƒ‚æ÷”ÚÕ¯÷Æ¿‡µƒ∏ﬂº∂π¶ƒ‹°£"
+DISKNAME         ="”¢Ãÿ∂˚(R) ∏ﬂº∂Õ¯¬Á∑˛ŒÒµƒπ‚≈ÃªÚ»Ì≈Ã"
+
+V_Intel="Intel"
+iANSProtocol.Desc="Intel(R) Advanced Network Services Protocol"
+; ServiceType values
+
+SERVICE_KERNEL_DRIVER       = 0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  = 0x00000002
+SERVICE_ADAPTER             = 0x00000004
+SERVICE_RECOGNIZER_DRIVER   = 0x00000008
+SERVICE_WIN32_OWN_PROCESS   = 0x00000010
+SERVICE_WIN32_SHARE_PROCESS = 0x00000020
+SERVICE_INTERACTIVE_PROCESS = 0x00000100
+SERVICE_INTERACTIVE_SHARE_PROCESS = 0x00000120
+
+; StartType values
+SERVICE_BOOT_START          = 0x00000000
+SERVICE_SYSTEM_START        = 0x00000001
+SERVICE_AUTO_START          = 0x00000002
+SERVICE_DEMAND_START        = 0x00000003
+SERVICE_DISABLED            = 0x00000004
+
+; ErrorControl values
+SERVICE_ERROR_IGNORE        = 0x00000000
+SERVICE_ERROR_NORMAL        = 0x00000001
+SERVICE_ERROR_SEVERE        = 0x00000002
+SERVICE_ERROR_CRITICAL      = 0x00000003
+
+; Characteristic flags
+NCF_VIRTUAL                 = 0x0001
+NCF_WRAPPER                 = 0x0002
+NCF_PHYSICAL                = 0x0004
+NCF_HIDDEN                  = 0x0008
+NCF_NO_SERVICE              = 0x0010
+NCF_NOT_USER_REMOVABLE      = 0x0020
+NCF_HAS_UI                  = 0x0080
+NCF_MODEM                   = 0x0100
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_EXPAND_SZ               = 0x20000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_TAGTOFRONT        = 0x1
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+FLG_ADDREG_KEYONLY          = 0x00000010
+
+;------------------------------------------------------------------------------------
+[Strings.0404] ; Chinese (Traditional)
+CustomizedEventMessageFile_w2k  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_6064 ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSProtocol_HELP="Intel(R) ∂i∂•∫Ù∏Ù™A∞» Protocol ®œ•Œ©Û¶®≤’©MµÍ¿¿ LAN §ß√˛™∫∂i∂••\Ø‡°C"
+DISKNAME         ="Intel(R) ∂i∂•∫Ù∏Ù™A∞» •˙∫–§˘©Œ∫œ§˘"
+
+V_Intel="Intel"
+iANSProtocol.Desc="Intel(R) Advanced Network Services Protocol"
+; ServiceType values
+
+SERVICE_KERNEL_DRIVER       = 0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  = 0x00000002
+SERVICE_ADAPTER             = 0x00000004
+SERVICE_RECOGNIZER_DRIVER   = 0x00000008
+SERVICE_WIN32_OWN_PROCESS   = 0x00000010
+SERVICE_WIN32_SHARE_PROCESS = 0x00000020
+SERVICE_INTERACTIVE_PROCESS = 0x00000100
+SERVICE_INTERACTIVE_SHARE_PROCESS = 0x00000120
+
+; StartType values
+SERVICE_BOOT_START          = 0x00000000
+SERVICE_SYSTEM_START        = 0x00000001
+SERVICE_AUTO_START          = 0x00000002
+SERVICE_DEMAND_START        = 0x00000003
+SERVICE_DISABLED            = 0x00000004
+
+; ErrorControl values
+SERVICE_ERROR_IGNORE        = 0x00000000
+SERVICE_ERROR_NORMAL        = 0x00000001
+SERVICE_ERROR_SEVERE        = 0x00000002
+SERVICE_ERROR_CRITICAL      = 0x00000003
+
+; Characteristic flags
+NCF_VIRTUAL                 = 0x0001
+NCF_WRAPPER                 = 0x0002
+NCF_PHYSICAL                = 0x0004
+NCF_HIDDEN                  = 0x0008
+NCF_NO_SERVICE              = 0x0010
+NCF_NOT_USER_REMOVABLE      = 0x0020
+NCF_HAS_UI                  = 0x0080
+NCF_MODEM                   = 0x0100
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_EXPAND_SZ               = 0x20000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_TAGTOFRONT        = 0x1
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+FLG_ADDREG_KEYONLY          = 0x00000010
+
+;------------------------------------------------------------------------------------
+[Strings.0407] ; German (Germany)
+CustomizedEventMessageFile_w2k  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_6064 ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSProtocol_HELP="Intel(R) Erweiterte Netzwerkleistungen Protocol wird f¸r erweiterte Funktionen wie Gruppenbildung und virtuelles LAN verwendet."
+DISKNAME         ="Intel(R) Erweiterte Netzwerkleistungen CD-ROM oder Diskette"
+
+V_Intel="Intel"
+iANSProtocol.Desc="Intel(R) Advanced Network Services Protocol"
+; ServiceType values
+
+SERVICE_KERNEL_DRIVER       = 0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  = 0x00000002
+SERVICE_ADAPTER             = 0x00000004
+SERVICE_RECOGNIZER_DRIVER   = 0x00000008
+SERVICE_WIN32_OWN_PROCESS   = 0x00000010
+SERVICE_WIN32_SHARE_PROCESS = 0x00000020
+SERVICE_INTERACTIVE_PROCESS = 0x00000100
+SERVICE_INTERACTIVE_SHARE_PROCESS = 0x00000120
+
+; StartType values
+SERVICE_BOOT_START          = 0x00000000
+SERVICE_SYSTEM_START        = 0x00000001
+SERVICE_AUTO_START          = 0x00000002
+SERVICE_DEMAND_START        = 0x00000003
+SERVICE_DISABLED            = 0x00000004
+
+; ErrorControl values
+SERVICE_ERROR_IGNORE        = 0x00000000
+SERVICE_ERROR_NORMAL        = 0x00000001
+SERVICE_ERROR_SEVERE        = 0x00000002
+SERVICE_ERROR_CRITICAL      = 0x00000003
+
+; Characteristic flags
+NCF_VIRTUAL                 = 0x0001
+NCF_WRAPPER                 = 0x0002
+NCF_PHYSICAL                = 0x0004
+NCF_HIDDEN                  = 0x0008
+NCF_NO_SERVICE              = 0x0010
+NCF_NOT_USER_REMOVABLE      = 0x0020
+NCF_HAS_UI                  = 0x0080
+NCF_MODEM                   = 0x0100
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_EXPAND_SZ               = 0x20000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_TAGTOFRONT        = 0x1
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+FLG_ADDREG_KEYONLY          = 0x00000010
+
+;------------------------------------------------------------------------------------
+[Strings.0C0A] ; Spanish (Spain)
+CustomizedEventMessageFile_w2k  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_6064 ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSProtocol_HELP="El Protocolo de Servicios avanzados de red Intel(R) se utiliza para funciones avanzadas como la creaciÛn de equipos y LAN virtual."
+DISKNAME         ="CD-ROM o disquete de los Servicios avanzados de red Intel(R)"
+
+V_Intel="Intel"
+iANSProtocol.Desc="Intel(R) Advanced Network Services Protocol"
+; ServiceType values
+
+SERVICE_KERNEL_DRIVER       = 0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  = 0x00000002
+SERVICE_ADAPTER             = 0x00000004
+SERVICE_RECOGNIZER_DRIVER   = 0x00000008
+SERVICE_WIN32_OWN_PROCESS   = 0x00000010
+SERVICE_WIN32_SHARE_PROCESS = 0x00000020
+SERVICE_INTERACTIVE_PROCESS = 0x00000100
+SERVICE_INTERACTIVE_SHARE_PROCESS = 0x00000120
+
+; StartType values
+SERVICE_BOOT_START          = 0x00000000
+SERVICE_SYSTEM_START        = 0x00000001
+SERVICE_AUTO_START          = 0x00000002
+SERVICE_DEMAND_START        = 0x00000003
+SERVICE_DISABLED            = 0x00000004
+
+; ErrorControl values
+SERVICE_ERROR_IGNORE        = 0x00000000
+SERVICE_ERROR_NORMAL        = 0x00000001
+SERVICE_ERROR_SEVERE        = 0x00000002
+SERVICE_ERROR_CRITICAL      = 0x00000003
+
+; Characteristic flags
+NCF_VIRTUAL                 = 0x0001
+NCF_WRAPPER                 = 0x0002
+NCF_PHYSICAL                = 0x0004
+NCF_HIDDEN                  = 0x0008
+NCF_NO_SERVICE              = 0x0010
+NCF_NOT_USER_REMOVABLE      = 0x0020
+NCF_HAS_UI                  = 0x0080
+NCF_MODEM                   = 0x0100
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_EXPAND_SZ               = 0x20000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_TAGTOFRONT        = 0x1
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+FLG_ADDREG_KEYONLY          = 0x00000010
+
+;------------------------------------------------------------------------------------
+[Strings.040C] ; French (France)
+CustomizedEventMessageFile_w2k  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_6064 ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSProtocol_HELP="Le protocole Services rÈseau avancÈs Intel(R) est utilisÈ pour les fonctionnalitÈs ÈvoluÈes telles que l'agrÈgation de cartes ou les rÈseaux VLAN."
+DISKNAME         ="CD-ROM ou disquette Services rÈseau avancÈs Intel(R)"
+
+V_Intel="Intel"
+iANSProtocol.Desc="Intel(R) Advanced Network Services Protocol"
+; ServiceType values
+
+SERVICE_KERNEL_DRIVER       = 0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  = 0x00000002
+SERVICE_ADAPTER             = 0x00000004
+SERVICE_RECOGNIZER_DRIVER   = 0x00000008
+SERVICE_WIN32_OWN_PROCESS   = 0x00000010
+SERVICE_WIN32_SHARE_PROCESS = 0x00000020
+SERVICE_INTERACTIVE_PROCESS = 0x00000100
+SERVICE_INTERACTIVE_SHARE_PROCESS = 0x00000120
+
+; StartType values
+SERVICE_BOOT_START          = 0x00000000
+SERVICE_SYSTEM_START        = 0x00000001
+SERVICE_AUTO_START          = 0x00000002
+SERVICE_DEMAND_START        = 0x00000003
+SERVICE_DISABLED            = 0x00000004
+
+; ErrorControl values
+SERVICE_ERROR_IGNORE        = 0x00000000
+SERVICE_ERROR_NORMAL        = 0x00000001
+SERVICE_ERROR_SEVERE        = 0x00000002
+SERVICE_ERROR_CRITICAL      = 0x00000003
+
+; Characteristic flags
+NCF_VIRTUAL                 = 0x0001
+NCF_WRAPPER                 = 0x0002
+NCF_PHYSICAL                = 0x0004
+NCF_HIDDEN                  = 0x0008
+NCF_NO_SERVICE              = 0x0010
+NCF_NOT_USER_REMOVABLE      = 0x0020
+NCF_HAS_UI                  = 0x0080
+NCF_MODEM                   = 0x0100
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_EXPAND_SZ               = 0x20000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_TAGTOFRONT        = 0x1
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+FLG_ADDREG_KEYONLY          = 0x00000010
+
+;------------------------------------------------------------------------------------
+[Strings.0410] ; Italian (Italy)
+CustomizedEventMessageFile_w2k  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_6064 ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSProtocol_HELP="Servizi avanzati di rete Intel(R) Protocol Ë usato per funzioni evolute quali il raggruppamento e le LAN virtuali."
+DISKNAME         ="CD-ROM o dischetto di Servizi avanzati di rete Intel(R)"
+
+V_Intel="Intel"
+iANSProtocol.Desc="Intel(R) Advanced Network Services Protocol"
+; ServiceType values
+
+SERVICE_KERNEL_DRIVER       = 0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  = 0x00000002
+SERVICE_ADAPTER             = 0x00000004
+SERVICE_RECOGNIZER_DRIVER   = 0x00000008
+SERVICE_WIN32_OWN_PROCESS   = 0x00000010
+SERVICE_WIN32_SHARE_PROCESS = 0x00000020
+SERVICE_INTERACTIVE_PROCESS = 0x00000100
+SERVICE_INTERACTIVE_SHARE_PROCESS = 0x00000120
+
+; StartType values
+SERVICE_BOOT_START          = 0x00000000
+SERVICE_SYSTEM_START        = 0x00000001
+SERVICE_AUTO_START          = 0x00000002
+SERVICE_DEMAND_START        = 0x00000003
+SERVICE_DISABLED            = 0x00000004
+
+; ErrorControl values
+SERVICE_ERROR_IGNORE        = 0x00000000
+SERVICE_ERROR_NORMAL        = 0x00000001
+SERVICE_ERROR_SEVERE        = 0x00000002
+SERVICE_ERROR_CRITICAL      = 0x00000003
+
+; Characteristic flags
+NCF_VIRTUAL                 = 0x0001
+NCF_WRAPPER                 = 0x0002
+NCF_PHYSICAL                = 0x0004
+NCF_HIDDEN                  = 0x0008
+NCF_NO_SERVICE              = 0x0010
+NCF_NOT_USER_REMOVABLE      = 0x0020
+NCF_HAS_UI                  = 0x0080
+NCF_MODEM                   = 0x0100
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_EXPAND_SZ               = 0x20000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_TAGTOFRONT        = 0x1
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+FLG_ADDREG_KEYONLY          = 0x00000010
+
+;------------------------------------------------------------------------------------
+[Strings.0411] ; Japanese (Japan)
+CustomizedEventMessageFile_w2k  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_6064 ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSProtocol_HELP="ÉCÉìÉeÉã(R) ÉAÉhÉoÉìÉXÉgÅEÉlÉbÉgÉèÅ[ÉNÅEÉTÅ[ÉrÉX Protocol ÇÕÉ`Å[ÉÄâªÇ®ÇÊÇ—âºëz LAN Ç»Ç«ÇÃçÇìxã@î\Ç…égÇÌÇÍÇ‹Ç∑ÅB"
+DISKNAME         ="ÉCÉìÉeÉã(R) ÉAÉhÉoÉìÉXÉgÅEÉlÉbÉgÉèÅ[ÉNÅEÉTÅ[ÉrÉX CD-ROM Ç‹ÇΩÇÕÉtÉçÉbÉsÅ[ÉfÉBÉXÉN"
+
+V_Intel="Intel"
+iANSProtocol.Desc="Intel(R) Advanced Network Services Protocol"
+; ServiceType values
+
+SERVICE_KERNEL_DRIVER       = 0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  = 0x00000002
+SERVICE_ADAPTER             = 0x00000004
+SERVICE_RECOGNIZER_DRIVER   = 0x00000008
+SERVICE_WIN32_OWN_PROCESS   = 0x00000010
+SERVICE_WIN32_SHARE_PROCESS = 0x00000020
+SERVICE_INTERACTIVE_PROCESS = 0x00000100
+SERVICE_INTERACTIVE_SHARE_PROCESS = 0x00000120
+
+; StartType values
+SERVICE_BOOT_START          = 0x00000000
+SERVICE_SYSTEM_START        = 0x00000001
+SERVICE_AUTO_START          = 0x00000002
+SERVICE_DEMAND_START        = 0x00000003
+SERVICE_DISABLED            = 0x00000004
+
+; ErrorControl values
+SERVICE_ERROR_IGNORE        = 0x00000000
+SERVICE_ERROR_NORMAL        = 0x00000001
+SERVICE_ERROR_SEVERE        = 0x00000002
+SERVICE_ERROR_CRITICAL      = 0x00000003
+
+; Characteristic flags
+NCF_VIRTUAL                 = 0x0001
+NCF_WRAPPER                 = 0x0002
+NCF_PHYSICAL                = 0x0004
+NCF_HIDDEN                  = 0x0008
+NCF_NO_SERVICE              = 0x0010
+NCF_NOT_USER_REMOVABLE      = 0x0020
+NCF_HAS_UI                  = 0x0080
+NCF_MODEM                   = 0x0100
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_EXPAND_SZ               = 0x20000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_TAGTOFRONT        = 0x1
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+FLG_ADDREG_KEYONLY          = 0x00000010
+
+;------------------------------------------------------------------------------------
+[Strings.0412] ; Korean (Korea)
+CustomizedEventMessageFile_w2k  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_6064 ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSProtocol_HELP="¿Œ≈⁄(R) ∞Ì±ﬁ ≥◊∆Æøˆ≈© º≠∫ÒΩ∫ «¡∑Œ≈‰ƒ›¿∫ ∆¿ ±∏º∫ π◊ ∞°ªÛ LAN∞˙ ∞∞¿∫ ∞Ì±ﬁ ±‚¥…ø° ªÁøÎµÀ¥œ¥Ÿ."
+DISKNAME         ="¿Œ≈⁄(R) ∞Ì±ﬁ ≥◊∆Æøˆ≈© º≠∫ÒΩ∫ CD-ROM ∂«¥¬ «√∑Œ«« µΩ∫≈©"
+
+V_Intel="Intel"
+iANSProtocol.Desc="Intel(R) Advanced Network Services Protocol"
+; ServiceType values
+
+SERVICE_KERNEL_DRIVER       = 0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  = 0x00000002
+SERVICE_ADAPTER             = 0x00000004
+SERVICE_RECOGNIZER_DRIVER   = 0x00000008
+SERVICE_WIN32_OWN_PROCESS   = 0x00000010
+SERVICE_WIN32_SHARE_PROCESS = 0x00000020
+SERVICE_INTERACTIVE_PROCESS = 0x00000100
+SERVICE_INTERACTIVE_SHARE_PROCESS = 0x00000120
+
+; StartType values
+SERVICE_BOOT_START          = 0x00000000
+SERVICE_SYSTEM_START        = 0x00000001
+SERVICE_AUTO_START          = 0x00000002
+SERVICE_DEMAND_START        = 0x00000003
+SERVICE_DISABLED            = 0x00000004
+
+; ErrorControl values
+SERVICE_ERROR_IGNORE        = 0x00000000
+SERVICE_ERROR_NORMAL        = 0x00000001
+SERVICE_ERROR_SEVERE        = 0x00000002
+SERVICE_ERROR_CRITICAL      = 0x00000003
+
+; Characteristic flags
+NCF_VIRTUAL                 = 0x0001
+NCF_WRAPPER                 = 0x0002
+NCF_PHYSICAL                = 0x0004
+NCF_HIDDEN                  = 0x0008
+NCF_NO_SERVICE              = 0x0010
+NCF_NOT_USER_REMOVABLE      = 0x0020
+NCF_HAS_UI                  = 0x0080
+NCF_MODEM                   = 0x0100
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_EXPAND_SZ               = 0x20000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_TAGTOFRONT        = 0x1
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+FLG_ADDREG_KEYONLY          = 0x00000010
+
+;------------------------------------------------------------------------------------
+[Strings.0416] ; Portuguese (Brazil)
+CustomizedEventMessageFile_w2k  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_wxp  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w32e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w64  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60  ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_w60e ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+CustomizedEventMessageFile_6064 ="%SystemRoot%\System32\drivers\iANSmsg.dll"
+iANSProtocol_HELP="O Protocolo de ServiÁos avanÁados de rede Intel(R)  È usado para recursos avanÁados como agrupamento e LAN virtual."
+DISKNAME         ="CD-ROM ou disquete do ServiÁos avanÁados de rede Intel(R)"
+
+V_Intel="Intel"
+iANSProtocol.Desc="Intel(R) Advanced Network Services Protocol"
+; ServiceType values
+
+SERVICE_KERNEL_DRIVER       = 0x00000001
+SERVICE_FILE_SYSTEM_DRIVER  = 0x00000002
+SERVICE_ADAPTER             = 0x00000004
+SERVICE_RECOGNIZER_DRIVER   = 0x00000008
+SERVICE_WIN32_OWN_PROCESS   = 0x00000010
+SERVICE_WIN32_SHARE_PROCESS = 0x00000020
+SERVICE_INTERACTIVE_PROCESS = 0x00000100
+SERVICE_INTERACTIVE_SHARE_PROCESS = 0x00000120
+
+; StartType values
+SERVICE_BOOT_START          = 0x00000000
+SERVICE_SYSTEM_START        = 0x00000001
+SERVICE_AUTO_START          = 0x00000002
+SERVICE_DEMAND_START        = 0x00000003
+SERVICE_DISABLED            = 0x00000004
+
+; ErrorControl values
+SERVICE_ERROR_IGNORE        = 0x00000000
+SERVICE_ERROR_NORMAL        = 0x00000001
+SERVICE_ERROR_SEVERE        = 0x00000002
+SERVICE_ERROR_CRITICAL      = 0x00000003
+
+; Characteristic flags
+NCF_VIRTUAL                 = 0x0001
+NCF_WRAPPER                 = 0x0002
+NCF_PHYSICAL                = 0x0004
+NCF_HIDDEN                  = 0x0008
+NCF_NO_SERVICE              = 0x0010
+NCF_NOT_USER_REMOVABLE      = 0x0020
+NCF_HAS_UI                  = 0x0080
+NCF_MODEM                   = 0x0100
+
+; Registry types
+REG_MULTI_SZ                = 0x10000
+REG_EXPAND_SZ               = 0x20000
+REG_DWORD                   = 0x10001
+
+; Service install flags
+SPSVCINST_TAGTOFRONT        = 0x1
+SPSVCINST_ASSOCSERVICE      = 0x2
+
+FLG_ADDREG_KEYONLY          = 0x00000010
+

@@ -1,0 +1,929 @@
+;*******************************************************************************
+;**                                                                           **
+;**                            INTEL CONFIDENTIAL                             **
+;**                                                                           **
+;**        Copyright 2010-2016 Intel Corporation All Rights Reserved.         **
+;**                                                                           **
+;**  The material contained or described herein and all documents related     **
+;**  to such material ("Material") are owned by Intel Corporation or its      **
+;**  suppliers or licensors. Title to the Material remains with Intel         **
+;**  Corporation or its suppliers and licensors. The Material contains trade  **
+;**  secrets and proprietary and confidential information of Intel or its     **
+;**  suppliers and licensors. The Material is protected by worldwide          **
+;**  copyright and trade secret laws and treaty provisions. No part of the    **
+;**  Material may be used, copied, reproduced, modified, published,           **
+;**  uploaded, posted, transmitted, distributed, or disclosed in any way      **
+;**  without Intel's prior express written permission.                        **
+;**                                                                           **
+;**  No license under any patent, copyright, trade secret or other            **
+;**  intellectual property right is granted to or conferred upon you by       **
+;**  disclosure or delivery of the Materials, either expressly, by            **
+;**  implication, inducement, estoppel or otherwise. Any license under such   **
+;**  intellectual property rights must be express and approved by Intel in    **
+;**  writing.                                                                 **
+;**                                                                           **
+;*******************************************************************************
+;
+;*******************************************************************************
+; INF for Intel(R) 40 Gigabit PCIe Network Adapters
+;*******************************************************************************
+;
+[Version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Intel%
+CatalogFile = i40ea65.cat
+DriverVer   = 01/03/2017,1.6.102.0
+
+[Manufacturer]
+%Intel% = Intel, NTamd64.10.0
+
+[Intel]
+
+[Intel.NTamd64.10.0]
+; DisplayName                            Section  DeviceID
+; -----------                            -------  --------
+%F1572.Generic.Description%            = F1572,   PCI\VEN_8086&DEV_1572
+%F1581.Generic.Description%            = F1581,   PCI\VEN_8086&DEV_1581
+%F1583.Generic.Description%            = F1583,   PCI\VEN_8086&DEV_1583
+%F1572.SFP.Generic.Description%        = F1572,   PCI\VEN_8086&DEV_1572&SUBSYS_00008086
+%F1583.QSFP.Dual.Description%          = F1583,   PCI\VEN_8086&DEV_1583&SUBSYS_00008086
+%F1583.QSFP.Dual.Description%          = F1583,   PCI\VEN_8086&DEV_1583&SUBSYS_00068086
+%F1572.SFP.Dual.Dell.Description%      = F1572,   PCI\VEN_8086&DEV_1572&SUBSYS_00068086
+%F1572.SFP.Quad.Dell.Description%      = F1572,   PCI\VEN_8086&DEV_1572&SUBSYS_00058086
+%F1581.KBNDC.Dell.Generic.Description% = F1581,   PCI\VEN_8086&DEV_1581&SUBSYS_00001028
+%F1581.2PKBNDC.Dell.Description%       = F1581,   PCI\VEN_8086&DEV_1581&SUBSYS_1F9E1028
+%F1581.4PKBNDC.Dell.Description%       = F1581,   PCI\VEN_8086&DEV_1581&SUBSYS_1F981028
+%F1572.RNDC.Dell.Generic.Description%  = F1572,   PCI\VEN_8086&DEV_1572&SUBSYS_00001028
+%F1572.RNDC.Dell.Description%          = F1572,   PCI\VEN_8086&DEV_1572&SUBSYS_1F991028
+%F1572.SFPRNDC.Dell.Description%       = F1572,   PCI\VEN_8086&DEV_1572&SUBSYS_1F9C1028
+%F1583.QSFP.Dual.Dell.Description%     = F1583,   PCI\VEN_8086&DEV_1583&SUBSYS_00001028
+%F1583.QSFP.Dual.Dell.Description%     = F1583,   PCI\VEN_8086&DEV_1583&SUBSYS_1F9F1028
+%F1572.OCP.Dual.Dell.Description%      = F1572,   PCI\VEN_8086&DEV_1572&SUBSYS_000B8086
+%F1589.BASET.LOM.Description%          = F1586,   PCI\VEN_8086&DEV_1589
+%F1589.Generic.Description%            = F1586,   PCI\VEN_8086&DEV_1589&SUBSYS_00008086
+%F1589.Generic.Description%            = F1586,   PCI\VEN_8086&DEV_1589&SUBSYS_00038086
+
+[NO_DRV]
+Characteristics = 0x01
+Include         = machine.inf
+Needs           = NO_DRV
+
+[NO_DRV.Services]
+Include = machine.inf
+Needs   = NO_DRV.Services
+
+; ------------------------------------------------------
+; Intel(R) 40 Gigabit Controller
+; ------------------------------------------------------
+[F1572]
+Characteristics     = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType             = 5 ; PCI
+Port1FunctionNumber = 0
+DelReg              = Advanced.DelReg, FCoE.DelReg
+AddReg              = Default.reg, RSS.reg, Uninstall.reg
+Addreg              = Powermgmt.reg
+AddReg              = DCB.reg, QOS.reg, RSC.reg, ENCAP.reg, VMQ.reg, PDPI.reg, VRSS.reg
+AddReg              = Sriov.reg
+Addreg              = 1Gb_10Gb_Speed.reg
+AddReg              = CoInKPM.reg
+AddReg              = ProductVersion.reg
+CopyFiles           = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType             = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType          = 0     ; NdisMedium802_3
+*PhysicalMediaType  = 14    ; NdisPhysicalMedium802_3
+
+[F1572.Services]
+AddService = %ServiceName%, 0x12, Service, EventLog
+
+[F1572.HW]
+Include = machine.inf
+Needs   = PciSriovSupported, PciIoSpaceNotRequired
+AddReg  = MSI.reg
+
+[F1572.CoInstallers]
+AddReg    = CoInstaller_AddReg, CoInKPM.reg
+CopyFiles = CoInstallerCopyFiles
+
+[F1581]
+Characteristics     = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType             = 5 ; PCI
+Port1FunctionNumber = 0
+DelReg              = Advanced.DelReg, FCoE.DelReg
+AddReg              = Default.reg, RSS.reg, Uninstall.reg
+Addreg              = Powermgmt.reg
+AddReg              = DCB.reg, QOS.reg, RSC.reg, ENCAP.reg, VMQ.reg, PDPI.reg, VRSS.reg
+AddReg              = Sriov.reg
+AddReg              = CoInKPM.reg
+AddReg              = ProductVersion.reg
+CopyFiles           = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType             = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType          = 0     ; NdisMedium802_3
+*PhysicalMediaType  = 14    ; NdisPhysicalMedium802_3
+
+[F1581.Services]
+AddService = %ServiceName%, 0x12, Service, EventLog
+
+[F1581.HW]
+Include = machine.inf
+Needs   = PciSriovSupported, PciIoSpaceNotRequired
+AddReg  = MSI.reg
+
+[F1581.CoInstallers]
+AddReg    = CoInstaller_AddReg, CoInKPM.reg
+CopyFiles = CoInstallerCopyFiles
+
+[F1583]
+Characteristics     = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType             = 5 ; PCI
+Port1FunctionNumber = 0
+DelReg              = Advanced.DelReg, FCoE.DelReg
+AddReg              = Default.reg, RSS.reg, Uninstall.reg
+Addreg              = Powermgmt.reg
+AddReg              = DCB.reg, QOS.reg, RSC.reg, ENCAP.reg, VMQ.reg, PDPI.reg, VRSS.reg
+AddReg              = Sriov.reg
+Addreg              = 40Gb_Speed.reg
+AddReg              = CoInKPM.reg
+AddReg              = ProductVersion.reg
+CopyFiles           = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType             = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType          = 0     ; NdisMedium802_3
+*PhysicalMediaType  = 14    ; NdisPhysicalMedium802_3
+
+[F1583.Services]
+AddService = %ServiceName%, 0x12, Service, EventLog
+
+[F1583.HW]
+Include = machine.inf
+Needs   = PciSriovSupported, PciIoSpaceNotRequired
+AddReg  = MSI.reg
+
+[F1583.CoInstallers]
+AddReg    = CoInstaller_AddReg, CoInKPM.reg
+CopyFiles = CoInstallerCopyFiles
+
+[F1586]
+Characteristics     = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType             = 5 ; PCI
+Port1FunctionNumber = 0
+DelReg              = Advanced.DelReg, FCoE.DelReg
+AddReg              = Default.reg, RSS.reg, Uninstall.reg
+Addreg              = Powermgmt.reg
+AddReg              = DCB.reg, QOS.reg, RSC.reg, ENCAP.reg, VMQ.reg, PDPI.reg, VRSS.reg
+AddReg              = Sriov.reg
+Addreg              = 100Mb_1Gb_10Gb_Speed.reg
+AddReg              = CoInKPM.reg
+AddReg              = ProductVersion.reg
+CopyFiles           = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType             = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType          = 0     ; NdisMedium802_3
+*PhysicalMediaType  = 14    ; NdisPhysicalMedium802_3
+
+[F1586.Services]
+AddService = %ServiceName%, 0x12, Service, EventLog
+
+[F1586.HW]
+Include = machine.inf
+Needs   = PciSriovSupported, PciIoSpaceNotRequired
+AddReg  = MSI.reg
+
+[F1586.CoInstallers]
+AddReg    = CoInstaller_AddReg, CoInKPM.reg
+CopyFiles = CoInstallerCopyFiles
+
+;-------------------------------------------------------------------------------
+; Registry Settings
+;-------------------------------------------------------------------------------
+[Default.reg]
+HKR, Ndi\Interfaces,                            UpperRange,             0, "ndis5,IFCoE"
+HKR, Ndi\Interfaces,                            LowerRange,             0, "ethernet"
+HKR, Ndi,                                       Service,                0, %ServiceName%
+HKR, Ndi\Params\*FlowControl,                   ParamDesc,              0, %FlowControl%
+HKR, Ndi\Params\*FlowControl,                   default,                0, "4"
+HKR, Ndi\Params\*FlowControl\Enum,              "0",                    0, %Disabled%
+HKR, Ndi\Params\*FlowControl\Enum,              "1",                    0, %FlowControl_TxOnly%
+HKR, Ndi\Params\*FlowControl\Enum,              "2",                    0, %FlowControl_RxOnly%
+HKR, Ndi\Params\*FlowControl\Enum,              "3",                    0, %FlowControl_Full%
+HKR, Ndi\Params\*FlowControl\Enum,              "4",                    0, %AutoNegotiation%
+HKR, Ndi\Params\*FlowControl,                   type,                   0, "enum"
+
+; *TransmitBuffers
+HKR, Ndi\params\*TransmitBuffers,               ParamDesc,              0, %TransmitBuffers%
+HKR, Ndi\params\*TransmitBuffers,               default,                0, "512"
+HKR, Ndi\params\*TransmitBuffers,               min,                    0, "128"
+HKR, Ndi\params\*TransmitBuffers,               max,                    0, "4096"
+HKR, Ndi\params\*TransmitBuffers,               step,                   0, "64"
+HKR, Ndi\params\*TransmitBuffers,               Base,                   0, "10"
+HKR, Ndi\params\*TransmitBuffers,               type,                   0, "int"
+
+; *ReceiveBuffers
+HKR, Ndi\params\*ReceiveBuffers,                ParamDesc,              0, %ReceiveBuffers%
+HKR, Ndi\params\*ReceiveBuffers,                default,                0, "512"
+HKR, Ndi\params\*ReceiveBuffers,                min,                    0, "128"
+HKR, Ndi\params\*ReceiveBuffers,                max,                    0, "4096"
+HKR, Ndi\params\*ReceiveBuffers,                step,                   0, "64"
+HKR, Ndi\params\*ReceiveBuffers,                Base,                   0, "10"
+HKR, Ndi\params\*ReceiveBuffers,                type,                   0, "int"
+
+; *TCPChecksumOffloadIPv4
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,        ParamDesc,              0, %TCPChksumOffv4%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,        default,                0, "3"
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,   "0",                    0, %Disabled%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,   "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,   "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,   "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,        type,                   0, "enum"
+
+; *TCPChecksumOffloadIPv6
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6,        ParamDesc,              0, %TCPChksumOffv6%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6,        default,                0, "3"
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\Enum,   "0",                    0, %Disabled%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\Enum,   "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\Enum,   "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\Enum,   "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6,        type,                   0, "enum"
+
+; *UDPChecksumOffloadIPv4
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,        ParamDesc,              0, %UDPChksumOffv4%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,        default,                0, "3"
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,   "0",                    0, %Disabled%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,   "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,   "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,   "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,        type,                   0, "enum"
+
+; *UDPChecksumOffloadIPv6
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6,        ParamDesc,              0, %UDPChksumOffv6%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6,        default,                0, "3"
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\Enum,   "0",                    0, %Disabled%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\Enum,   "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\Enum,   "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\Enum,   "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6,        type,                   0, "enum"
+
+; *IPChecksumOffloadIPv4
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,         ParamDesc,              0, %IPChksumOffv4%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,         default,                0, "3"
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,    "0",                    0, %Disabled%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,    "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,    "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,    "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,         type,                   0, "enum"
+
+; Network Address
+HKR, Ndi\params\NetworkAddress,                 ParamDesc,              0, %LAA%
+HKR, Ndi\params\NetworkAddress,                 Default,                0, ""
+HKR, Ndi\params\NetworkAddress,                 type,                   0, "edit"
+HKR, NDI\params\NetworkAddress,                 LimitText,              0, "12"
+HKR, NDI\params\NetworkAddress,                 UpperCase,              0, "1"
+HKR, NDI\params\NetworkAddress,                 optional,               0, "1"
+
+;Log Link State Event
+HKR,Ndi\Params\LogLinkStateEvent,               ParamDesc,              0, %LogLinkState%
+HKR,Ndi\Params\LogLinkStateEvent,               Type,                   0, "enum"
+HKR,Ndi\Params\LogLinkStateEvent,               Default,                0, "51"
+HKR,Ndi\Params\LogLinkStateEvent\Enum,          "51",                   0, %Enabled%
+HKR,Ndi\Params\LogLinkStateEvent\Enum,          "16",                   0, %Disabled%
+HKR,,                                           LogLinkStateEvent,      0, "51"
+
+; Interrupt Throttle Rate
+HKR, Ndi\Params\ITR,                            ParamDesc,              0, %InterruptThrottleRate%
+HKR, Ndi\Params\ITR,                            default,                0, "65535"
+HKR, Ndi\Params\ITR\Enum,                       "65535",                0, %Adaptive%
+HKR, Ndi\Params\ITR\Enum,                       "2000",                 0, %Extreme%
+HKR, Ndi\Params\ITR\Enum,                       "950",                  0, %High%
+HKR, Ndi\Params\ITR\Enum,                       "488",                  0, %Medium%
+HKR, Ndi\Params\ITR\Enum,                       "200",                  0, %Low%
+HKR, Ndi\Params\ITR\Enum,                       "0",                    0, %Off%
+HKR, Ndi\Params\ITR,                            type,                   0, "enum"
+
+; *PriorityVLANTag
+HKR, Ndi\Params\*PriorityVLANTag,               ParamDesc,              0, %PriorityVLANTag2%
+HKR, Ndi\Params\*PriorityVLANTag,               default,                0, "3"
+HKR, Ndi\Params\*PriorityVLANTag\Enum,          "0",                    0, %PriorityVlanDisabled2%
+HKR, Ndi\Params\*PriorityVLANTag\Enum,          "1",                    0, %PriorityEnabled2%
+HKR, Ndi\Params\*PriorityVLANTag\Enum,          "2",                    0, %VlanEnabled%
+HKR, Ndi\Params\*PriorityVLANTag\Enum,          "3",                    0, %PriorityVlanEnabled2%
+HKR, Ndi\Params\*PriorityVLANTag,               type,                   0, "enum"
+
+; *InterruptModeration
+HKR, Ndi\Params\*InterruptModeration,           ParamDesc,              0, %InterruptModeration%
+HKR, Ndi\Params\*InterruptModeration,           default,                0, "1"
+HKR, Ndi\Params\*InterruptModeration\Enum,      "0",                    0, %Disabled%
+HKR, Ndi\Params\*InterruptModeration\Enum,      "1",                    0, %Enabled%
+HKR, Ndi\Params\*InterruptModeration,           type,                   0, "enum"
+
+; *LsoV2IPv4
+HKR, Ndi\Params\*LsoV2IPv4,                     ParamDesc,              0, %LsoV2IPv4%
+HKR, Ndi\Params\*LsoV2IPv4,                     default,                0, "1"
+HKR, Ndi\Params\*LsoV2IPv4\Enum,                "0",                    0, %Disabled%
+HKR, Ndi\Params\*LsoV2IPv4\Enum,                "1",                    0, %Enabled%
+HKR, Ndi\Params\*LsoV2IPv4,                     type,                   0, "enum"
+
+; *LsoV2IPv6
+HKR, Ndi\Params\*LsoV2IPv6,                     ParamDesc,              0, %LsoV2IPv6%
+HKR, Ndi\Params\*LsoV2IPv6,                     default,                0, "1"
+HKR, Ndi\Params\*LsoV2IPv6\Enum,                "0",                    0, %Disabled%
+HKR, Ndi\Params\*LsoV2IPv6\Enum,                "1",                    0, %Enabled%
+HKR, Ndi\Params\*LsoV2IPv6,                     type,                   0, "enum"
+
+; *JumboPacket
+HKR, Ndi\Params\*JumboPacket,                   ParamDesc,              0, %JumboPacket%
+HKR, Ndi\Params\*JumboPacket,                   default,                0, "1514"
+HKR, Ndi\Params\*JumboPacket\Enum,              "1514",                 0, %Disabled%
+HKR, Ndi\Params\*JumboPacket\Enum,              "4088",                 0, %Bytes4088%
+HKR, Ndi\Params\*JumboPacket\Enum,              "9014",                 0, %Bytes9014%
+HKR, Ndi\Params\*JumboPacket,                   type,                   0, "enum"
+
+; 18.0.0 => 18F0F0FF
+HKR,,                                           CEMDriverVer,           0, "418443519"
+
+[RSC.reg]
+; *RscIPv4
+HKR, Ndi\Params\*RscIPv4,                       ParamDesc,              0, %RSCIPv4%
+HKR, Ndi\Params\*RscIPv4,                       default,                0, "1"
+HKR, Ndi\Params\*RscIPv4\Enum,                  "0",                    0, %Disabled%
+HKR, Ndi\Params\*RscIPv4\Enum,                  "1",                    0, %Enabled%
+HKR, Ndi\Params\*RscIPv4,                       type,                   0, "enum"
+
+; *RscIPv6
+HKR, Ndi\Params\*RscIPv6,                       ParamDesc,              0, %RSCIPv6%
+HKR, Ndi\Params\*RscIPv6,                       default,                0, "1"
+HKR, Ndi\Params\*RscIPv6\Enum,                  "0",                    0, %Disabled%
+HKR, Ndi\Params\*RscIPv6\Enum,                  "1",                    0, %Enabled%
+HKR, Ndi\Params\*RscIPv6,                       type,                   0, "enum"
+
+[10Gb_Speed.reg]
+HKR, Ndi\params\*SpeedDuplex,                   ParamDesc,              0, %SpeedDuplex%
+HKR, Ndi\params\*SpeedDuplex,                   default,                0, "7"
+HKR, Ndi\params\*SpeedDuplex,                   type,                   0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,              "7",                    0, %10Gb_Full_Duplex%
+
+[20Gb_Speed.reg]
+HKR, Ndi\params\*SpeedDuplex,                   ParamDesc,              0, %SpeedDuplex%
+HKR, Ndi\params\*SpeedDuplex,                   default,                0, "8"
+HKR, Ndi\params\*SpeedDuplex,                   type,                   0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,              "8",                    0, %20Gb_Full_Duplex%
+
+[25Gb_Speed.reg]
+HKR, Ndi\params\*SpeedDuplex,                   ParamDesc,              0, %SpeedDuplex%
+HKR, Ndi\params\*SpeedDuplex,                   default,                0, "0"
+HKR, Ndi\params\*SpeedDuplex,                   type,                   0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,              "0",                    0, %AutoNegotiation%
+
+[40Gb_Speed.reg]
+HKR, Ndi\params\*SpeedDuplex,                   ParamDesc,              0, %SpeedDuplex%
+HKR, Ndi\params\*SpeedDuplex,                   default,                0, "0"
+HKR, Ndi\params\*SpeedDuplex,                   type,                   0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,              "0",                    0, %AutoNegotiation%
+HKR, Ndi\params\*SpeedDuplex\enum,              "9",                    0, %40Gb_Full_Duplex%
+
+[10Gb_40Gb_Speed.reg]
+HKR, Ndi\params\*SpeedDuplex,                   ParamDesc,              0, %SpeedDuplex%
+HKR, Ndi\params\*SpeedDuplex,                   default,                0, "0"
+HKR, Ndi\params\*SpeedDuplex,                   type,                   0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,              "0",                    0, %AutoNegotiation%
+HKR, Ndi\params\*SpeedDuplex\enum,              "7",                    0, %10Gb_Full_Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,              "9",                    0, %40Gb_Full_Duplex%
+
+[1Gb_10Gb_Speed.reg]
+HKR, Ndi\params\*SpeedDuplex,                   ParamDesc,              0, %SpeedDuplex%
+HKR, Ndi\params\*SpeedDuplex,                   default,                0, "0"
+HKR, Ndi\params\*SpeedDuplex,                   type,                   0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,              "0",                    0, %AutoNegotiation%
+HKR, Ndi\params\*SpeedDuplex\enum,              "6",                    0, %1000Mb_Full_Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,              "7",                    0, %10Gb_Full_Duplex%
+
+[100Mb_1Gb_10Gb_Speed.reg]
+HKR, Ndi\params\*SpeedDuplex,                   ParamDesc,              0, %SpeedDuplex%
+HKR, Ndi\params\*SpeedDuplex,                   default,                0, "0"
+HKR, Ndi\params\*SpeedDuplex,                   type,                   0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,              "0",                    0, %AutoNegotiation%
+HKR, Ndi\params\*SpeedDuplex\enum,              "4",                    0, %100Mb_Full_Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,              "6",                    0, %1000Mb_Full_Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,              "7",                    0, %10Gb_Full_Duplex%
+
+[VMQ.reg]
+; *VMQ
+HKR, Ndi\Params\*VMQ,                           ParamDesc,              0, %VMQ%
+HKR, Ndi\Params\*VMQ,                           default,                0, "1"
+HKR, Ndi\Params\*VMQ,                           type,                   0, "enum"
+HKR, Ndi\Params\*VMQ\Enum,                      "0",                    0, %Disabled%
+HKR, Ndi\Params\*VMQ\Enum,                      "1",                    0, %Enabled%
+
+; *VMQVlanFiltering
+HKR, Ndi\Params\*VMQVlanFiltering,              ParamDesc,              0, %VMQVlanFiltering%
+HKR, Ndi\Params\*VMQVlanFiltering,              default,                0, "1"
+HKR, Ndi\Params\*VMQVlanFiltering,              type,                   0, "enum"
+HKR, Ndi\Params\*VMQVlanFiltering\Enum,         "0",                    0, %Disabled%
+HKR, Ndi\Params\*VMQVlanFiltering\Enum,         "1",                    0, %Enabled%
+HKR,,                                           VMQSupported,           0, "1"
+
+[SRIOV.reg]
+; *SRIOV
+HKR, Ndi\Params\*SRIOV,                         ParamDesc,              0, %Sriov%
+HKR, Ndi\Params\*SRIOV,                         default,                0, "1"
+HKR, Ndi\Params\*SRIOV,                         type,                   0, "enum"
+HKR, Ndi\Params\*SRIOV\Enum,                    "0",                    0, %Disabled%
+HKR, Ndi\Params\*SRIOV\Enum,                    "1",                    0, %Enabled%
+
+; SRIOV Default switch configuration
+HKR, NicSwitches\0,*Flags,                                              0x00010001,       0x06
+HKR, NicSwitches\0,*SwitchType,                                         0x00010001,       1
+HKR, NicSwitches\0,*SwitchId,                                           0x00010001,       0
+HKR, NicSwitches\0,*SwitchName,                                         0,                "DefaultSwitchName"
+HKR, NicSwitches\0,*NumVFs,                                             0x00010001,       128
+
+[RSS.reg]
+; NumRssQueues
+HKR, Ndi\Params\*NumRssQueues,                   ParamDesc,              0, %NumRssQueues2%
+HKR, Ndi\Params\*NumRssQueues,                   default,                0, "8"
+HKR, Ndi\Params\*NumRssQueues,                   type,                   0, "enum"
+HKR, Ndi\Params\*NumRssQueues\Enum,              "1",                    0, %1queue%
+HKR, Ndi\Params\*NumRssQueues\Enum,              "2",                    0, %2queues%
+HKR, Ndi\Params\*NumRssQueues\Enum,              "4",                    0, %4queues%
+HKR, Ndi\Params\*NumRssQueues\Enum,              "8",                    0, %8queues%
+HKR, Ndi\Params\*NumRssQueues\Enum,              "16",                   0, %16queues%
+HKR, Ndi\Params\*NumRssQueues\Enum,              "32",                   0, %32queues%
+
+; *RSSProfile
+HKR, Ndi\Params\*RSSProfile,                   ParamDesc,              0, %RSSProfile%
+HKR, Ndi\Params\*RSSProfile,                   default,                0, "4"
+HKR, Ndi\Params\*RSSProfile,                   type,                   0, "enum"
+HKR, Ndi\Params\*RSSProfile\Enum,              "1",                    0, %Closest_Processor%
+HKR, Ndi\Params\*RSSProfile\Enum,              "2",                    0, %Closest_Processor_Static%
+HKR, Ndi\Params\*RSSProfile\Enum,              "3",                    0, %NUMA_Scaling%
+HKR, Ndi\Params\*RSSProfile\Enum,              "4",                    0, %NUMA_Scaling_Static%
+HKR, Ndi\Params\*RSSProfile\Enum,              "5",                    0, %Conservative_Scaling%
+HKR,,                                          *RSSProfile,            0, "4"
+
+; *RSS
+HKR, Ndi\Params\*RSS,                           ParamDesc,              0, %RSS%
+HKR, Ndi\Params\*RSS,                           default,                0, "1"
+HKR, Ndi\Params\*RSS,                           type,                   0, "enum"
+HKR, Ndi\Params\*RSS\Enum,                      "0",                    0, %Disabled%
+HKR, Ndi\Params\*RSS\Enum,                      "1",                    0, %Enabled%
+
+; *RssBaseProcNumber
+HKR, Ndi\params\*RssBaseProcNumber,             ParamDesc,              0, %RssBaseProcNumber%
+HKR, Ndi\params\*RssBaseProcNumber,             default,                0, "0"
+HKR, Ndi\params\*RssBaseProcNumber,             min,                    0, "0"
+HKR, Ndi\params\*RssBaseProcNumber,             max,                    0, "63"
+HKR, Ndi\params\*RssBaseProcNumber,             step,                   0, "1"
+HKR, Ndi\params\*RssBaseProcNumber,             Optional,               0, "0"
+HKR, Ndi\params\*RssBaseProcNumber,             type,                   0, "int"
+
+; *NumaNodeId
+HKR, Ndi\params\*NumaNodeId,                    ParamDesc,              0, %NumaNodeId%
+HKR, Ndi\params\*NumaNodeId,                    default,                0, "65535"
+HKR, Ndi\params\*NumaNodeId,                    type,                   0, "dword"
+HKR, Ndi\params\*NumaNodeId,                    min,                    0, "0"
+HKR, Ndi\params\*NumaNodeId,                    max,                    0, "65535"
+HKR, Ndi\params\*NumaNodeId,                    step,                   0, "1"
+
+; *MaxRssProcessors
+HKR, Ndi\params\*MaxRssProcessors,              ParamDesc,              0, %MaxRssProcessors%
+HKR, Ndi\params\*MaxRssProcessors,              default,                0, "32"
+HKR, Ndi\params\*MaxRssProcessors,              type,                   0, "enum"
+HKR, Ndi\params\*MaxRssProcessors\Enum,         "1",                    0, "1"
+HKR, Ndi\params\*MaxRssProcessors\Enum,         "2",                    0, "2"
+HKR, Ndi\params\*MaxRssProcessors\Enum,         "4",                    0, "4"
+HKR, Ndi\params\*MaxRssProcessors\Enum,         "8",                    0, "8"
+HKR, Ndi\params\*MaxRssProcessors\Enum,         "16",                   0, "16"
+HKR, Ndi\params\*MaxRssProcessors\Enum,         "32",                   0, "32"
+
+[QOS.reg]
+; *QOS
+HKR, Ndi\Params\*QOS,                           ParamDesc,              0, %QOS%
+HKR, Ndi\Params\*QOS,                           default,                0, "0"
+HKR, Ndi\Params\*QOS,                           type,                   0, "enum"
+HKR, Ndi\Params\*QOS\Enum,                      "0",                    0, %Disabled%
+HKR, Ndi\Params\*QOS\Enum,                      "1",                    0, %Enabled%
+
+[ENCAP.reg]
+; *EncapsulatedTaskOffload
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffload, ParamDesc,              0, %Encap%
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffload, default,                0, "1"
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffload, type,                   0, "enum"
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffload\Enum, "0",               0, %Disabled%
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffload\Enum, "1",               0, %Enabled%
+
+; *EncapsulatedTaskOffloadNvgre
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffloadNvgre, ParamDesc,         0, %EncapNvgre%
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffloadNvgre, default,           0, "1"
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffloadNvgre, type,              0, "enum"
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffloadNvgre\Enum, "0",          0, %Disabled%
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffloadNvgre\Enum, "1",          0, %Enabled%
+
+; *EncapsulatedTaskOffloadVxlan
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffloadVxlan, ParamDesc,         0, %EncapVxlan%
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffloadVxlan, default,           0, "1"
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffloadVxlan, type,              0, "enum"
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffloadVxlan\Enum, "0",          0, %Disabled%
+HKR, Ndi\Params\*EncapsulatedPacketTaskOffloadVxlan\Enum, "1",          0, %Enabled%
+
+; *VxlanUDPPortNumber
+HKR, Ndi\Params\*VxlanUDPPortNumber, ParamDesc,                         0, %VxlanUdpPort%
+HKR, Ndi\Params\*VxlanUDPPortNumber, default,                           0, "4789"
+HKR, Ndi\Params\*VxlanUDPPortNumber, min,                               0, "1"
+HKR, Ndi\Params\*VxlanUDPPortNumber, max,                               0, "65535"
+HKR, Ndi\Params\*VxlanUDPPortNumber, step,                              0, "1"
+HKR, Ndi\Params\*VxlanUDPPortNumber, Optional,                          0, "0"
+HKR, Ndi\Params\*VxlanUDPPortNumber, type,                              0, "dword"
+
+; *EncapOverhead
+HKR,, *EncapOverhead,                                                   0, "0"
+
+[PDPI.reg]
+; *PacketDirect
+HKR, Ndi\Params\*PacketDirect,                  ParamDesc,              0, %PacketDirect%
+HKR, Ndi\Params\*PacketDirect,                  default,                0, "1"
+HKR, Ndi\Params\*PacketDirect,                  type,                   0, "enum"
+HKR, Ndi\Params\*PacketDirect\Enum,             "0",                    0, %Disabled%
+HKR, Ndi\Params\*PacketDirect\Enum,             "1",                    0, %Enabled%
+
+[VRSS.reg]
+; *RssOnHostVPorts
+HKR, Ndi\Params\*RssOnHostVPorts,               ParamDesc,              0, %VSwitchRSS%
+HKR, Ndi\Params\*RssOnHostVPorts,               default,                0, "1"
+HKR, Ndi\Params\*RssOnHostVPorts,               type,                   0, "enum"
+HKR, Ndi\Params\*RssOnHostVPorts\Enum,          "0",                    0, %Disabled%
+HKR, Ndi\Params\*RssOnHostVPorts\Enum,          "1",                    0, %Enabled%
+
+; VlanId
+HKR, Ndi\params\VlanId,                         ParamDesc,              0, %VlanID%
+HKR, Ndi\params\VlanId,                         default,                0, "0"
+HKR, Ndi\params\VlanId,                         type,                   0, "DWORD"
+HKR, Ndi\params\VlanId,                         min,                    0, "0"
+HKR, Ndi\params\VlanId,                         max,                    0, "4094"
+HKR, Ndi\params\VlanId,                         step,                   0, "1"
+HKR, Ndi\params\VlanId,                         base,                   0, "10"
+
+[NoDCB.reg]
+HKR, Ndi\Interfaces,                            UpperRange,             0, "ndis5"
+
+[DCB.reg]
+HKR, DcbCfg,                                     DcbPfcAdvertise,       2, "1"
+HKR, DcbCfg,                                     DcbPfcEnable,          2, "1"
+HKR, DcbCfg,                                     DcbPfcWilling,         2, "1"
+HKR, DcbCfg,                                     DcbPgAdvertise,        2, "1"
+HKR, DcbCfg,                                     DcbPgEnable,           2, "1"
+HKR, DcbCfg,                                     DcbPgWilling,          2, "1"
+HKR, DcbCfg,                                     Bw0DetailTx,           2, "Bandwidth Group 0"
+HKR, DcbCfg,                                     Bw0DetailRx,           2, "Bandwidth Group 0"
+HKR, DcbCfg,                                     Bw0PercentageRx,       2, "13"
+HKR, DcbCfg,                                     Bw0PercentageTx,       2, "13"
+HKR, DcbCfg,                                     Bw1DetailTx,           2, "Bandwidth Group 1"
+HKR, DcbCfg,                                     Bw1DetailRx,           2, "Bandwidth Group 1"
+HKR, DcbCfg,                                     Bw1PercentageRx,       2, "13"
+HKR, DcbCfg,                                     Bw1PercentageTx,       2, "13"
+HKR, DcbCfg,                                     Bw2DetailTx,           2, "Bandwidth Group 2"
+HKR, DcbCfg,                                     Bw2DetailRx,           2, "Bandwidth Group 2"
+HKR, DcbCfg,                                     Bw2PercentageRx,       2, "13"
+HKR, DcbCfg,                                     Bw2PercentageTx,       2, "13"
+HKR, DcbCfg,                                     Bw3DetailTx,           2, "Bandwidth Group 3"
+HKR, DcbCfg,                                     Bw3DetailRx,           2, "Bandwidth Group 3"
+HKR, DcbCfg,                                     Bw3PercentageRx,       2, "13"
+HKR, DcbCfg,                                     Bw3PercentageTx,       2, "13"
+HKR, DcbCfg,                                     Bw4DetailTx,           2, "Bandwidth Group 4"
+HKR, DcbCfg,                                     Bw4DetailRx,           2, "Bandwidth Group 4"
+HKR, DcbCfg,                                     Bw4PercentageRx,       2, "12"
+HKR, DcbCfg,                                     Bw4PercentageTx,       2, "12"
+HKR, DcbCfg,                                     Bw5DetailTx,           2, "Bandwidth Group 5"
+HKR, DcbCfg,                                     Bw5DetailRx,           2, "Bandwidth Group 5"
+HKR, DcbCfg,                                     Bw5PercentageRx,       2, "12"
+HKR, DcbCfg,                                     Bw5PercentageTx,       2, "12"
+HKR, DcbCfg,                                     Bw6DetailTx,           2, "Bandwidth Group 6"
+HKR, DcbCfg,                                     Bw6DetailRx,           2, "Bandwidth Group 6"
+HKR, DcbCfg,                                     Bw6PercentageRx,       2, "12"
+HKR, DcbCfg,                                     Bw6PercentageTx,       2, "12"
+HKR, DcbCfg,                                     Bw7DetailTx,           2, "Bandwidth Group 7"
+HKR, DcbCfg,                                     Bw7DetailRx,           2, "Bandwidth Group 7"
+HKR, DcbCfg,                                     Bw7PercentageRx,       2, "12"
+HKR, DcbCfg,                                     Bw7PercentageTx,       2, "12"
+HKR, DcbCfg\St0Config,                           DcbAppData,            0x00000003 , "00"
+HKR, DcbCfg\St0Config,                           DcbAppAdvertise,       2, "0"
+HKR, DcbCfg\St0Config,                           DcbAppEnable,          2, "1"
+HKR, DcbCfg\St0Config,                           DcbAppWilling,         2, "1"
+HKR, DcbCfg\St0Config,                           DcbLLinkAdvertise,     2, "1"
+HKR, DcbCfg\St0Config,                           DcbLLinkEnable,        2, "1"
+HKR, DcbCfg\St0Config,                           DcbLLinkWilling,       2, "1"
+HKR, DcbCfg\St1Config,                           DcbAppData,            0x00000003 , "00"
+HKR, DcbCfg\St1Config,                           DcbAppAdvertise,       2, "0"
+HKR, DcbCfg\St1Config,                           DcbAppEnable,          2, "1"
+HKR, DcbCfg\St1Config,                           DcbAppWilling,         2, "1"
+HKR, DcbCfg\Tc0Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc0Config\Rx,                        BwID,                  2, "0"
+HKR, DcbCfg\Tc0Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc0Config\Rx,                        UptoTc,                2, "1"
+HKR, DcbCfg\Tc0Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc0Config\Tx,                        BwID,                  2, "0"
+HKR, DcbCfg\Tc0Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc0Config\Tx,                        UptoTc,                2, "1"
+HKR, DcbCfg\Tc0Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc1Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc1Config\Rx,                        BwID,                  2, "1"
+HKR, DcbCfg\Tc1Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc1Config\Rx,                        UptoTc,                2, "2"
+HKR, DcbCfg\Tc1Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc1Config\Tx,                        BwID,                  2, "1"
+HKR, DcbCfg\Tc1Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc1Config\Tx,                        UptoTc,                2, "2"
+HKR, DcbCfg\Tc1Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc2Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc2Config\Rx,                        BwID,                  2, "2"
+HKR, DcbCfg\Tc2Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc2Config\Rx,                        UptoTc,                2, "4"
+HKR, DcbCfg\Tc2Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc2Config\Tx,                        BwID,                  2, "2"
+HKR, DcbCfg\Tc2Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc2Config\Tx,                        UptoTc,                2, "4"
+HKR, DcbCfg\Tc2Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc3Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc3Config\Rx,                        BwID,                  2, "3"
+HKR, DcbCfg\Tc3Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc3Config\Rx,                        UptoTc,                2, "8"
+HKR, DcbCfg\Tc3Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc3Config\Tx,                        BwID,                  2, "3"
+HKR, DcbCfg\Tc3Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc3Config\Tx,                        UptoTc,                2, "8"
+HKR, DcbCfg\Tc3Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc4Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc4Config\Rx,                        BwID,                  2, "4"
+HKR, DcbCfg\Tc4Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc4Config\Rx,                        UptoTc,                2, "16"
+HKR, DcbCfg\Tc4Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc4Config\Tx,                        BwID,                  2, "4"
+HKR, DcbCfg\Tc4Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc4Config\Tx,                        UptoTc,                2, "16"
+HKR, DcbCfg\Tc4Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc5Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc5Config\Rx,                        BwID,                  2, "5"
+HKR, DcbCfg\Tc5Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc5Config\Rx,                        UptoTc,                2, "32"
+HKR, DcbCfg\Tc5Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc5Config\Tx,                        BwID,                  2, "5"
+HKR, DcbCfg\Tc5Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc5Config\Tx,                        UptoTc,                2, "32"
+HKR, DcbCfg\Tc5Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc6Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc6Config\Rx,                        BwID,                  2, "6"
+HKR, DcbCfg\Tc6Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc6Config\Rx,                        UptoTc,                2, "64"
+HKR, DcbCfg\Tc6Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc6Config\Tx,                        BwID,                  2, "6"
+HKR, DcbCfg\Tc6Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc6Config\Tx,                        UptoTc,                2, "64"
+HKR, DcbCfg\Tc6Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc7Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc7Config\Rx,                        BwID,                  2, "7"
+HKR, DcbCfg\Tc7Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc7Config\Rx,                        UptoTc,                2, "128"
+HKR, DcbCfg\Tc7Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc7Config\Tx,                        BwID,                  2, "7"
+HKR, DcbCfg\Tc7Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc7Config\Tx,                        UptoTc,                2, "128"
+HKR, DcbCfg\Tc7Config\Tx,                        StrictPriority,        2, "0"
+
+[MSI.reg]
+HKR, "Interrupt Management", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MSISupported, 0x00010001, 1
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MessageNumberLimit, 0x00010001, 33
+
+[Powermgmt.reg]
+; EnablePME
+HKR,Ndi\Params\EnablePME,                 ParamDesc,                    0, %Enable_PME%
+HKR,Ndi\Params\EnablePME,                 Type,                         0, "enum"
+HKR,Ndi\Params\EnablePME,                 Default,                      0, "0"
+HKR,Ndi\Params\EnablePME\Enum,            "1",                          0, %Enabled%
+HKR,Ndi\Params\EnablePME\Enum,            "0",                          0, %Disabled%
+
+[PowermgmtEn.reg]
+; EnablePME enabled
+HKR,Ndi\Params\EnablePME,                 ParamDesc,                    0, %Enable_PME%
+HKR,Ndi\Params\EnablePME,                 Type,                         0, "enum"
+HKR,Ndi\Params\EnablePME,                 Default,                      0, "1"
+HKR,Ndi\Params\EnablePME\Enum,            "1",                          0, %Enabled%
+HKR,Ndi\Params\EnablePME\Enum,            "0",                          0, %Disabled%
+
+[Advanced.DelReg]
+HKR, Ndi\Params
+HKR, PROSetNdi\Params
+HKR, PROSetNdi\NdiExt
+
+[FCoE.DelReg]
+HKR,, FCoENumaNodeCount
+HKR,, FCoEStartingRSSCoreNumber
+HKR,, EnableFcoeOffload
+
+[AddEventLog]
+HKR,, EventMessageFile, 0x00020000, %EventLogMessageDllPath%
+HKR,, TypesSupported,   0x00010001, 7
+
+[ProductVersion.reg]
+HKLM,SOFTWARE\Dell\MUP\Intel\Product_Version,,,"18.0.0"
+
+;-----------------------------------------------------------------------------
+; Uninstall parameters
+;-----------------------------------------------------------------------------
+[Uninstall.reg]
+HKR,Prounstl\SupportedDevices\8086, 1572, 0, "1572"
+HKR,Prounstl\SupportedDevices\8086, 1580, 0, "1580"
+HKR,Prounstl\SupportedDevices\8086, 1581, 0, "1581"
+HKR,Prounstl\SupportedDevices\8086, 1583, 0, "1583"
+HKR,Prounstl\SupportedDevices\8086, 1584, 0, "1584"
+HKR,Prounstl\SupportedDevices\8086, 1585, 0, "1585"
+HKR,Prounstl\SupportedDevices\8086, 1586, 0, "1586"
+HKR,Prounstl\SupportedDevices\8086, 1589, 0, "1589"
+HKR,Prounstl\SupportedDevices\8086, 158A, 0, "158A"
+HKR,Prounstl\SupportedDevices\8086, 158B, 0, "158B"
+HKR,Prounstl\Dins, i40ea65.din, 0, "XL710.Uninstall"
+HKR,Prounstl\Services, %ServiceName%, 0, i40ea65.sys
+
+;-----------------------------------------------------------------------------
+; Driver "service" installation settings
+;-----------------------------------------------------------------------------
+[Service]
+DisplayName    = %Service.Displayname%
+ServiceType    = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType      = 3 ;%SERVICE_DEMAND_START%
+ErrorControl   = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\i40ea65.sys
+LoadOrderGroup = NDIS
+AddReg         = Service_AddReg
+
+[Service_AddReg]
+HKR,, BootFlags, 0x00010001, 0x1
+
+;-----------------------------------------------------------------------------
+; Event Log settings
+;-----------------------------------------------------------------------------
+[EventLog]
+AddReg = AddEventLog
+
+;-----------------------------------------------------------------------------
+; Coinstaller installation
+;-----------------------------------------------------------------------------
+[CoInstallerCopyFiles]
+NicCo4.dll,,,0x00000010 ;don't overwrite
+NicInI40.dll
+
+[CoInstaller_AddReg]
+HKR,, CoInstallers32, 0x00010000, "NicCo4.dll,NicCoInstallerEntry"
+HKR,, NicCoPlugins, 0x00010000, "NicInI40.dll,NicCoInstallerEntry"
+
+[CoInK.reg]
+HKR,, CoInstallFlag, 0x00010001, 0x20680040
+
+[CoInKPM.reg]
+HKR,, CoInstallFlag, 0x00010001, 0x20680048
+
+[CoInKPMNOSR.reg]
+HKR,, CoInstallFlag, 0x00010001, 0x00680048
+
+[CopyFiles]
+i40ea65.sys,,,2
+
+[MessageDll.CopyFiles]
+;i40eamsg.dll,,,2
+
+[Uninstall.CopyFiles]
+i40ea65.din,,,2
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;-----------------------------------------------------------------------------
+[DestinationDirs]
+CopyFiles            = 12
+DefaultDestDir       = 11
+Uninstall.CopyFiles  = 11
+CoInstallerCopyFiles = 11
+MessageDll.CopyFiles = 11
+
+[SourceDisksNames]
+1 = %DiskName%,,,
+
+;-----------------------------------------------------------------------------
+; SourceDisksFiles
+;-----------------------------------------------------------------------------
+[SourceDisksFiles]
+i40ea65.sys  = 1
+i40ea65.din  = 1
+;i40eamsg.dll = 1
+NicCo4.dll   = 1
+NicInI40.dll = 1
+
+[Strings]
+InterruptModeration                  = "Interrupt Moderation"
+InterruptThrottleRate                = "Interrupt Moderation Rate"
+Adaptive                             = "Adaptive"
+Extreme                              = "Extreme"
+High                                 = "High"
+Medium                               = "Medium"
+Low                                  = "Low"
+IPChksumOffv4                        = "IPv4 Checksum Offload"
+TCPChksumOffv4                       = "TCP Checksum Offload (IPv4)"
+UDPChksumOffv4                       = "UDP Checksum Offload (IPv4)"
+LsoV2IPv4                            = "Large Send Offload V2 (IPv4)"
+TCPChksumOffv6                       = "TCP Checksum Offload (IPv6)"
+UDPChksumOffv6                       = "UDP Checksum Offload (IPv6)"
+LsoV2IPv6                            = "Large Send Offload V2 (IPv6)"
+ChksumOffTxRx                        = "Rx & Tx Enabled"
+ChksumOffTx                          = "Tx Enabled"
+ChksumOffRx                          = "Rx Enabled"
+TransmitBuffers                      = "Transmit Buffers"
+ReceiveBuffers                       = "Receive Buffers"
+RSS                                  = "Receive Side Scaling"
+NumRssQueues2                        = "Maximum Number of RSS Queues"
+RSSProfile                           = "RSS load balancing profile"
+Closest_Processor                    = "ClosestProcessor"
+Closest_Processor_Static             = "ClosestProcessorStatic"
+NUMA_Scaling                         = "NUMAScaling"
+NUMA_Scaling_Static                  = "NUMAScalingStatic"
+Conservative_Scaling                 = "ConservativeScaling"
+RssBaseProcNumber                    = "RSS Base Processor Number"
+MaxRssProcessors                     = "Maximum Number of RSS Processors"
+NumaNodeId                           = "Preferred NUMA node"
+1queue                               = "1 Queue"
+2queues                              = "2 Queues"
+4queues                              = "4 Queues"
+8queues                              = "8 Queues"
+16queues                             = "16 Queues"
+32queues                             = "32 Queues"
+FlowControl                          = "Flow Control"
+FlowControl_RxOnly                   = "Rx Enabled"
+FlowControl_TxOnly                   = "Tx Enabled"
+FlowControl_Full                     = "Rx & Tx Enabled"
+PriorityVLANTag2                     = "Packet Priority & VLAN"
+PriorityVlanDisabled2                = "Packet Priority & VLAN Disabled"
+PriorityEnabled2                     = "Packet Priority Enabled"
+PriorityVlanEnabled2                 = "Packet Priority & VLAN Enabled"
+VlanEnabled                          = "VLAN Enabled"
+SpeedDuplex                          = "Speed & Duplex"
+AutoNegotiation                      = "Auto Negotiation"
+100Mb_Full_Duplex                    = "100 Mbps Full Duplex"
+1000Mb_Full_Duplex                   = "1.0 Gbps Full Duplex"
+10Gb_Full_Duplex                     = "10 Gbps Full Duplex"
+20Gb_Full_Duplex                     = "20 Gbps Full Duplex"
+40Gb_Full_Duplex                     = "40 Gbps Full Duplex"
+Off                                  = "Off"
+Enabled                              = "Enabled"
+Disabled                             = "Disabled"
+Bytes4088                            = "4088 Bytes"
+Bytes9014                            = "9014 Bytes"
+LAA                                  = "Locally Administered Address"
+JumboPacket                          = "Jumbo Packet"
+RSCIPv4                              = "Recv Segment Coalescing (IPv4)"
+RSCIPv6                              = "Recv Segment Coalescing (IPv6)"
+LogLinkState                         = "Log Link State Event"
+Enable_PME                           = "Enable PME"
+VMQ                                  = "Virtual Machine Queues"
+VMQVlanFiltering                     = "VMQ VLAN Filtering"
+SRIOV                                = "SR-IOV"
+QOS                                  = "NDIS QOS"
+PacketDirect                         = "Packet Direct"
+VlanId                               = "VLAN ID"
+Encap                                = "Encapsulated Task Offload"
+EncapNvgre                           = "NVGRE Encapsulated Task Offload"
+EncapVxlan                           = "VXLAN Encapsulated Task Offload"
+VxlanUdpPort                         = "VXLAN UDP destination port number"
+VSwitchRSS                           = "Virtual Switch RSS"
+ServiceName                          = "i40ea"
+Intel                                = "Intel"
+EventLogMessageDllPath               = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\drivers\i40ea65.sys"
+DiskName                             = "Intel(R) PRO/40GbE Driver Disk"
+Service.Displayname                  = "Intel(R) PRO/40GbE PCIe-A Network Connection Driver"
+
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+
+F1572.Generic.Description            = "Intel(R) Ethernet Controller X710 for 10GbE SFP+"
+F1581.Generic.Description            = "Intel(R) Ethernet Controller X710 for 10GbE backplane"
+F1583.Generic.Description            = "Intel(R) Ethernet Controller XL710 for 40GbE QSFP+"
+F1572.SFP.Generic.Description        = "Intel(R) Ethernet Converged Network Adapter X710"
+F1583.QSFP.Dual.Description          = "Intel(R) Ethernet Converged Network Adapter XL710-Q2"
+F1572.SFP.Quad.Dell.Description      = "Intel(R) Ethernet Converged Network Adapter X710"
+F1572.SFP.Dual.Dell.Description      = "Intel(R) Ethernet Converged Network Adapter X710"
+F1581.KBNDC.Dell.Generic.Description = "Intel(R) Ethernet 10G X710-k bNDC"
+F1581.2PKBNDC.Dell.Description       = "Intel(R) Ethernet 10G 2P X710-k bNDC"
+F1581.4PKBNDC.Dell.Description       = "Intel(R) Ethernet 10G 4P X710-k bNDC"
+F1572.RNDC.Dell.Generic.Description  = "Intel(R) Ethernet 10G X710 rNDC"
+F1572.RNDC.Dell.Description          = "Intel(R) Ethernet 10G 4P X710/I350 rNDC"
+F1572.SFPRNDC.Dell.Description       = "Intel(R) Ethernet 10G 4P X710 SFP+ rNDC"
+F1572.OCP.Dual.Dell.Description      = "Intel(R) Ethernet Server Adapter X710-DA2 for OCP"
+F1589.BASET.LOM.Description          = "Intel(R) Ethernet Controller X710/X557-AT 10GBASE-T"
+F1572.SFP.OCP.Dual.Dell.Description  = "Intel(R) Ethernet Server Adapter X710-DA2 for OCP"
+F1583.QSFP.Dual.Dell.Description     = "Intel(R) Ethernet 40G 2P XL710 QSFP+ rNDC"
+F1589.Generic.Description            = "Intel(R) Ethernet Converged Network Adapter X710-T"
+F1585.Generic.Description            = "Intel(R) Ethernet Controller XL710 for 10GbE QSFP+"
+F1586.Generic.Description            = "Intel(R) Ethernet Controller X710 for 10GBASE-T"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------

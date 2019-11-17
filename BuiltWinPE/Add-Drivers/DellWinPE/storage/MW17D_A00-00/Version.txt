@@ -1,0 +1,8 @@
+Title: Storage:  Driver
+Version: A00
+OEM Name: 
+OEM Version: 2.00.66.02
+Computers: Precision: R7610, T7610, T3610, T5610
+OS: Windows 8.1 64-bit - 8.1 SL (Single Language), Windows 8.1 64-bit - 8.1 Pro, Windows 8.1 64-bit - 8.1
+Languages: Japanese,Chinese Simplified,Spanish,Korean,French,Italian,Chinese Traditional,German,English
+Created: 10/14/2013

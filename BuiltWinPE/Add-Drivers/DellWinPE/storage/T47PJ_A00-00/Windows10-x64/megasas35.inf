@@ -1,0 +1,325 @@
+; INF file for MegaRaid family of RAID controllers.
+;////////////////////////////////////////////////////////////////////////////////////////////////////////
+;//
+;// Avago Technologies is a trademark of Avago Technologies in the United States and other countries. 
+;//
+;// Copyright © 2015-2017 Avago Technologies 
+;// All rights reserved 
+;//
+;////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+[version]
+Signature   ="$Windows NT$"
+Class       = SCSIAdapter
+ClassGUID   = {4D36E97B-E325-11CE-BFC1-08002BE10318}
+Provider    = %AVAGO%
+CatalogFile = megasas35.cat
+DriverVer=06/08/2017,7.702.12.00
+
+[Manufacturer]
+%AVAGO% = AVAGO, NTx86, NTamd64
+
+[SourceDisksNames]
+1 = %DISK%
+
+[SourceDisksFiles]
+megasas35.sys = 1
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[Install_MSI.NT]
+CopyFiles = @megasas35.sys
+
+[Install_MSI.NT.HW]
+Include = machine.inf
+Needs   = PciIoSpaceNotRequired
+AddReg  = Install_AddReg_HW
+
+[Install_AddReg_HW]
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MSISupported, %REG_DWORD%, %MSI_ENABLED%
+HKR, Interrupt Management\Affinity Policy, DevicePolicy, %REG_DWORD%, %AcrossAllProcessors%
+HKR, Interrupt Management\Affinity Policy, DevicePriority, %REG_DWORD%, %IrqPriorityHigh%
+HKR, Interrupt Management\Affinity Policy, GroupPolicy, %REG_DWORD%, 1
+
+[Install_MSI.NT.Services]
+AddService = megasas35, %SPSVCINST_ASSOCSERVICE%, Driver_Install, EventLog_Install
+
+[Driver_Install]
+ServiceType    = %SERVICE_KERNEL_DRIVER% 
+StartType      = %SERVICE_BOOT_START% 
+ErrorControl   = %SERVICE_ERROR_NORMAL% 
+ServiceBinary  = %12%\megasas35.sys
+LoadOrderGroup = SCSI Miniport
+AddReg         = Parms_AddReg
+
+[Parms_AddReg]
+HKR, "Parameters", %BUSTYPE_NAME%, %REG_DWORD%, %BUSTYPE_RAID%
+HKR, "Parameters\PnpInterface", %PCIBUS%, %REG_DWORD%, 1
+HKR, "Parameters\Device", DriverParameter, %FLAG_ADDREG_NOCLOBBER%, "nobusywait=1"
+HKR, "Parameters\Device", %512eKey%, %REG_DWORD%, %ENABLED%
+HKLM, "System\CurrentControlSet\Services\Disk", %TIMEOUT_VALUE%, %REG_DWORD%, %TIMEOUT_SECONDS%
+HKR, "StorPort", "PowerSrbTimeout", %REG_DWORD%, %POWER_TIMEOUT%
+
+[EventLog_Install]
+AddReg = EventLog_AddReg
+
+[EventLog_AddReg]
+HKR,,EventMessageFile, %REG_EXPAND_SZ%, "%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\megasas35.sys"
+HKR,,TypesSupported, %REG_DWORD%, 7
+
+[AVAGO.NTx86]
+
+
+;MegaRAID
+%9460-16i.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_94601000
+%9480-8i8e.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_94801000
+%9460-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_94611000
+%9460-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_94621000
+%9480-8e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_94811000
+%9365-28i.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_94631000
+%9365-24i.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_94641000
+%9440-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_94411000
+%9440-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_94401000
+%9440-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_94421000
+
+;Intel
+%RMSP3AD160.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_352D8086
+%RSP3TD160.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_94608086
+%RSP3MD088.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_94808086
+%RMSP3CD080.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_352E8086
+%RMSP3HD080.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_352F8086
+%RSP3DD080.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_94618086
+%RMSP3LD060.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_35288086
+%RMSP3LD060.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_35298086
+%RSP3WD080.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_94418086
+%RSP3TD080.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_94408086
+
+;DELL
+%H840.DeviceDesc%                 = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FC91028
+%H840ESDS.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FCA1028
+%H740P.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FCB1028
+%H740PESDS.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FCC1028
+%H740PMini.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FCD1028
+%H740PMiniESDS.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FCE1028
+%H740PMiniB.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FCF1028
+%H740PMiniBESDS.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FD01028
+%H745PMX.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_1FD41028
+
+;Lenovo
+%Boynton8i.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_05001D49
+%Dania.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_001C&SUBSYS_05011D49
+%CaptMarvel.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_05021D49
+%Vero8i.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_06011D49
+%Vero16i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_06021D49
+%Vero24i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_06031D49
+%Vero8e.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_06041D49
+%Aventura.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_001B&SUBSYS_06051D49
+%LenovoHitachiDania.DeviceDesc%   = Install_MSI, PCI\VEN_1000&DEV_001C&SUBSYS_30901054
+%Polaris-8i.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_103A17AA
+%Betelguese-16i.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_103B17AA
+
+;Cisco
+%UCSC-RAID12G-2GB.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_020E1137
+%UCSC-RAID12GP-4GB.DeviceDesc%    = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_02101137
+%UCSC-SAS9460-8i.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_02131137
+
+;FTS
+%PRAID-EP540i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_12361734
+%PRAID-EP580i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_12381734
+%PRAID-EP520i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_123E1734
+
+;Huawei
+%HuaWei3508ROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_D21519E5
+%HuaWei3408ROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_D21319E5
+%HuaWei3516ROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_D21619E5
+
+
+;Quanta  
+%Quanta3516ROMB32PD.DeviceDesc%    = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_8B00152D
+%Quanta3516ROMB240PD.DeviceDesc%   = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_8B01152D
+
+;Inventec
+%Inventec3508ROMB.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_11703508
+
+
+[AVAGO.NTamd64]
+
+;MegaRAID
+%9460-16i.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_94601000
+%9480-8i8e.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_94801000
+%9460-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_94611000
+%9460-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_94621000
+%9480-8e.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_94811000
+%9365-28i.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_94631000
+%9365-24i.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_94641000
+%9440-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_94411000
+%9440-8i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_94401000
+%9440-4i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_94421000
+
+;Intel
+%RMSP3AD160.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_352D8086
+%RSP3TD160.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_94608086
+%RSP3MD088.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_94808086
+%RMSP3CD080.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_352E8086
+%RMSP3HD080.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_352F8086
+%RSP3DD080.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_94618086
+%RMSP3LD060.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_35288086
+%RMSP3LD060.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_35298086
+%RSP3WD080.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_94418086
+%RSP3TD080.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_94408086
+
+;DELL
+%H840.DeviceDesc%                 = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FC91028
+%H840ESDS.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FCA1028
+%H740P.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FCB1028
+%H740PESDS.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FCC1028
+%H740PMini.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FCD1028
+%H740PMiniESDS.DeviceDesc%        = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FCE1028
+%H740PMiniB.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FCF1028
+%H740PMiniBESDS.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_1FD01028
+%H745PMX.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_1FD41028
+
+;Lenovo
+%Boynton8i.DeviceDesc%            = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_05001D49
+%Dania.DeviceDesc%                = Install_MSI, PCI\VEN_1000&DEV_001C&SUBSYS_05011D49
+%CaptMarvel.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_05021D49
+%Vero8i.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_06011D49
+%Vero16i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_06021D49
+%Vero24i.DeviceDesc%              = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_06031D49
+%Vero8e.DeviceDesc%               = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_06041D49
+%Aventura.DeviceDesc%             = Install_MSI, PCI\VEN_1000&DEV_001B&SUBSYS_06051D49
+%LenovoHitachiDania.DeviceDesc%   = Install_MSI, PCI\VEN_1000&DEV_001C&SUBSYS_30901054
+%Polaris-8i.DeviceDesc%           = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_103A17AA
+%Betelguese-16i.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_103B17AA
+
+;Cisco
+%UCSC-RAID12G-2GB.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_020E1137
+%UCSC-RAID12GP-4GB.DeviceDesc%    = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_02101137
+%UCSC-SAS9460-8i.DeviceDesc%      = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_02131137
+
+;FTS
+%PRAID-EP540i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_12361734
+%PRAID-EP580i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_12381734
+%PRAID-EP520i.DeviceDesc%         = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_123E1734
+
+;Huawei
+%HuaWei3508ROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_D21519E5
+%HuaWei3408ROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0017&SUBSYS_D21319E5
+%HuaWei3516ROMB.DeviceDesc%       = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_D21619E5
+
+;Quanta  
+
+%Quanta3516ROMB32PD.DeviceDesc%    = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_8B00152D
+%Quanta3516ROMB240PD.DeviceDesc%   = Install_MSI, PCI\VEN_1000&DEV_0014&SUBSYS_8B01152D
+
+;Inventec
+%Inventec3508ROMB.DeviceDesc%     = Install_MSI, PCI\VEN_1000&DEV_0016&SUBSYS_11703508
+
+
+[Strings]
+;Localizable Strings needed for HBA naming in Windows UI
+
+AVAGO = "AVAGO TECH."
+DISK = "AVAGO megasas35 Controller Driver"
+
+
+;MegaRAID
+9460-16i.DeviceDesc               = "MegaRAID 9460-16i"
+9480-8i8e.DeviceDesc              = "MegaRAID 9480-8i8e"
+9460-8i.DeviceDesc                = "MegaRAID 9460-8i"
+9460-4i.DeviceDesc                = "MegaRAID 9460-4i"
+9480-8e.DeviceDesc                = "MegaRAID 9480-8e"
+9365-28i.DeviceDesc               = "MegaRAID 9365-28i"
+9365-24i.DeviceDesc               = "MegaRAID 9365-24i"
+9440-16i.DeviceDesc               = "MegaRAID 9440-16i"
+9440-8i.DeviceDesc                = "MegaRAID 9440-8i"
+9440-4i.DeviceDesc                = "MegaRAID 9440-4i"
+
+; Intel
+RMSP3AD160.DeviceDesc             = "Intel(R) Integrated RAID Module RMSP3AD160F"
+RSP3TD160.DeviceDesc              = "Intel(R) RAID Controller RSP3TD160F"
+RSP3MD088.DeviceDesc              = "Intel(R) RAID Controller RSP3MD088F"
+RMSP3CD080.DeviceDesc             = "Intel(R) Integrated RAID Module RMSP3CD080F"
+RMSP3HD080.DeviceDesc             = "Intel(R) Integrated RAID Module RMSP3HD080E"
+RSP3DD080.DeviceDesc              = "Intel(R) RAID Controller RSP3DD080F"
+RSP3WD080.DeviceDesc              = "Intel(R) RAID Controller RSP3WD080E"
+RMSP3LD060.DeviceDesc             = "Intel(R) Integrated RAID RMSP3LD060"
+RSP3TD080.DeviceDesc              = "Intel(R) Integrated RAID RSP3TD080"
+
+;DELL
+H840.DeviceDesc                   = "PERC H840 Adapter"
+H840ESDS.DeviceDesc               = "PERC H840 Adapter - ESDS"
+H740P.DeviceDesc                  = "PERC H740P Adapter"
+H740PESDS.DeviceDesc              = "PERC H740P Adapter - ESDS"
+H740PMini.DeviceDesc              = "PERC H740P Mini"
+H740PMiniESDS.DeviceDesc          = "PERC H740P Mini - ESDS"
+H740PMiniB.DeviceDesc             = "PERC H740P Mini(blade)"
+H740PMiniBESDS.DeviceDesc         = "PERC H740P Mini(blade) - ESDS"
+H745PMX.DeviceDesc                = "PERC H745P MX"
+
+; Lenovo
+Boynton8i.DeviceDesc              = "ThinkSystem RAID 530-8i PCIe 12Gb Adapter"
+Vero8i.DeviceDesc                 = "ThinkSystem RAID 930-8i 2GB Flash PCIe 12Gb Adapter"
+Vero16i.DeviceDesc                = "ThinkSystem RAID 930-16i 4GB Flash PCIe 12Gb Adapter"
+Vero24i.DeviceDesc                = "ThinkSystem RAID 930-24i 4GB Flash PCIe 12Gb Adapter"
+Vero8e.DeviceDesc                 = "ThinkSystem RAID 930-8e 4GB Flash PCIe 12Gb Adapter"
+Aventura.DeviceDesc               = "ThinkSystem RAID 930-4i 2GB Flash Flex Adapter"
+Dania.DeviceDesc                  = "ThinkSystem RAID 530-4i Flex Adapter"
+CaptMarvel.DeviceDesc             = "ThinkSystem RAID 530-8i Dense Adapter"
+LenovoHitachiDania.DeviceDesc     = "HITACHI SAS 3404 iMR ROMB"
+Polaris-8i.DeviceDesc             = "MegaRAID 9440-8i"
+Betelguese-16i.DeviceDesc         = "MegaRAID 9460-16i"
+
+;Cisco
+UCSC-RAID12G-2GB.DeviceDesc       = "Cisco 12G Modular Raid Controller with 2GB cache (max 16 drives)"
+UCSC-RAID12GP-4GB.DeviceDesc      = "Cisco 12G Modular Raid Controller with 4GB cache (max 26 drives)"
+UCSC-SAS9460-8i.DeviceDesc        = "Cisco 12G 9460-8i Raid controller with 2GB cache"
+
+;FTS
+PRAID-EP540i.DeviceDesc           = "PRAID EP540i"
+PRAID-EP580i.DeviceDesc           = "PRAID EP580i"
+PRAID-EP520i.DeviceDesc           = "PRAID EP520i"
+
+;Huawei
+HuaWei3508ROMB.DeviceDesc         = "SAS3508"
+HuaWei3408ROMB.DeviceDesc         = "SAS3408-iMR"
+HuaWei3516ROMB.DeviceDesc         = "SAS3516"
+
+;Quanta
+Quanta3516ROMB32PD.DeviceDesc    = "Quanta 3516 Mezzanine ROMB 32PD"
+Quanta3516ROMB240PD.DeviceDesc   = "Quanta 3516 Mezzanine ROMB 240PD"
+
+;Inventec
+Inventec3508ROMB.DeviceDesc       = "OMSC-SAS3508"
+
+
+;*******************************************
+;Non-Localizable strings
+
+SPSVCINST_ASSOCSERVICE = 0x00000002
+SERVICE_KERNEL_DRIVER  = 1
+SERVICE_BOOT_START     = 0
+SERVICE_ERROR_NORMAL   = 1
+REG_EXPAND_SZ          = 0x00020000
+REG_DWORD              = 0x00010001
+FLAG_ADDREG_NOCLOBBER  = 0x00000002
+
+PCIBUS                  = 5
+TIMEOUT_SECONDS         = 60
+TIMEOUT_VALUE           = "TimeoutValue"
+BUSTYPE_NAME            = "BusType"
+BUSTYPE_RAID            = 8
+POWER_TIMEOUT           = 0x28
+
+MSI_DISABLED            = 0
+MSI_ENABLED             = 1
+AcrossAllProcessors     = 5
+IrqPriorityHigh         = 3
+
+512eKey                 = "EnableQueryAccessAlignment"
+ENABLED                 = 1
+DISABLED                = 0

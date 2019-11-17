@@ -1,0 +1,102 @@
+;/*++
+;
+;Copyright (c) 2010-2017, Intel Corporation
+;
+;Abstract:
+;    INF file for installing Thunderbolt(TM) Networking Driver
+;
+;--*/
+
+[Version]
+Signature               = "$Windows NT$"
+Class                   = Net
+ClassGUID               = {4D36E972-E325-11CE-BFC1-08002BE10318}
+Provider                = %Intel%
+CatalogFile             = tp2p81x.cat
+DriverVer=02/27/2017,16.3.61.2
+
+[Manufacturer]
+%Intel%                 = Thunderbolt,NTamd64.6.3.1
+
+[Thunderbolt.NTamd64.6.3.1]
+%TbtMpDrv_Desc%         = TbtMpDrv_ndi, {E6869364-3C20-4216-87C6-829A050D1291}\P2P
+
+;-------------------------------------------------------------------------
+; Installation Section
+;-------------------------------------------------------------------------
+[TbtMpDrv_ndi]
+AddReg                  = Install.ndi
+Characteristics         = 0x81   ; NCF_VIRTUAL | NCF_HAS_UI
+BusType                 = 5      ; PCIBus
+Copyfiles               = TbtMpDrv_copyfiles.sys
+
+*IfType                 = 0x6    ; IF_TYPE_ETHERNET_CSMACD
+*MediaType              = 0x0    ; NdisMedium802_3
+*PhysicalMediaType      = 14     ; NdisPhysicalMedium802_3
+EnableDhcp              = 0      ; Disable DHCP
+
+[SourceDisksNames]
+1                       = %TbtMpDrv_Desc%,"",,
+
+[SourceDisksFiles]
+tp2p81x.sys            = 1,,
+
+[DestinationDirs]
+DefaultDestDir          = 12
+TbtMpDrv_copyfiles.sys  = 12
+
+[TbtMpDrv_copyfiles.sys]
+tp2p81x.sys,,,2
+
+;-------------------------------------------------------------------------
+; Ndi installation support
+;-------------------------------------------------------------------------
+[Install.ndi]
+HKR,  Ndi,                          Service,    ,  "TbtMpDrv"
+HKR,  Ndi\Interfaces,               UpperRange, 0, "ndis5"
+HKR,  Ndi\Interfaces,               LowerRange, 0, "ethernet"
+; *RSS
+HKR,  Ndi\Params\*RSS,              ParamDesc,  0, %RSS%
+HKR,  Ndi\Params\*RSS,              default,    0, "1"
+HKR,  Ndi\Params\*RSS,              type,       0, "enum"
+HKR,  Ndi\Params\*RSS\Enum,         "0",        0, %Disabled%
+HKR,  Ndi\Params\*RSS\Enum,         "1",        0, %Enabled%
+
+;-------------------------------------------------------------------------
+; Service installation support
+;-------------------------------------------------------------------------
+[TbtMpDrv_ndi.Services]
+AddService              = TbtMpDrv, 2, TbtMpDrv_Service.Install, TbtMpDrv_EventLog
+
+[TbtMpDrv_Service.Install]
+DisplayName             = %TbtMpDrv_Desc%
+ServiceType             = %SERVICE_KERNEL_DRIVER%
+StartType               = %SERVICE_DEMAND_START%
+ErrorControl            = %SERVICE_ERROR_NORMAL%
+ServiceBinary           = %12%\tp2p81x.sys
+LoadOrderGroup          = NDIS
+Description             = %TbtMpDrv_Desc%
+
+
+[TbtMpDrv_EventLog]
+AddReg                  = TbtMpDrv_AddEventLog.Reg
+
+[TbtMpDrv_AddEventLog.Reg]
+HKR,  ,                                      EventMessageFile,    0x00020000, "%%SystemRoot%%\System32\netevent.dll"
+HKR,  ,                                      TypesSupported,      0x00010001, 7
+HKLM, %PathToEtwPublishers%\%ProviderGuid%,  "",                  0x00000000, "Intel-Thunderbolt-Miniport"
+HKLM, %PathToEtwPublishers%\%ProviderGuid%,  "MessageFileName",   0x00020000, "%%SystemRoot%%\System32\Drivers\tp2p81x.sys"
+HKLM, %PathToEtwPublishers%\%ProviderGuid%,  "ResourceFileName",  0x00020000, "%%SystemRoot%%\System32\Drivers\tp2p81x.sys"
+
+[Strings]
+Intel                   = "Intel(R) Corporation"
+TbtMpDrv_Desc           = "Thunderbolt(TM) Networking"
+PathToEtwPublishers     = "SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Publishers"
+ProviderGuid            = "{763EFBF2-58C8-46A9-ADFB-ABB4081BA009}"
+SERVICE_KERNEL_DRIVER   = 1
+SERVICE_DEMAND_START    = 3
+SERVICE_ERROR_NORMAL    = 1
+RSS                     = "Receive Side Scaling"
+Enabled                 = "Enabled"
+Disabled                = "Disabled"
+

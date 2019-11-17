@@ -1,0 +1,155 @@
+;
+; LSI_SAS3.INF - version W8.1.0 (Windows 8.1 /Server 2012 R2)
+;
+; This is the INF file for Windows 8 / Server 2012 R2 for the LSI_SAS3
+; based PCI MPT environment (Serial Attached SCSI devices)
+;
+; ********************************************************************
+;                                                                    *
+;   Copyright 2013 LSI Corporation. All rights reserved.             *
+;                                                                    *
+;   This file is property of LSI Corporation and is licensed for     *
+;   use as is.  The receipt of or possession of this file does not   *
+;   convey any rights to modify its contents, in whole, or in part,  *
+;   without the specific written consent of LSI Corporation.         *
+;                                                                    *
+; ********************************************************************
+
+[version]
+signature="$Windows NT$"
+Class=SCSIAdapter
+ClassGUID={4D36E97B-E325-11CE-BFC1-08002BE10318}
+Provider=%LSI%
+DriverVer=06/02/2014,2.50.75.01
+CatalogFile.ntamd64=LSI_SAS3.cat
+
+[DestinationDirs]
+DefaultDestDir = 12 ; DIRID_DRIVERS
+LSI_EXE_CopyFiles = 11 ; %SystemDrive%\windows\system32
+LSI_CFGDEF_CopyFiles = 24, ProgramData\LSI\Wdcfg
+
+[SourceDisksFiles.amd64]
+lsi_sas3.sys = 1
+lsinodrv.inf = 1
+wdcfg.exe = 1
+DriverConfigParam.def = 1
+
+[SourceDisksNames]
+1 = %DiskDesc%,,
+
+[Manufacturer]
+%LSI%=LSI, NTamd64
+%INTEL%=INTEL, NTamd64
+
+[LSI.NTamd64]
+%DevDesc1% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0090
+%DevDesc1% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0091
+%DevDesc1% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0092
+%DevDesc1% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0093
+%DevDesc1% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0094
+%DevDesc1% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0095
+%DevDesc2% = LSI_SAS_Inst, PCI\VEN_1000&DEV_006C
+%DevDesc3% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0096
+%DevDesc2% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0097
+
+[INTEL.NTamd64]
+%DevDescI1% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0097&SUBSYS_35248086
+%DevDescI2% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0097&SUBSYS_35238086
+%DevDescI3% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0097&SUBSYS_35228086
+%DevDescI4% = LSI_SAS_Inst, PCI\VEN_1000&DEV_0097&SUBSYS_35218086
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[LSI_SAS_Inst]
+CopyFiles = LSI_SAS_CopyFiles
+CopyFiles = LSI_EXE_CopyFiles
+CopyFiles = LSI_CFGDEF_CopyFiles
+AddReg = LSI_SAS_AddReg
+AddReg = LSI_WDCFG_AddReg
+CopyINF = lsinodrv.inf
+
+[LSI_SAS_Inst.HW]
+AddReg = Shutdown_addreg
+DelReg = LegacyScsiportValues
+AddReg = InterruptMgmtValues
+Include = machine.inf
+Needs = PciIoSpaceNotRequired
+
+[LSI_SAS_Inst.Services]
+AddService = LSI_SAS3, %SPSVCINST_ASSOCSERVICE%, LSI_SAS_Service_Inst, Miniport_EventLog_Inst
+
+[LSI_SAS_AddReg]
+HKLM,SYSTEM\CurrentControlSet\Services\Lsi_sas3\Parameters\Device,DriverParameter,0x00000002,"PlaceHolder=0;"
+HKLM,SYSTEM\CurrentControlSet\Services\Lsi_sas3\Parameters\Device,EnableQueryAccessAlignment,0x00010001,1
+
+[LSI_WDCFG_AddReg]
+HKLM,SYSTEM\CurrentControlSet\Control\Wdcfg,TargetDriver,0x00000000,"LSI_SAS3"
+
+[LSI_SAS_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\lsi_sas3.sys
+LoadOrderGroup = SCSI Miniport
+AddReg         = pnpsafe_pci_addreg
+AddReg         = bus_type_sas
+
+[LSI_SAS_CopyFiles]
+lsi_sas3.sys,,,1
+
+[LSI_EXE_CopyFiles]
+wdcfg.exe,,,2
+
+[LSI_CFGDEF_CopyFiles]
+DriverConfigParam.def,,,2
+
+[Shutdown_addreg]
+HKR,"ScsiPort","NeedsSystemShutdownNotification",0x00010001,1
+
+[LegacyScsiportValues]
+HKR,Scsiport,BusNumber
+HKR,Scsiport,LegacyInterfaceType
+HKR,Scsiport,SlotNumber
+
+[InterruptMgmtValues] 
+HKR,"Interrupt Management",0x00000010 
+HKR,"Interrupt Management\MessageSignaledInterruptProperties",0x00000010 
+HKR,"Interrupt Management\MessageSignaledInterruptProperties",MSISupported,0x00010001,1 
+HKR, "Interrupt Management\Affinity Policy", DevicePriority, 0x00010001, 3 
+HKR, "Interrupt Management\Affinity Policy", DevicePolicy, 0x00010001, 5  
+HKR, "Interrupt Management\Affinity Policy", GroupPolicy, 0x00010001, 1  
+
+[pnpsafe_pci_addreg]
+HKR, "Parameters\PnpInterface", "5", 0x00010001, 0x00000001
+
+[bus_type_sas]
+HKR, "Parameters", "BusType", 0x00010001, 0x0000000A
+
+[Miniport_EventLog_Inst]
+AddReg = Miniport_EventLog_AddReg
+
+[Miniport_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+[Strings]
+LSI = "LSI Corporation"
+DiskDesc = "LSI PCI Fusion-MPT SAS3 Driver Install Disk (StorPort)"
+DevDesc1 = "LSI Adapter, SAS3 3108 Invader ROC -StorPort"
+DevDesc2 = "LSI Adapter, SAS3 3008 Fury -StorPort"
+DevDesc3 = "LSI Adapter, SAS3 3004 Fury -StorPort"
+INTEL = "Intel Corporation"
+DevDescI1 = "Intel(R) RAID Controller RS3UC080 "
+DevDescI2 = "Intel(R) RAID Controller RS3FC044 "
+DevDescI3 = "Intel(R) RAID Controller RS3GC008"
+DevDescI4 = "Intel(R) Integrated RAID Module RMS3JC080"
+
+;*******************************************
+;Handy macro substitutions (non-localizable)
+SPSVCINST_ASSOCSERVICE = 0x00000002
+SERVICE_KERNEL_DRIVER  = 1
+SERVICE_BOOT_START     = 0
+SERVICE_ERROR_NORMAL   = 1
+REG_EXPAND_SZ          = 0x00020000
+REG_DWORD              = 0x00010001

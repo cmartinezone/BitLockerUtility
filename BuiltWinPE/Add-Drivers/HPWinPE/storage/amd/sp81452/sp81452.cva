@@ -1,0 +1,133 @@
+﻿[CVA File Information]
+CVATimeStamp=20170725T125727
+CVASyntaxVersion=2.1A6
+
+[Software Title]
+US=AMD SATA RAID Driver
+
+[US.Software Description]
+This package provides the AMD AHCI Compatible RAID Controller Driver for supported models running a supported operating system.
+
+[General]
+PN=000000-000
+Version=7.2.0.25
+Revision=Q
+Pass=1
+Type=Driver
+Category=Driver-Storage
+TargetPartition=MFG DIAGS
+SystemMustBeRebooted=1
+VendorName=AMD
+VendorVersion=7.2.0.25
+
+[SupportedLanguages]
+Languages=GLOBAL
+Countries=GBL
+
+[ProfessionalInnovations]
+HPPI=NO
+LearnMore=
+
+[DetailFileInformation]
+rcraid.sys=<DRIVERS>\,0x0007,0x0002,0x0000,0x0019,WT64
+rcraid.sys=<DRIVERS>\,0x0007,0x0002,0x0000,0x0019,WTIOT64
+
+[Softpaq]
+SoftpaqNumber=SP81452
+SupersededSoftpaqNumber=SP79131
+SoftPaqMD5=f45b53525ed5ead5c76b5b0fd21755d6
+
+[Devices]
+PCI\VEN_1022&DEV_7905="AMD RAID Controller"
+PCI\VEN_1022&DEV_7901="AMD SATA Controller"
+PCI\VEN_1022&DEV_7904="AMD SATA Controller"
+
+[Devices_INFPath]
+WT64_INFPath=WTx64
+WTIOT64_INFPath=WTx64
+
+[System Information]
+SysId01=0x8265
+SysName01=HP EliteDesk 705 G3 MT,HP EliteDesk 705 G3 SFF
+SysId02=0x835B
+SysName02=HP EliteDesk 705 G3 MT,HP EliteDesk 705 G3 SFF
+
+[Operating Systems]
+WT64=OEM
+WTIOT64=OEM
+
+[US.Enhancements]
+- Provides RAID-1 solution on AMD AHCI/RAID Controller for data mirroring
+protection
+
+
+[Install Execution]
+Install="setup.exe"
+SilentInstall="Callinst.exe" /app spinstall_s.cmd /hide /ret 3010
+
+[ReturnCode]
+0:SUCCESS:REBOOT=The action completed successfully.
+1641:SUCCESS:NOREBOOT=The installer has initiated a restart. This message is indicative of a success. 
+1619:SUCCESS:NOREBOOT= The action completed successfully. 
+13:FAILURE:NOREBOOT=The data is invalid.
+14:SUCCESS:REBOOT= A restart is required to complete the install
+87:FAILURE:NOREBOOT=One of the parameters was invalid. 
+259:FAILURE:NOREBOOT=An error occurred during installation. 
+1604:FAILURE:NOREBOOT=Installation suspended, incomplete. 
+1612:FAILURE:NOREBOOT=The installation source for this product is not available. 
+1613:FAILURE:NOREBOOT=This installation package cannot be installed by the Windows Installer service. 
+1620:FAILURE:NOREBOOT=This installation package could not be opened. 
+1621:FAILURE:NOREBOOT=There was an error starting the Windows Installer service user interface. Contact your support personnel.
+1623:FAILURE:NOREBOOT=This language of this installation package is not supported by your system. 
+1624:FAILURE:NOREBOOT=There was an error applying transforms. Verify that the specified transform paths are valid. 
+1631:FAILURE:NOREBOOT=The Windows Installer service failed to start. Contact your support personnel. 
+1632:FAILURE:NOREBOOT=The Temp folder is either full or inaccessible. Verify that the Temp folder exists and that you can write to it. 
+1634:CANCEL:NOREBOOT=Component is not used on this machine. 
+1639:FAILURE:NOREBOOT=Invalid command line argument.
+-522190794:SUCCESS:NOREBOOT=The action completed successfully.        
+-522190759:SUCCESS:NOREBOOT=The action completed successfully.        
+-522190592:SUCCESS:NOREBOOT=The action completed successfully.        
+-522189566:SUCCESS:NOREBOOT=The action completed successfully.        
+-5012:SUCCESS:NOREBOOT=The action completed successfully.  
+-5006:SUCCESS:NOREBOOT=The action completed successfully.  
+-5001:SUCCESS:NOREBOOT=The action completed successfully.  
+-3:SUCCESS:NOREBOOT=The action completed successfully.        
+-2:SUCCESS:NOREBOOT=The action completed successfully.        
+1:SUCCESS:REBOOT=The action completed successfully.         
+2:SUCCESS:NOREBOOT=The action completed successfully.         
+3:SUCCESS:NOREBOOT=The action completed successfully.         
+5:SUCCESS:NOREBOOT=The action completed successfully.         
+7:SUCCESS:NOREBOOT=The action completed successfully.         
+10:SUCCESS:NOREBOOT=The action completed successfully.                    
+99:SUCCESS:NOREBOOT=The action completed successfully.       
+255:SUCCESS:NOREBOOT=The action completed successfully.          
+1153:SUCCESS:NOREBOOT=The action completed successfully.   
+1158:SUCCESS:NOREBOOT=The action completed successfully.   
+1601:SUCCESS:NOREBOOT=The action completed successfully.   
+1602:SUCCESS:NOREBOOT=The action completed successfully.   
+1603:SUCCESS:NOREBOOT=The action completed successfully.   
+1618:SUCCESS:NOREBOOT=The action completed successfully.     
+1622:SUCCESS:NOREBOOT=The action completed successfully.   
+1633:SUCCESS:NOREBOOT=The action completed successfully.   
+1636:SUCCESS:NOREBOOT=The action completed successfully.   
+1638:SUCCESS:NOREBOOT=The action completed successfully.   
+3010:SUCCESS:REBOOT=The action completed successfully.   
+1073807364:SUCCESS:NOREBOOT=The action completed successfully.       
+1073807464:SUCCESS:NOREBOOT=The action completed successfully.
+
+[Private]
+Private_SSMCompliant=1
+DPB_Compliant=1
+Private_ReleaseType=Routine
+Private_ProductType = Desktops
+
+[Private_SoftpaqInstall]
+
+NOTE: To install the software in this SoftPaq, you must be logged in with Administrator privileges.
+1. Download the file by clicking the "Download" or "Obtain Software" button and saving the file to a folder on your hard drive (make a note of the folder where the downloaded file is saved).
+2. Double-click the downloaded file and follow the on-screen instructions to unpack the files to C:\SWSETUP\SP81452(complete step3 in the next page to get SP# first then change SP# here) or another directory of your choice.
+3. Run the setup program from the directory that contains the unpacked SoftPaq files. Use the -? to list the command line options for the setup program.
+
+[CVAToolDocumentStamp]
+Generated by Release CVA Tool Version 1.0 using Syntax Version 2.0 A1 on 7/25/2017 12:57:27 AM
+Copyright (c) 2017 HP Development Company, L.P.

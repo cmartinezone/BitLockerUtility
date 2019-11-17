@@ -1,0 +1,39 @@
+;/*++
+;
+;Copyright (c) 2010-2018, Intel Corporation
+;
+;Abstract:
+;    INF file for installing Thunderbolt HSA Application Component
+;
+;--*/
+
+[Version]
+Signature = "$WINDOWS NT$"
+Class = SoftwareComponent
+ClassGuid = {5c4c3332-344d-483c-8739-259e934c9cc8}
+Provider = %Intel%
+CatalogFile = TbtHostControllerHsaComponent.cat
+DriverVer = 05/22/2019,1.41.648.4
+
+[Manufacturer]
+%Intel% = Thunderbolt,NTamd64.10.0...16299
+
+[Thunderbolt.NTamd64.10.0...16299]
+"Thunderbolt(TM) HSA Component" = Thunderbolt_HSA_Install, SWC\PROVIDER_Intel&&COMPONENT_ThunderboltHSA
+
+[Thunderbolt_HSA_Install.NT]
+; empty 
+
+[Thunderbolt_HSA_Install.NT.Services]
+AddService=,2
+
+[Thunderbolt_HSA_Install.NT.Software]
+AddSoftware = ThunderboltHSA,,Thunderbolt_HSA_SoftwareInstall
+
+[Thunderbolt_HSA_SoftwareInstall]
+SoftwareType = 2
+SoftwareID = pfn://AppUp.ThunderboltControlCenter_8j3eq9eme6ctt
+
+
+[Strings]
+Intel = "Intel(R) Corporation"

@@ -1,0 +1,145 @@
+;/*++
+;
+;Copyright (c) 2010-2017, Intel Corporation
+;
+;Abstract:
+;    INF file for installing Thunderbolt Bus driver
+;
+;--*/
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = System
+ClassGuid   = {4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider    = %Intel%
+CatalogFile = tbt100x.cat
+DriverVer=01/25/2018,17.3.73.6
+
+[DestinationDirs]
+DefaultDestDir          = 12
+TbtCoInstallerCopyFiles = 11
+Msi_Dir                 = 24,\Intel\Thunderbolt
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+tbt100x.sys  = 1,,
+tbtcoinx.dll    = 1,,
+setup.msi      = 1,,
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%Intel% = Thunderbolt,NTamd64.10.0.1
+
+[Thunderbolt.NTamd64.10.0.1]
+; DisplayName                Section            Device Id
+; -----------                -------            ---------
+%TbtBusDrv_DeviceDesc1575% = TbtBusDrv_Device, PCI\VEN_8086&DEV_1575&CC_0880
+%TbtBusDrv_DeviceDesc1577% = TbtBusDrv_Device, PCI\VEN_8086&DEV_1577&CC_0880
+%TbtBusDrv_DeviceDesc15BF% = TbtBusDrv_Device, PCI\VEN_8086&DEV_15BF&CC_0880
+%TbtBusDrv_DeviceDesc15D2% = TbtBusDrv_Device, PCI\VEN_8086&DEV_15D2&CC_0880
+%TbtBusDrv_DeviceDesc15D9% = TbtBusDrv_Device, PCI\VEN_8086&DEV_15D9&CC_0880
+%TbtBusDrv_DeviceDesc15E8% = TbtBusDrv_Device, PCI\VEN_8086&DEV_15E8&CC_0880
+%TbtBusDrv_DeviceDesc15EB% = TbtBusDrv_Device, PCI\VEN_8086&DEV_15EB&CC_0880
+%TbtBusDrv_DeviceDesc15DC% = TbtBusDrv_Device, PCI\VEN_8086&DEV_15DC&CC_0880
+%TbtBusDrv_DeviceDesc15DD% = TbtBusDrv_Device, PCI\VEN_8086&DEV_15DD&CC_0880
+%TbtBusDrv_DeviceDesc15DE% = TbtBusDrv_Device, PCI\VEN_8086&DEV_15DE&CC_0880
+
+[TbtBusDrv_Device.NT]
+CopyFiles = Drivers_Dir
+CopyFiles = Msi_Dir
+
+[Drivers_Dir]
+tbt100x.sys
+
+[Msi_Dir]
+setup.msi
+
+;-------------- Service installation
+[TbtBusDrv_Device.NT.Services]
+AddService = nhi,%SPSVCINST_ASSOCSERVICE%, TbtBusDrv_Service_Inst, TbtBusDrv_EventLog_Inst
+
+[TbtBusDrv_Device.NT.CoInstallers]
+AddReg      = TbtCoInstallerReg
+CopyFiles   = TbtCoInstallerCopyFiles
+
+[TbtBusDrv_Device.NT.HW]
+AddReg = MSI.reg
+AddReg = Security.reg
+
+[MSI.reg]
+HKR, "Interrupt Management",                                      0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties",   0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties",   MSISupported,        0x00010001, 1
+HKR, "Interrupt Management\MessageSignaledInterruptProperties",   MessageNumberLimit,  0x00010001, 16
+
+[TbtBusDrv_Device.NT.WMI]
+WMIInterface = {D1358209-C7FF-4D55-92AB-AC9645537BF3}, 1, WMISecurity
+
+[WmiSecurity]
+security = "O:BAG:BAD:P(A;;GA;;;SY)(A;;GA;;;BA)(A;;GA;;;WD)"
+
+[Security.reg]
+HKR,,DeviceCharacteristics,0x10001,0x100
+HKR,,Security,,"D:P(A;;GA;;;SY)(A;;GA;;;BA)(A;;GR;;;WD)"
+
+;*****************************************
+; Co-installer Section
+;*****************************************
+[TbtCoInstallerReg]
+HKLM, "SYSTEM\CurrentControlSet\Services\ThunderboltService", ApprovalLevel, 0x00010001, 1 
+HKR,,CoInstallers32,0x00010000,"tbtcoinx_17_3_73_6.dll, CoDeviceInstall"
+
+[TbtCoInstallerCopyFiles]
+tbtcoinx_17_3_73_6.dll,tbtcoinx.dll,,0x00000010
+
+; -------------- TbtBusDrv driver install sections
+[TbtBusDrv_Service_Inst]
+DisplayName    = %TbtBusDrv_SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\tbt100x.sys
+LoadOrderGroup = Extended Base
+AddReg         = TbtBusDrv_Service_Events_AddReg
+
+[TbtBusDrv_Service_Events_AddReg]
+HKLM, %PathToEtwPublishers%\%ProviderGuid%, "", 0x00000000, "Intel-Thunderbolt-Bus"
+HKLM, %PathToEtwPublishers%\%ProviderGuid%, "MessageFileName", 0x00020000, "%%SystemRoot%%\System32\Drivers\tbt100x.sys"
+HKLM, %PathToEtwPublishers%\%ProviderGuid%, "ResourceFileName", 0x00020000, "%%SystemRoot%%\System32\Drivers\tbt100x.sys"
+
+[TbtBusDrv_Device.NT.Wdf]
+KmdfService =  nhi, TbtBusDrv_wdfsect
+
+[TbtBusDrv_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[EventLog.reg]
+HKR,,EventMessageFile,0x00020000,"%%SystemRoot%%\System32\IoLogMsg.dll;%%12%%\tbt100x.sys"
+HKR,,TypesSupported,0x00010001,7
+
+[TbtBusDrv_EventLog_Inst]
+AddReg = EventLog.reg
+
+[Strings]
+SPSVCINST_ASSOCSERVICE = 0x00000002
+Intel = "Intel(R) Corporation"
+DiskName = "Thunderbolt(TM) Controller Installation Disk"
+TbtBusDrv_DeviceDesc1575 = "Thunderbolt(TM) Controller - 1575"
+TbtBusDrv_DeviceDesc1577 = "Thunderbolt(TM) Controller - 1577"
+TbtBusDrv_DeviceDesc15BF = "Thunderbolt(TM) Controller - 15BF"
+TbtBusDrv_DeviceDesc15D2 = "Thunderbolt(TM) Controller - 15D2"
+TbtBusDrv_DeviceDesc15D9 = "Thunderbolt(TM) Controller - 15D9"
+TbtBusDrv_DeviceDesc15E8 = "Thunderbolt(TM) Controller - 15E8"
+TbtBusDrv_DeviceDesc15EB = "Thunderbolt(TM) Controller - 15EB"
+TbtBusDrv_DeviceDesc15DC = "Intel(R) Controller - 15DC"
+TbtBusDrv_DeviceDesc15DD = "Intel(R) Controller - 15DD"
+TbtBusDrv_DeviceDesc15DE = "Intel(R) Controller - 15DE"
+TbtBusDrv_SVCDESC = "Thunderbolt(TM) Controller"
+PathToEtwPublishers = "SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Publishers"
+ProviderGuid = "{88EF8329-295D-4D79-AC09-38F9610A40C9}"
+

@@ -1,0 +1,124 @@
+; Copyright (c) 2013, LSI Corporation
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=System
+ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider=%LSI%
+DriverVer=06/02/2014,2.50.75.01
+CatalogFile.ntamd64=LSI_SAS3.cat
+
+[SourceDisksFiles.amd64]
+
+[SourceDisksNames]
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[Manufacturer]
+%LSI%=LSI, NTamd64
+%IBM%=IBM, NTamd64
+%SUN%=SUN, NTamd64
+%INTEL%=INTEL, NTamd64
+
+[LSI.NTamd64]
+%SASx28.DeviceDesc% = NODRV, SCSI\EnclosureLSILOGICSASX28_A.0______
+%SASx28.DeviceDesc% = NODRV, SCSI\EnclosureLSILOGICSASX28_A.1______
+%SASx36.DeviceDesc% = NODRV, SCSI\EnclosureLSILOGICSASX36_A.0______
+%SASx36.DeviceDesc% = NODRV, SCSI\EnclosureLSILOGICSASX36_A.1______
+%SASx36.DeviceDesc% = NODRV, SCSI\EnclosureLSILOGIC___SASX36_A.1___
+%SASswitch.DeviceDesc% = NODRV, SCSI\EnclosureLSILOGICx36_LYNX3090____
+%SAS2switch.DeviceDesc% = NODRV, SCSI\EnclosureLSI_____SAS616x_________
+%DE5300_1.DeviceDesc% = NODRV, SCSI\Enclosure_____LSI______DE5300-SAS
+%DE5300_2.DeviceDesc% = NODRV, SCSI\Enclosure_____LSI__DE5300-FUJITSU
+
+[IBM.NTamd64]
+%SAS_SES.DeviceDesc% = NODRV, SCSI\EnclosureIBM_____SAS_SES-2_DEVICE
+%SAS_SES.DeviceDesc% = NODRV, SCSI\EnclosureIBM-ESXSVSC7160_________
+%SAS_SES.DeviceDesc% = NODRV, SCSI\EnclosureIBM-ESXS_SAS_EXP_BP_____
+%SAS_BCS.DeviceDesc% = NODRV, SCSI\EnclosureIBM-ESXSBCS-DSS1___3GSAS
+%SAS_BCS.DeviceDesc% = NODRV, SCSI\EnclosureIBM-ESXSBCS-DSS2___3GSAS
+
+[SUN.NTamd64]
+%SAS_JBOD_1.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____BLADE_DISK______
+%SAS_JBOD_2.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____NEM_PLUS________
+%SAS_JBOD_3.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____16Disk_Backplane
+%SAS_JBOD_4.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____SS_J4200________
+%SAS_JBOD_5.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____Storage_J4200___
+%SAS_JBOD_6.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____SS_J4300________
+%SAS_JBOD_7.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____Storage_J4300___
+%SAS_JBOD_8.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____SS_J4400________
+%SAS_JBOD_9.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____Storage_J4400___
+%SAS_JBOD_10.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____SS_J4500________
+%SAS_JBOD_11.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____Storage_J4500___
+%SAS_JBOD_12.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____NEM_P_10GbE_x10_
+%SAS_JBOD_13.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____NEM_P_10GbE_x12_
+%SAS_JBOD_14.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____NEMHydra_C10____
+%SAS_JBOD_15.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____Storage_F5100___
+%SAS_JBOD_16.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____Blade_Storage_II
+%SAS_JBOD_17.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____NEM_Hydra_II____
+%SAS_JBOD_18.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____C4_NEM__________
+%SAS_JBOD_19.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____Switch_24p_10GE_
+%SAS_JBOD_20.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____HYDE12__________
+%SAS_JBOD_21.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____HYDE24__________
+%SAS_JBOD_22.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____T4_Storage______
+%SAS_JBOD_23.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____Storage_J4310___
+%SAS_JBOD_24.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____Storage_J4410___
+%SAS_JBOD_25.DeviceDesc% = NODRV, SCSI\EnclosureSUN_____NEM_Hydra_IIOpus
+
+[INTEL.NTamd64]
+%INTEL_JBOD_1.DeviceDesc% = NODRV, SCSI\EnclosureIntel___RES2SV240_______
+%INTEL_JBOD_2.DeviceDesc% = NODRV, SCSI\EnclosureIntel___RES2CV360_______
+%INTEL_JBOD_3.DeviceDesc% = NODRV, SCSI\EnclosureIntel___RES2CV240_______
+
+[NODRV]
+
+[NODRV.Services]
+AddService = , %SPSVCINST_ASSOCSERVICE%
+
+[Strings]
+LSI = "LSI Corporation"
+IBM = "IBM Corporation"
+SUN = "Sun Microsystems, Inc."
+INTEL = "Intel Corporation"
+SASx28.DeviceDesc = "LSI SAS x28 Expander"
+SASx36.DeviceDesc = "LSI SAS x36 Expander"
+SASswitch.DeviceDesc = "LSI LYNX 3090 SAS Switch"
+SAS2switch.DeviceDesc = "LSI SAS 616x Switch"
+DE5300_1.DeviceDesc = "LSI DE5300-SAS SCSI Enclosure Device"
+DE5300_2.DeviceDesc = "LSI DE5300-FUJITSU SCSI Enclosure Device"
+SAS_SES.DeviceDesc = "IBM SAS SES Device"
+SAS_BCS.DeviceDesc = "IBM BCS SAS Storage Module"
+SAS_JBOD_1.DeviceDesc = "Sun Blade 6000 Disk Module"
+SAS_JBOD_2.DeviceDesc = "Sun Blade 6000 Network Express Module Plus"
+SAS_JBOD_3.DeviceDesc = "Sun SES Enclosure Device"
+SAS_JBOD_4.DeviceDesc = "Sun Storage J4200"
+SAS_JBOD_5.DeviceDesc = "Sun Storage J4200"
+SAS_JBOD_6.DeviceDesc = "Sun Storage J4300"
+SAS_JBOD_7.DeviceDesc = "Sun Storage J4300"
+SAS_JBOD_8.DeviceDesc = "Sun Storage J4400"
+SAS_JBOD_9.DeviceDesc = "Sun Storage J4400"
+SAS_JBOD_10.DeviceDesc = "Sun Storage J4500"
+SAS_JBOD_11.DeviceDesc = "Sun Storage J4500"
+SAS_JBOD_12.DeviceDesc = "Sun Blade 6000 Network Express Module 10-Port 10GbE"
+SAS_JBOD_13.DeviceDesc = "Sun Blade 6000 Network Express Module 12-Port 10GbE"
+SAS_JBOD_14.DeviceDesc = "Sun Blade 6000 10GbE Virtualized Multi-Fabric Network Express Module"
+SAS_JBOD_15.DeviceDesc = "Sun Storage F5100 Flash Array"
+SAS_JBOD_16.DeviceDesc = "Sun Blade Storage Module M2"
+SAS_JBOD_17.DeviceDesc = "Sun Blade 6000 Virtualized Multi-Fabric 10GE Network Express Module M2"
+SAS_JBOD_18.DeviceDesc = "Sun SES Enclosure Device"
+SAS_JBOD_19.DeviceDesc = "Sun Blade 6000 Ethernet Switched NEM 24p 10GE"
+SAS_JBOD_20.DeviceDesc = "Sun SES Enclosure Device"
+SAS_JBOD_21.DeviceDesc = "Sun SES Enclosure Device"
+SAS_JBOD_22.DeviceDesc = "Sun SES Enclosure Device"
+SAS_JBOD_23.DeviceDesc = "Sun Storage J4310"
+SAS_JBOD_24.DeviceDesc = "Sun Storage J4410"
+SAS_JBOD_25.DeviceDesc = "Sun Blade 6000 Switched Network Express Module 24p 10GbE"
+INTEL_JBOD_1.DeviceDesc = "Intel(R) RAID Expander RS2SV240"
+INTEL_JBOD_2.DeviceDesc = "Intel(R) RAID Expander RS2CV360"
+INTEL_JBOD_3.DeviceDesc = "Intel(R) RAID Expander RS2CV240"
+
+;*******************************************
+;Handy macro substitutions (non-localizable)
+SPSVCINST_ASSOCSERVICE = 0x00000002
+

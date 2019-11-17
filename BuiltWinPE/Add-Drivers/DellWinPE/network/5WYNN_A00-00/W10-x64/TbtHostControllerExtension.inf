@@ -1,0 +1,110 @@
+;/*++
+;
+;Copyright (c) 2010-2018, Intel Corporation
+;
+;Abstract:
+;    INF file for installing Thunderbolt Host Controller software extensions
+;
+;--*/
+
+[Version]
+Signature = "$WINDOWS NT$"
+Class = Extension
+ClassGuid = {e2f84ce7-8efa-411c-aa69-97454ca4cb57}
+Provider = %Intel%
+ExtensionId = {B4DAA161-39A4-49EA-BC66-7B05A9DDBB16}
+CatalogFile = TbtHostControllerExtension.cat
+DriverVer = 05/22/2019,1.41.648.4
+
+[Manufacturer]
+%Intel% = Thunderbolt,NTamd64.10.0...16299
+
+[Thunderbolt.NTamd64.10.0...16299]
+%TbtBusDrv_DeviceDesc1575% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_1575&CC_0880
+%TbtBusDrv_DeviceDesc1577% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_1577&CC_0880
+%TbtBusDrv_DeviceDesc15BF% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_15BF&CC_0880
+%TbtBusDrv_DeviceDesc15D2% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_15D2&CC_0880
+%TbtBusDrv_DeviceDesc15D9% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_15D9&CC_0880
+%TbtBusDrv_DeviceDesc15E8% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_15E8&CC_0880
+%TbtBusDrv_DeviceDesc15EB% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_15EB&CC_0880
+%TbtBusDrv_DeviceDesc1137% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_1137&CC_0880
+%TbtBusDrv_DeviceDesc15DC% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_15DC&CC_0880
+%TbtBusDrv_DeviceDesc15DD% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_15DD&CC_0880
+%TbtBusDrv_DeviceDesc15DE% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_15DE&CC_0880
+%TbtBusDrv_DeviceDesc8A17% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_8A17&CC_0880
+%TbtBusDrv_DeviceDesc8A0D% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_8A0D&CC_0880
+%TbtBusDrv_DeviceDesc8AA3% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_8AA3&CC_0880
+%TbtBusDrv_DeviceDesc8AA0% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_8AA0&CC_0880
+%TbtBusDrv_DeviceDesc8AB3% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_8AB3&CC_0880
+%TbtBusDrv_DeviceDesc8AB0% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_8AB0&CC_0880
+%TbtBusDrv_DeviceDesc9A1B% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_9A1B&CC_0880
+%TbtBusDrv_DeviceDesc9A1D% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_9A1D&CC_0880
+%TbtBusDrv_DeviceDesc9A1F% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_9A1F&CC_0880
+%TbtBusDrv_DeviceDesc9A21% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_9A21&CC_0880
+%TbtBusDrv_DeviceDesc463E% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_463E&CC_0880
+%TbtBusDrv_DeviceDesc466D% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_466D&CC_0880
+%TbtBusDrv_DeviceDesc464E% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_464E&CC_0880
+%TbtBusDrv_DeviceDesc467D% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_467D&CC_0880
+%TbtBusDrv_DeviceDesc465E% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_465E&CC_0880
+%TbtBusDrv_DeviceDesc468D% = TbtBusDrvExtension_Install, PCI\VEN_8086&DEV_468D&CC_0880
+
+[DestinationDirs]
+ServiceFiles = 10
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+ThunderboltService.exe = 1,,
+TbtControlCenterToastLauncher.exe = 1,,
+
+[TbtBusDrvExtension_Install.NT]
+CopyFiles = ServiceFiles
+
+[ServiceFiles]
+ThunderboltService.exe
+TbtControlCenterToastLauncher.exe
+
+[TbtBusDrvExtension_Install.NT.Services]
+AddService = TbtHostControllerService, 0x00000800, ThunderboltService_ServiceInstall
+
+[ThunderboltService_ServiceInstall]
+DisplayName = %ThunderboltServiceName.SrvName%
+Description = %ThunderboltServiceName.SvcDesc%
+ServiceType    = 0x00000010
+StartType      = 2; SERVICE_AUTO_START
+ErrorControl   = 1
+ServiceBinary  = %10%\ThunderboltService.exe
+
+[Strings]
+Intel = "Intel(R) Corporation"
+DiskName = "Thunderbolt(TM) Controller Installation Disk"
+TbtBusDrv_DeviceDesc1575 = "Thunderbolt(TM) Controller - 1575"
+TbtBusDrv_DeviceDesc1577 = "Thunderbolt(TM) Controller - 1577"
+TbtBusDrv_DeviceDesc15BF = "Thunderbolt(TM) Controller - 15BF"
+TbtBusDrv_DeviceDesc15D2 = "Thunderbolt(TM) Controller - 15D2"
+TbtBusDrv_DeviceDesc15D9 = "Thunderbolt(TM) Controller - 15D9"
+TbtBusDrv_DeviceDesc15E8 = "Thunderbolt(TM) Controller - 15E8"
+TbtBusDrv_DeviceDesc15EB = "Thunderbolt(TM) Controller - 15EB"
+TbtBusDrv_DeviceDesc1137 = "Thunderbolt(TM) Controller - 1137"
+TbtBusDrv_DeviceDesc15DC = "Intel(R) Controller - 15DC"
+TbtBusDrv_DeviceDesc15DD = "Intel(R) Controller - 15DD"
+TbtBusDrv_DeviceDesc15DE = "Intel(R) Controller - 15DE"
+TbtBusDrv_DeviceDesc8A17 = "Thunderbolt(TM) Controller - 8A17"
+TbtBusDrv_DeviceDesc8A0D = "Thunderbolt(TM) Controller - 8A0D"
+TbtBusDrv_DeviceDesc8AA3 = "Thunderbolt(TM) Controller - 8AA3"
+TbtBusDrv_DeviceDesc8AA0 = "Thunderbolt(TM) Controller - 8AA0"
+TbtBusDrv_DeviceDesc8AB3 = "Thunderbolt(TM) Controller - 8AB3"
+TbtBusDrv_DeviceDesc8AB0 = "Thunderbolt(TM) Controller - 8AB0"
+TbtBusDrv_DeviceDesc9A1B = "Thunderbolt(TM) Controller - 9A1B"
+TbtBusDrv_DeviceDesc9A1D = "Thunderbolt(TM) Controller - 9A1D"
+TbtBusDrv_DeviceDesc9A1F = "Thunderbolt(TM) Controller - 9A1F"
+TbtBusDrv_DeviceDesc9A21 = "Thunderbolt(TM) Controller - 9A21"
+TbtBusDrv_DeviceDesc463E = "Thunderbolt(TM) Controller - 463E"
+TbtBusDrv_DeviceDesc466D = "Thunderbolt(TM) Controller - 466D"
+TbtBusDrv_DeviceDesc464E = "Thunderbolt(TM) Controller - 464E"
+TbtBusDrv_DeviceDesc467D = "Thunderbolt(TM) Controller - 467D"
+TbtBusDrv_DeviceDesc465E = "Thunderbolt(TM) Controller - 465E"
+TbtBusDrv_DeviceDesc468D = "Thunderbolt(TM) Controller - 468D"
+ThunderboltServiceName.SrvName = "Thunderbolt(TM) Application Launcher"
+ThunderboltServiceName.SvcDesc = "Launches Thunderbolt(TM) control application"

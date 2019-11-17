@@ -1,0 +1,78 @@
+;*******************************************************************************
+;*                                                                            **
+;*                     I N T E L   P R O P R I E T A R Y                      **
+;*                                                                            **
+;*   COPYRIGHT (c) 1999-2015 BY INTEL CORPORATION. ALL RIGHTS RESERVED.  NO   **
+;*   PART  OF  THIS  PROGRAM OR PUBLICATION MAY BE REPRODUCED, TRANSMITTED,   **
+;*   TRANSCRIBED, STORED IN A RETRIEVAL  SYSTEM,  OR  TRANSLATED  INTO  ANY   **
+;*   LANGUAGE OR COMPUTER LANGUAGE IN ANY FORM OR BY ANY MEANS, ELECTRONIC,   **
+;*   MECHANICAL, MAGNETIC, OPTICAL, CHEMICAL, MANUAL, OR OTHERWISE, WITHOUT   **
+;*   THE PRIOR WRITTEN PERMISSION OF :                                        **
+;*                                                                            **
+;*                             INTEL CORPORATION                              **
+;*                                                                            **
+;*                          2200 MISSION COLLEGE BLVD                         **
+;*                                                                            **
+;*                     SANTA CLARA, CALIFORNIA 95052-8119                     **
+;*                                                                            **
+;*******************************************************************************
+;
+;*******************************************************************************
+; v1q65x64.Din
+; $Revision: 1.1 $
+;
+; Intel(R) PRO/1000 Gigabit Server Adapter
+;
+;   Version 6.4.0.0
+;
+[version]
+Signature   = "$Windows NT$"
+SetupClass  = BASE
+Provider    = %Intel%
+
+[Manufacturer]
+%Intel%     = Intel
+
+[ControlFlags]
+
+[Intel]
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+DefaultDestDir          = 11
+e1000.DelFiles          = 12
+CoInstaller.DelFiles    = 11
+UnInstall.DelFiles      = 11
+
+;----------------------------------------------------------------------------
+; Uninstall
+[8259x.Uninstall]
+DelFiles=e1000.DelFiles, CoInstaller.DelFiles, UnInstall.DelFiles
+DelReg=8259x.DelReg
+
+[e1000.DelFiles]
+v1q65x64.sys,,,1
+
+[CoInstaller.DelFiles]
+v1qmsg.dll,,,1
+NicCo4.dll,,,1
+NicInVQ.dll,,,1
+
+[UnInstall.DelFiles]
+Prounstl.exe,,,1
+v1q65x64.din,,,1
+
+[8259x.DelReg]
+HKLM,Software\Microsoft\Windows\CurrentVersion\Uninstall\PROSet
+HKLM,Software\INTEL\Prounstl
+HKLM,Software\INTEL\NIC
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Intel                    = "Intel"
+				 
+

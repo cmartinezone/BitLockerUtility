@@ -1,0 +1,107 @@
+;-----------------------------------------------------------------------------
+;
+; rcbottom.inf = Installation for AMD-RAID device driver
+;
+; Copyright (c)2012-2017 Advanced Micro Devices, Inc.
+;
+;-----------------------------------------------------------------------------
+; - This version supports Windows 10.
+; - Class and ClassGUID specify the type of driver and must match
+;     (see $DDKPATH/inc/api/devguid.h).
+; - Driver provided by Advanced Micro Devices, Inc. for AMD-RAID 8.1 software.
+;   (8.1.0-73)
+;-----------------------------------------------------------------------------
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=SCSIAdapter
+ClassGUID = {4D36E97B-E325-11CE-BFC1-08002BE10318}
+Provider=%AMD%
+CatalogFile=rcbottom.cat
+DriverVer=09/08/2017,8.1.0.73
+
+; ================= Class section =====================
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+;*****************************************
+; Install Section
+;*****************************************
+
+[Manufacturer]
+%AMD% = AMD,ntamd64
+
+;-----------------------------------------------------------------------------
+[AMD.ntamd64]
+%rcbottom_Desc%=rcbottom_Inst,PCI\VEN_1022&DEV_7905&CC_0104
+%rcbottom_Desc%=rcbottom_Inst,PCI\VEN_1022&DEV_43BD&CC_0104
+%rcbottom_Desc%=rcbottom_Inst,PCI\VEN_1022&DEV_7916&CC_0104
+
+[rcbottom_Inst.NT]
+CopyFiles=Drivers_Dir
+
+[Drivers_Dir]
+rcbottom.sys,,,0x00002004
+
+;-------------- Service installation
+[rcbottom_Inst.NT.Services]
+AddService = rcbottom,%SPSVCINST_ASSOCSERVICE%, rcbottom_Service_Inst
+
+; -------------- rcbottom driver install sections
+[rcbottom_Service_Inst]
+DisplayName    = %rcbottom.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 0               ; SERVICE_BOOT_START
+ErrorControl   = 2               ; SERVICE_ERROR_SEVERE
+ServiceBinary  = %12%\rcbottom.sys
+LoadOrderGroup = base
+DelReg = rcbottom_Inst_DelReg
+AddReg = rcbottom_Inst_AddReg
+
+;-----------------------------------------------------------------------------
+[rcbottom_Inst_DelReg]
+HKR, "Parameters\Device", "EnableHIPM"
+HKR, "Parameters\Device", "EnableDIPM"
+
+;-----------------------------------------------------------------------------
+[rcbottom_Inst_AddReg]
+HKR, "Parameters\Device", "EnableHIPM", 0x00010001, 0xFFFFFFFF 
+HKR, "Parameters\Device", "EnableDIPM", 0x00010001, 0X00000000 
+
+
+
+;
+;--- rcbottom_Inst Coinstaller installation ------
+;
+
+[DestinationDirs]
+DefaultDestDir = 12
+rcbottom_Inst_CoInstaller_CopyFiles = 11
+
+[rcbottom_Inst.NT.CoInstallers]
+AddReg=rcbottom_Inst_CoInstaller_AddReg
+CopyFiles=rcbottom_Inst_CoInstaller_CopyFiles
+
+[rcbottom_Inst_CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller01011.dll,WdfCoInstaller"
+
+[rcbottom_Inst_CoInstaller_CopyFiles]
+WdfCoInstaller01011.dll
+
+[SourceDisksFiles]
+rcbottom.sys  = 1,,
+WdfCoInstaller01011.dll=1 ; make sure the number matches with SourceDisksNames
+
+[rcbottom_Inst.NT.Wdf]
+KmdfService =  rcbottom, rcbottom_wdfsect
+[rcbottom_wdfsect]
+KmdfLibraryVersion = 1.11
+
+[Strings]
+AMD = "Advanced Micro Devices, Inc."
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ClassName="ADAPTER" ; TODO: edit ClassName
+DiskName = "AMD-RAID Bottom Device Installation Disk"
+rcbottom_Desc = "AMD-RAID Bottom Device"
+rcbottom.SVCDESC = "AMD-RAID Bottom Service"

@@ -1,0 +1,508 @@
+; Copyright (c) 2009-2014 Intel Corporation 
+; ********************************************************************************************** 
+; ********************************************************************************************** 
+; **    Filename:  iaStorS.inf 
+; **    Revision:  DRIVER_INFO 
+; **    Abstract:  Windows* INF File for SCU Intel(R) Rapid Storage Technology Enterprise Driver 
+; **               Installs: RSTe SCU RAID Controller Miniport (without RST Filter Driver) 
+; **               Only for Windows 8 releases 
+; ********************************************************************************************** 
+; 
+[Version] 
+Signature = "$Windows NT$" 
+Class=SCSIAdapter 
+ClassGUID={4D36E97B-E325-11CE-BFC1-08002BE10318} 
+Provider=%INTEL% 
+CatalogFile=iaStorS.cat 
+DriverVer=05/21/2015,4.3.0.1198
+; 
+[PackageInfo] 
+Name=SCU 
+; 
+[SourceDisksNames] 
+1 = %DiskId1%,,,"" 
+; 
+[DestinationDirs] 
+DefaultDestDir = 12 
+; 
+[ControlFlags] 
+ExcludeFromSelect = * 
+; 
+[Manufacturer] 
+%INTEL% = INTEL, NTamd64.6.2, NTamd64.6.3, NTamd64.10.0
+; 
+[Intel_SCU_iaStorS_Service_Inst] 
+ServiceType    = %SERVICE_KERNEL_DRIVER% 
+StartType      = %SERVICE_BOOT_START% 
+ErrorControl   = %SERVICE_ERROR_NORMAL% 
+ServiceBinary  = %12%\iaStorS.sys 
+LoadOrderGroup = SCSI Miniport 
+AddReg         = pnpsafe_pci_addreg 
+AddReg         = UserParameters 
+;AddReg         = msienable_addreg 
+; 
+[Intel_SCU_EventLog_Inst] 
+AddReg = Intel_SCU_EventLog_Inst.AddReg 
+; 
+[Intel_SCU_EventLog_Inst.AddReg] 
+HKR,,EventMessageFile,%REG_TYPE_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\iaStorS.sys" 
+HKR,,TypesSupported,%REG_TYPE_DWORD%,7 
+;
+;****************************************************************************** 
+;* 
+;* 64-BIT X86 ARCHITECTURE 
+;* 
+;* This section specifies the 64-bit architecture specific INF file entries 
+;* required to install a driver as a 64-bit compatible driver. 
+;* 
+;****************************************************************************** 
+[SourceDisksFiles.amd64] 
+iaStorS.sys = 1,,, 
+; 
+[INTEL.NTamd64.10.0] 
+;windows_10_64-bit and later 
+%PCI\VEN_8086&DEV_1D60&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D60&SUBSYS_062615D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_062615D9
+%PCI\VEN_8086&DEV_1D60&SUBSYS_30511054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_30511054
+%PCI\VEN_8086&DEV_1D60&SUBSYS_35828086.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_35828086
+%PCI\VEN_8086&DEV_1D60&SUBSYS_35848086.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_35848086
+%PCI\VEN_8086&DEV_1D65&SUBSYS_30511054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D65&SUBSYS_30511054
+%PCI\VEN_8086&DEV_1D68&SUBSYS_00B21137.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_00B21137
+%PCI\VEN_8086&DEV_1D68&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062515D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062515D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062615D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062615D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062815D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062815D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062915D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062915D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062A15D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062A15D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062B15D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062B15D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062C1025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062C1025
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062C15D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062C15D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062D1025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062D1025
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062F15D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062F15D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_06301025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_06301025
+%PCI\VEN_8086&DEV_1D68&SUBSYS_063015D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_063015D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_06311025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_06311025
+%PCI\VEN_8086&DEV_1D68&SUBSYS_063515D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_063515D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_063615D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_063615D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_063715D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_063715D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_102A17AA.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_102A17AA
+%PCI\VEN_8086&DEV_1D68&SUBSYS_102B17AA.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_102B17AA
+%PCI\VEN_8086&DEV_1D68&SUBSYS_102C17AA.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_102C17AA
+%PCI\VEN_8086&DEV_1D68&SUBSYS_102D17AA.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_102D17AA
+%PCI\VEN_8086&DEV_1D69&SUBSYS_00B21137.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_00B21137
+%PCI\VEN_8086&DEV_1D69&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D69&SUBSYS_04451014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_04451014
+%PCI\VEN_8086&DEV_1D69&SUBSYS_04461014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_04461014
+%PCI\VEN_8086&DEV_1D69&SUBSYS_30471054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_30471054
+%PCI\VEN_8086&DEV_1D69&SUBSYS_30511054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_30511054
+%PCI\VEN_8086&DEV_1D69&SUBSYS_800B1BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_800B1BCF
+%PCI\VEN_8086&DEV_1D69&SUBSYS_800E1BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_800E1BCF
+%PCI\VEN_8086&DEV_1D69&SUBSYS_80111BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_80111BCF
+%PCI\VEN_8086&DEV_1D6A&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6A&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_00B21137.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_00B21137
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_04451014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_04451014
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_04461014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_04461014
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_075C1025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_075C1025
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_30511054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_30511054
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_80091BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_80091BCF
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_800B1BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_800B1BCF
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_800E1BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_800E1BCF
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_80101BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_80101BCF
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_80111BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_80111BCF
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&CC_0107
+%Intel_SATA_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D61&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D62&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D63&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D64&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D65&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D66&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D67&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&CC_0107
+%Intel_SATA_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6A&CC_0107
+%Intel_SATA_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&CC_0107
+; 
+[INTEL.NTamd64.6.3] 
+;windows_8.1_64-bit
+%PCI\VEN_8086&DEV_1D60&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D60&SUBSYS_062615D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_062615D9
+%PCI\VEN_8086&DEV_1D60&SUBSYS_30511054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_30511054
+%PCI\VEN_8086&DEV_1D60&SUBSYS_35828086.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_35828086
+%PCI\VEN_8086&DEV_1D60&SUBSYS_35848086.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_35848086
+%PCI\VEN_8086&DEV_1D65&SUBSYS_30511054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D65&SUBSYS_30511054
+%PCI\VEN_8086&DEV_1D68&SUBSYS_00B21137.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_00B21137
+%PCI\VEN_8086&DEV_1D68&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062515D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062515D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062615D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062615D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062815D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062815D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062915D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062915D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062A15D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062A15D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062B15D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062B15D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062C1025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062C1025
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062C15D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062C15D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062D1025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062D1025
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062F15D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062F15D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_06301025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_06301025
+%PCI\VEN_8086&DEV_1D68&SUBSYS_063015D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_063015D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_06311025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_06311025
+%PCI\VEN_8086&DEV_1D68&SUBSYS_063515D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_063515D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_063615D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_063615D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_063715D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_063715D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_102A17AA.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_102A17AA
+%PCI\VEN_8086&DEV_1D68&SUBSYS_102B17AA.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_102B17AA
+%PCI\VEN_8086&DEV_1D68&SUBSYS_102C17AA.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_102C17AA
+%PCI\VEN_8086&DEV_1D68&SUBSYS_102D17AA.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_102D17AA
+%PCI\VEN_8086&DEV_1D69&SUBSYS_00B21137.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_00B21137
+%PCI\VEN_8086&DEV_1D69&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D69&SUBSYS_04451014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_04451014
+%PCI\VEN_8086&DEV_1D69&SUBSYS_04461014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_04461014
+%PCI\VEN_8086&DEV_1D69&SUBSYS_30471054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_30471054
+%PCI\VEN_8086&DEV_1D69&SUBSYS_30511054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_30511054
+%PCI\VEN_8086&DEV_1D69&SUBSYS_800B1BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_800B1BCF
+%PCI\VEN_8086&DEV_1D69&SUBSYS_800E1BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_800E1BCF
+%PCI\VEN_8086&DEV_1D69&SUBSYS_80111BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_80111BCF
+%PCI\VEN_8086&DEV_1D6A&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6A&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_00B21137.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_00B21137
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_04451014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_04451014
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_04461014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_04461014
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_075C1025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_075C1025
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_30511054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_30511054
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_80091BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_80091BCF
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_800B1BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_800B1BCF
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_800E1BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_800E1BCF
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_80101BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_80101BCF
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_80111BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_80111BCF
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&CC_0107
+%Intel_SATA_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D61&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D62&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D63&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D64&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D65&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D66&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D67&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&CC_0107
+%Intel_SATA_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6A&CC_0107
+%Intel_SATA_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&CC_0107
+;  
+[INTEL.NTamd64.6.2] 
+;windows_8_64-bit  
+%PCI\VEN_8086&DEV_1D60&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D60&SUBSYS_062615D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_062615D9
+%PCI\VEN_8086&DEV_1D60&SUBSYS_30511054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_30511054
+%PCI\VEN_8086&DEV_1D60&SUBSYS_35828086.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_35828086
+%PCI\VEN_8086&DEV_1D60&SUBSYS_35848086.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&SUBSYS_35848086
+%PCI\VEN_8086&DEV_1D65&SUBSYS_30511054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D65&SUBSYS_30511054
+%PCI\VEN_8086&DEV_1D68&SUBSYS_00B21137.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_00B21137
+%PCI\VEN_8086&DEV_1D68&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062515D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062515D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062615D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062615D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062815D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062815D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062915D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062915D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062A15D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062A15D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062B15D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062B15D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062C1025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062C1025
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062C15D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062C15D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062D1025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062D1025
+%PCI\VEN_8086&DEV_1D68&SUBSYS_062F15D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_062F15D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_06301025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_06301025
+%PCI\VEN_8086&DEV_1D68&SUBSYS_063015D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_063015D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_06311025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_06311025
+%PCI\VEN_8086&DEV_1D68&SUBSYS_063515D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_063515D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_063615D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_063615D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_063715D9.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_063715D9
+%PCI\VEN_8086&DEV_1D68&SUBSYS_102A17AA.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_102A17AA
+%PCI\VEN_8086&DEV_1D68&SUBSYS_102B17AA.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_102B17AA
+%PCI\VEN_8086&DEV_1D68&SUBSYS_102C17AA.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_102C17AA
+%PCI\VEN_8086&DEV_1D68&SUBSYS_102D17AA.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&SUBSYS_102D17AA
+%PCI\VEN_8086&DEV_1D69&SUBSYS_00B21137.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_00B21137
+%PCI\VEN_8086&DEV_1D69&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D69&SUBSYS_04451014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_04451014
+%PCI\VEN_8086&DEV_1D69&SUBSYS_04461014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_04461014
+%PCI\VEN_8086&DEV_1D69&SUBSYS_30471054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_30471054
+%PCI\VEN_8086&DEV_1D69&SUBSYS_30511054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_30511054
+%PCI\VEN_8086&DEV_1D69&SUBSYS_800B1BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_800B1BCF
+%PCI\VEN_8086&DEV_1D69&SUBSYS_800E1BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_800E1BCF
+%PCI\VEN_8086&DEV_1D69&SUBSYS_80111BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&SUBSYS_80111BCF
+%PCI\VEN_8086&DEV_1D6A&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6A&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_00B21137.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_00B21137
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_04321014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_04321014
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_04451014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_04451014
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_04461014.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_04461014
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_075C1025.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_075C1025
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_30511054.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_30511054
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_80091BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_80091BCF
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_800B1BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_800B1BCF
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_800E1BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_800E1BCF
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_80101BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_80101BCF
+%PCI\VEN_8086&DEV_1D6B&SUBSYS_80111BCF.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&SUBSYS_80111BCF
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D60&CC_0107
+%Intel_SATA_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D61&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D62&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D63&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D64&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D65&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D66&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D67&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D68&CC_0107
+%Intel_SAS_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D69&CC_0107
+%Intel_SATA_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6A&CC_0107
+%Intel_SATA_RAID.Desc% = Intel_SCU_iaStorS_Inst,PCI\VEN_8086&DEV_1D6B&CC_0107
+; 
+[Intel_SCU_iaStorS_Inst.ntamd64] 
+CopyFiles = @iaStorS.sys 
+; 
+[Intel_SCU_iaStorS_Inst.ntamd64.HW] 
+AddReg = msienable_addreg 
+Include = machine.inf 
+Needs = PciIoSpaceNotRequired 
+; 
+[Intel_SCU_iaStorS_Inst.ntamd64.Services] 
+AddService = iaStorS,%SPSVCINST_ASSOCSERVICE%,Intel_SCU_iaStorS_Service_Inst, Intel_SCU_EventLog_Inst 
+; 
+;****************************************************************************** 
+;* 
+;* PLUG-N-PLAY REGISTRY CHANGES 
+;* 
+;* This section specifies the registry entries necessary to indicate support 
+;* for Plug-n-Play. 
+;* 
+;****************************************************************************** 
+[pnpsafe_pci_addreg] 
+HKR, Parameters\PnpInterface,  5,                           %REG_TYPE_DWORD%,  0x00000001 
+; 
+; BusType 0xA == BusTypeSas (winioctl.h) 
+; PCI subclass code indicates SAS (not RAID), so for WHQL, the BusType 
+;  needs to match 
+HKR, Parameters,               BusType,                     %REG_TYPE_DWORD%,  0x0000000A 
+HKR, Parameters\Device,        EnableQueryAccessAlignment,  %REG_TYPE_DWORD%,  0x00000001 
+;****************************************************************************** 
+;* 
+;* MSI/MSI-X REGISTRY CHANGES 
+;* 
+;* This section specifies the registry entries necessary in order to indicate 
+;* this driver supports MSI-X. 
+;* 
+;****************************************************************************** 
+[msienable_addreg] 
+;;;  Indicate we support MSIx up to 2 message vectors 
+;HKR, Interrupt Management,                                    ,                   %REG_TYPE_KEY_ONLY% 
+HKR, Interrupt Management, 0x00000010 
+HKR, Interrupt Management\MessageSignaledInterruptProperties, 0x00000010 
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MSISupported,       %REG_TYPE_DWORD%,   1 
+;****************************************************************************** 
+;* 
+;* USER PARAMETER REGISTRY CHANGES 
+;* 
+;* This section specifies the parameters that users can modify in the 
+;* registry that will change the operation of the driver after a power 
+;* cycle of the system or a reinstall of the driver. 
+;* 
+;****************************************************************************** 
+[UserParameters] 
+;;; Build the Registry Directories 
+HKR, Parameters, Device, %REG_TYPE_KEY_ONLY% 
+; 
+;;; Add the RAID features 
+HKR, Parameters\Device, ReadPatrol,                               %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, RebuildOnHotInsert,                       %REG_TYPE_BINARY%,     0x00000000 
+; 
+;;; Add the Controller wide user parameters 
+HKR, Parameters\Device, ControllerDeviceSpinUpDelayInterval,      %REG_TYPE_DWORD%,      0x000001F4 
+HKR, Parameters\Device, ControllerInterruptCoalescenceNumber,     %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, ControllerInterruptCoalescenceTimer,      %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, ControllerSataNcqEnable,                  %REG_TYPE_DWORD%,      0x00000001 
+HKR, Parameters\Device, ControllerSataNcqDepthMaximum,            %REG_TYPE_DWORD%,      0x00000020 
+HKR, Parameters\Device, ControllerSataStandbyTimerEnable,         %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, ControllerSataNonZeroBufferOffsetEnable,  %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, ControllerInitialResetType,               %REG_TYPE_DWORD%,      0x00000008 
+HKR, Parameters\Device, ControllerClearAffiliationEnable,         %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, StpInactivityTimeout,                     %REG_TYPE_DWORD%,      0x00000005 
+HKR, Parameters\Device, SspInactivityTimeout,                     %REG_TYPE_DWORD%,      0x00000005 
+HKR, Parameters\Device, StpMaxOccupancyTimeout,                   %REG_TYPE_DWORD%,      0x00000005 
+HKR, Parameters\Device, SspMaxOccupancyTimeout,                   %REG_TYPE_DWORD%,      0x00000014 
+HKR, Parameters\Device, NoOutBoundTaskTimeout,                    %REG_TYPE_DWORD%,      0x00000002 
+HKR, Parameters\Device, IgnoreFUA,                                %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, PerformanceOptimizationsEnable,           %REG_TYPE_DWORD%,      0x00000000 
+; 
+HKR, Parameters\Device, InterruptCoalescingSampleSize,      %REG_TYPE_DWORD%,      0x0000000a 
+HKR, Parameters\Device, InterruptCoalescingSampleFrequency, %REG_TYPE_DWORD%,      0x00000064 
+HKR, Parameters\Device, InterruptCoalescingThreshold,       %REG_TYPE_DWORD%,      0x00002800 
+HKR, Parameters\Device, InterruptCoalescingLowNumber,       %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, InterruptCoalescingLowTimeout,      %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, InterruptCoalescingHighNumber,      %REG_TYPE_DWORD%,      0x00000010 
+HKR, Parameters\Device, InterruptCoalescingHighTimeout,     %REG_TYPE_DWORD%,      0x00000002 
+; 
+;;; Add the Phy specific user parameters 
+HKR, Parameters\Device, Phy0NotifyEnableSpinupInsertionFrequency, %REG_TYPE_DWORD%,      0x00000033 
+HKR, Parameters\Device, Phy0AlignInsertionFrequency,              %REG_TYPE_DWORD%,      0x0000007f 
+HKR, Parameters\Device, Phy0InConnectionAlignInsertionFrequency,  %REG_TYPE_DWORD%,      0x000000ff 
+HKR, Parameters\Device, Phy1NotifyEnableSpinupInsertionFrequency, %REG_TYPE_DWORD%,      0x00000033 
+HKR, Parameters\Device, Phy1AlignInsertionFrequency,              %REG_TYPE_DWORD%,      0x0000007f 
+HKR, Parameters\Device, Phy1InConnectionAlignInsertionFrequency,  %REG_TYPE_DWORD%,      0x000000ff 
+HKR, Parameters\Device, Phy2NotifyEnableSpinupInsertionFrequency, %REG_TYPE_DWORD%,      0x00000033 
+HKR, Parameters\Device, Phy2AlignInsertionFrequency,              %REG_TYPE_DWORD%,      0x0000007f 
+HKR, Parameters\Device, Phy2InConnectionAlignInsertionFrequency,  %REG_TYPE_DWORD%,      0x000000ff 
+HKR, Parameters\Device, Phy3NotifyEnableSpinupInsertionFrequency, %REG_TYPE_DWORD%,      0x00000033 
+HKR, Parameters\Device, Phy3AlignInsertionFrequency,              %REG_TYPE_DWORD%,      0x0000007f 
+HKR, Parameters\Device, Phy3InConnectionAlignInsertionFrequency,  %REG_TYPE_DWORD%,      0x000000ff 
+HKR, Parameters\Device, Controller0Phy0MaxSpeedGeneration,        %REG_TYPE_DWORD%,      0x00000002 
+HKR, Parameters\Device, Controller0Phy1MaxSpeedGeneration,        %REG_TYPE_DWORD%,      0x00000002 
+HKR, Parameters\Device, Controller0Phy2MaxSpeedGeneration,        %REG_TYPE_DWORD%,      0x00000002 
+HKR, Parameters\Device, Controller0Phy3MaxSpeedGeneration,        %REG_TYPE_DWORD%,      0x00000002 
+HKR, Parameters\Device, Controller1Phy0MaxSpeedGeneration,        %REG_TYPE_DWORD%,      0x00000002 
+HKR, Parameters\Device, Controller1Phy1MaxSpeedGeneration,        %REG_TYPE_DWORD%,      0x00000002 
+HKR, Parameters\Device, Controller1Phy2MaxSpeedGeneration,        %REG_TYPE_DWORD%,      0x00000002 
+HKR, Parameters\Device, Controller1Phy3MaxSpeedGeneration,        %REG_TYPE_DWORD%,      0x00000002 
+; 
+;;; Add the Port specific OEM parameters 
+HKR, Parameters\Device, OemHeaderVersion,                         %REG_TYPE_DWORD%,      0x00000010 
+HKR, Parameters\Device, Controller0OemModeType,                   %REG_TYPE_DWORD%,      0x00000001 
+HKR, Parameters\Device, Controller0OemConcurrentDeviceSpinUpCount,%REG_TYPE_DWORD%,      0x00000001 
+HKR, Parameters\Device, Controller0OemSscEnable,                  %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, Controller0OemPort0PhyMask,               %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, Controller0OemPort1PhyMask,               %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, Controller0OemPort2PhyMask,               %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, Controller0OemPort3PhyMask,               %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, Controller0OemPhy0SasAddressLow,          %REG_TYPE_DWORD%,      0x00000001 
+HKR, Parameters\Device, Controller0OemPhy0SasAddressHigh,         %REG_TYPE_DWORD%,      0x5FCFFFFF 
+HKR, Parameters\Device, Controller0OemPhy1SasAddressLow,          %REG_TYPE_DWORD%,      0x00000001 
+HKR, Parameters\Device, Controller0OemPhy1SasAddressHigh,         %REG_TYPE_DWORD%,      0x5FCFFFFF 
+HKR, Parameters\Device, Controller0OemPhy2SasAddressLow,          %REG_TYPE_DWORD%,      0x00000001 
+HKR, Parameters\Device, Controller0OemPhy2SasAddressHigh,         %REG_TYPE_DWORD%,      0x5FCFFFFF 
+HKR, Parameters\Device, Controller0OemPhy3SasAddressLow,          %REG_TYPE_DWORD%,      0x00000001 
+HKR, Parameters\Device, Controller0OemPhy3SasAddressHigh,         %REG_TYPE_DWORD%,      0x5FCFFFFF 
+HKR, Parameters\Device, Controller0OemPhy0AfeTxAmpControl0,       %REG_TYPE_DWORD%,      0x000BDD08 
+HKR, Parameters\Device, Controller0OemPhy0AfeTxAmpControl1,       %REG_TYPE_DWORD%,      0x000B7069 
+HKR, Parameters\Device, Controller0OemPhy0AfeTxAmpControl2,       %REG_TYPE_DWORD%,      0x000B7C09 
+HKR, Parameters\Device, Controller0OemPhy0AfeTxAmpControl3,       %REG_TYPE_DWORD%,      0x000AFC6E 
+HKR, Parameters\Device, Controller0OemPhy1AfeTxAmpControl0,       %REG_TYPE_DWORD%,      0x000BDD08 
+HKR, Parameters\Device, Controller0OemPhy1AfeTxAmpControl1,       %REG_TYPE_DWORD%,      0x000B7069 
+HKR, Parameters\Device, Controller0OemPhy1AfeTxAmpControl2,       %REG_TYPE_DWORD%,      0x000B7C09 
+HKR, Parameters\Device, Controller0OemPhy1AfeTxAmpControl3,       %REG_TYPE_DWORD%,      0x000AFC6E 
+HKR, Parameters\Device, Controller0OemPhy2AfeTxAmpControl0,       %REG_TYPE_DWORD%,      0x000BDD08 
+HKR, Parameters\Device, Controller0OemPhy2AfeTxAmpControl1,       %REG_TYPE_DWORD%,      0x000B7069 
+HKR, Parameters\Device, Controller0OemPhy2AfeTxAmpControl2,       %REG_TYPE_DWORD%,      0x000B7C09 
+HKR, Parameters\Device, Controller0OemPhy2AfeTxAmpControl3,       %REG_TYPE_DWORD%,      0x000AFC6E 
+HKR, Parameters\Device, Controller0OemPhy3AfeTxAmpControl0,       %REG_TYPE_DWORD%,      0x000BDD08 
+HKR, Parameters\Device, Controller0OemPhy3AfeTxAmpControl1,       %REG_TYPE_DWORD%,      0x000B7069 
+HKR, Parameters\Device, Controller0OemPhy3AfeTxAmpControl2,       %REG_TYPE_DWORD%,      0x000B7C09 
+HKR, Parameters\Device, Controller0OemPhy3AfeTxAmpControl3,       %REG_TYPE_DWORD%,      0x000AFC6E 
+; 
+HKR, Parameters\Device, Controller1OemModeType,                   %REG_TYPE_DWORD%,      0x00000001 
+HKR, Parameters\Device, Controller1OemConcurrentDeviceSpinUpCount,%REG_TYPE_DWORD%,      0x00000001 
+HKR, Parameters\Device, Controller1OemSscEnable,                  %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, Controller1OemPort0PhyMask,               %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, Controller1OemPort1PhyMask,               %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, Controller1OemPort2PhyMask,               %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, Controller1OemPort3PhyMask,               %REG_TYPE_DWORD%,      0x00000000 
+HKR, Parameters\Device, Controller1OemPhy0SasAddressLow,          %REG_TYPE_DWORD%,      0x00000004 
+HKR, Parameters\Device, Controller1OemPhy0SasAddressHigh,         %REG_TYPE_DWORD%,      0x5FCFFFFF 
+HKR, Parameters\Device, Controller1OemPhy1SasAddressLow,          %REG_TYPE_DWORD%,      0x00000004 
+HKR, Parameters\Device, Controller1OemPhy1SasAddressHigh,         %REG_TYPE_DWORD%,      0x5FCFFFFF 
+HKR, Parameters\Device, Controller1OemPhy2SasAddressLow,          %REG_TYPE_DWORD%,      0x00000004 
+HKR, Parameters\Device, Controller1OemPhy2SasAddressHigh,         %REG_TYPE_DWORD%,      0x5FCFFFFF 
+HKR, Parameters\Device, Controller1OemPhy3SasAddressLow,          %REG_TYPE_DWORD%,      0x00000004 
+HKR, Parameters\Device, Controller1OemPhy3SasAddressHigh,         %REG_TYPE_DWORD%,      0x5FCFFFFF 
+HKR, Parameters\Device, Controller1OemPhy0AfeTxAmpControl0,       %REG_TYPE_DWORD%,      0x000BDD08 
+HKR, Parameters\Device, Controller1OemPhy0AfeTxAmpControl1,       %REG_TYPE_DWORD%,      0x000B7069 
+HKR, Parameters\Device, Controller1OemPhy0AfeTxAmpControl2,       %REG_TYPE_DWORD%,      0x000B7C09 
+HKR, Parameters\Device, Controller1OemPhy0AfeTxAmpControl3,       %REG_TYPE_DWORD%,      0x000AFC6E 
+HKR, Parameters\Device, Controller1OemPhy1AfeTxAmpControl0,       %REG_TYPE_DWORD%,      0x000BDD08 
+HKR, Parameters\Device, Controller1OemPhy1AfeTxAmpControl1,       %REG_TYPE_DWORD%,      0x000B7069 
+HKR, Parameters\Device, Controller1OemPhy1AfeTxAmpControl2,       %REG_TYPE_DWORD%,      0x000B7C09 
+HKR, Parameters\Device, Controller1OemPhy1AfeTxAmpControl3,       %REG_TYPE_DWORD%,      0x000AFC6E 
+HKR, Parameters\Device, Controller1OemPhy2AfeTxAmpControl0,       %REG_TYPE_DWORD%,      0x000BDD08 
+HKR, Parameters\Device, Controller1OemPhy2AfeTxAmpControl1,       %REG_TYPE_DWORD%,      0x000B7069 
+HKR, Parameters\Device, Controller1OemPhy2AfeTxAmpControl2,       %REG_TYPE_DWORD%,      0x000B7C09 
+HKR, Parameters\Device, Controller1OemPhy2AfeTxAmpControl3,       %REG_TYPE_DWORD%,      0x000AFC6E 
+HKR, Parameters\Device, Controller1OemPhy3AfeTxAmpControl0,       %REG_TYPE_DWORD%,      0x000BDD08 
+HKR, Parameters\Device, Controller1OemPhy3AfeTxAmpControl1,       %REG_TYPE_DWORD%,      0x000B7069 
+HKR, Parameters\Device, Controller1OemPhy3AfeTxAmpControl2,       %REG_TYPE_DWORD%,      0x000B7C09 
+HKR, Parameters\Device, Controller1OemPhy3AfeTxAmpControl3,       %REG_TYPE_DWORD%,      0x000AFC6E 
+HKR, Parameters\Device, BackplaneIsPassive,                       %REG_TYPE_DWORD%,      0x00000000 
+;****************************************************************************** 
+;* 
+;* INF FILE STRINGS (VARIABLES) 
+;* 
+;* This section specifies variables that can be reused elsewhere in this 
+;* INF file. 
+;* 
+;****************************************************************************** 
+[Strings] 
+;;;  *******Localizable Strings******* 
+diskId1                = "iaStorS Installation Disk" 
+PCI\VEN_8086&DEV_1D60&SUBSYS_04321014.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D60&SUBSYS_062615D9.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D60&SUBSYS_30511054.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D60&SUBSYS_35828086.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D60&SUBSYS_35848086.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D65&SUBSYS_30511054.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_00B21137.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_04321014.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_062515D9.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_062615D9.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_062815D9.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_062915D9.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_062A15D9.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_062B15D9.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_062C1025.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_062C15D9.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_062D1025.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_062F15D9.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_06301025.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_063015D9.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_06311025.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_063515D9.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_063615D9.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_063715D9.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_102A17AA.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_102B17AA.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_102C17AA.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D68&SUBSYS_102D17AA.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D69&SUBSYS_00B21137.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D69&SUBSYS_04321014.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D69&SUBSYS_04451014.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D69&SUBSYS_04461014.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D69&SUBSYS_30471054.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D69&SUBSYS_30511054.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D69&SUBSYS_800B1BCF.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D69&SUBSYS_800E1BCF.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D69&SUBSYS_80111BCF.Desc = "Intel(R) C600 Series Chipset SAS RAID Controller"
+PCI\VEN_8086&DEV_1D6A&SUBSYS_04321014.Desc = "Intel(R) C600 Series Chipset SAS RAID (SATA Mode)"
+PCI\VEN_8086&DEV_1D6B&SUBSYS_00B21137.Desc = "Intel(R) C600 Series Chipset SAS RAID (SATA Mode)"
+PCI\VEN_8086&DEV_1D6B&SUBSYS_04321014.Desc = "Intel(R) C600 Series Chipset SAS RAID (SATA Mode)" 
+PCI\VEN_8086&DEV_1D6B&SUBSYS_04451014.Desc = "Intel(R) C600 Series Chipset SAS RAID (SATA Mode)"
+PCI\VEN_8086&DEV_1D6B&SUBSYS_04461014.Desc = "Intel(R) C600 Series Chipset SAS RAID (SATA Mode)"
+PCI\VEN_8086&DEV_1D6B&SUBSYS_075C1025.Desc = "Intel(R) C600 Series Chipset SAS RAID (SATA Mode)"
+PCI\VEN_8086&DEV_1D6B&SUBSYS_30511054.Desc = "Intel(R) C600 Series Chipset SAS RAID (SATA Mode)"
+PCI\VEN_8086&DEV_1D6B&SUBSYS_80091BCF.Desc = "Intel(R) C600 Series Chipset SAS RAID (SATA Mode)"
+PCI\VEN_8086&DEV_1D6B&SUBSYS_800B1BCF.Desc = "Intel(R) C600 Series Chipset SAS RAID (SATA Mode)"
+PCI\VEN_8086&DEV_1D6B&SUBSYS_800E1BCF.Desc = "Intel(R) C600 Series Chipset SAS RAID (SATA Mode)"
+PCI\VEN_8086&DEV_1D6B&SUBSYS_80101BCF.Desc = "Intel(R) C600 Series Chipset SAS RAID (SATA Mode)"
+PCI\VEN_8086&DEV_1D6B&SUBSYS_80111BCF.Desc = "Intel(R) C600 Series Chipset SAS RAID (SATA Mode)"
+Intel_SAS_RAID.Desc    = "Intel(R) C600 Series Chipset SAS RAID Controller" 
+Intel_SATA_RAID.Desc   = "Intel(R) C600 Series Chipset SAS RAID (SATA mode)" 
+INTEL = "Intel Corporation" 
+; 
+;;;  *******Non Localizable Strings******* 
+SERVICE_BOOT_START     = 0x0 
+SERVICE_SYSTEM_START   = 0x1 
+SERVICE_AUTO_START     = 0x2 
+SERVICE_DEMAND_START   = 0x3 
+SERVICE_DISABLED       = 0x4 
+SERVICE_KERNEL_DRIVER  = 0x1 
+; 
+SERVICE_ERROR_IGNORE   = 0x0 
+SERVICE_ERROR_NORMAL   = 0x1 
+SERVICE_ERROR_SEVERE   = 0x2 
+SERVICE_ERROR_CRITICAL = 0x3 
+; 
+REG_TYPE_BINARY    = 0x00000001 
+REG_TYPE_KEY_ONLY  = 0x00000010 
+REG_TYPE_DWORD     = 0x00010001 
+REG_TYPE_EXPAND_SZ = 0x00020000 
+; 
+SPSVCINST_ASSOCSERVICE = 0x00000002 

@@ -1,0 +1,206 @@
+;/*****************************************************************************
+;**                                                                          **
+;**        Copyright 2006 2013 Intel Corporation All Rights Reserved.        **
+;**                                                                          **
+;**  The material contained or described herein and all documents related    **
+;**  to such material ("Material") are owned by Intel Corporation or its     **
+;**  suppliers or licensors. Title to the Material remains with Intel        **
+;**  Corporation or its suppliers and licensors. The Material contains trade **
+;**  secrets and proprietary and confidential information of Intel or its    **
+;**  suppliers and licensors. The Material is protected by worldwide         **
+;**  copyright and trade secret laws and treaty provisions. No part of the   **
+;**  Material may be used, copied, reproduced, modified, published,          **
+;**  uploaded, posted, transmitted, distributed, or disclosed in any way     **
+;**  without Intelís prior express written permission.                       **
+;**                                                                          **
+;**  No license under any patent, copyright, trade secret or other           **
+;**  intellectual property right is granted to or conferred upon you by      **
+;**  disclosure or delivery of the Materials, either expressly, by           **
+;**  implication, inducement, estoppel or otherwise. Any license under such  **
+;**  intellectual property rights must be express and approved by Intel in   **
+;**  writing.                                                                **
+;*****************************************************************************/
+;
+;******************************************************************************
+; ilp60x64.inf (x64-bit Windows Server 2008)
+; $Revision$
+;
+[version]
+Signature   = "$Windows NT$"
+Class       = NetTrans
+ClassGUID   = {4d36e975-e325-11ce-bfc1-08002be10318}
+Provider    = %Intel%
+CatalogFile = ilp60x64.cat
+DriverVer   = 09/12/2016,1.32.0.0
+
+[Manufacturer]
+%Intel%     = Intel, NTamd64.6.0
+
+[Intel.NTamd64.6.0]
+; DisplayName                   Section                DeviceID
+; -----------                   -------                --------
+%iLldpProt_ProtDesc3% =         ilp60x64,               iLldpProt
+[ilp60x64]
+Characteristics = 0x20 ;NCF_NOT_USER_REMOVABLE 
+AddReg = illdpprot_reg
+CopyFiles = ilp60x64_CopyFiles, MessageDll_CopyFiles
+
+[ilp60x64.Services]
+AddService = illdpprot,      , ilp60x64_Service, EventLog
+DelService = illdpprot, 0x204
+
+[EventLog]
+AddReg = AddEventLog
+
+; AddReg sections
+[illdpprot_reg]
+HKR,  Ndi,             ClsID,         , {D6F4587C-A64B-47fc-8B0C-AA4792FC27EC}
+HKR,  Ndi,             ComponentDll, ,  "DCBNtObj.dll"
+HKR,  Ndi\Interfaces,  UpperRange,  ,  noupper
+HKR,  Ndi\Interfaces,  LowerRange,  ,  "illdpprot"
+HKR,  Ndi,             Service,     ,  "illdpprot"
+HKR,  Ndi,             HelpText,    ,  %iLldpProt_HelpText%
+
+; AddService sections
+[ilp60x64_service]
+DisplayName     = %iLldpProt_ProtDesc2%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 0 ;%SERVICE_BOOT_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\ilp60x64.sys
+LoadOrderGroup  = NDIS
+Description     = %iLldpProt_ProtDesc3%
+AddReg          = NdisImPlatformBinding_Reg
+
+[NdisImPlatformBinding_Reg]
+; By default, when an LBFO team or Bridge is created, all protocols will be
+; unbound from the underlying members and bound to the TNic(s). This keyword
+; allows a component to opt out of the default behavior
+; To prevent binding this protocol to the TNic(s):
+;   HKR, Parameters, NdisImPlatformBindingOptions,0x00010001,1 ; Do not bind to TNic
+; To prevent unbinding this protocol from underlying members:
+;   HKR, Parameters, NdisImPlatformBindingOptions,0x00010001,2 ; Do not unbind from Members
+; To prevent both binding to TNic and unbinding from members:
+;   HKR, Parameters, NdisImPlatformBindingOptions,0x00010001,3 ; Do not bind to TNic or unbind from Members
+HKR, Parameters, NdisImPlatformBindingOptions,0x00010001,3 ; Do not bind to TNic or unbind from Members
+
+[AddEventLog]
+HKR,, EventMessageFile, 0x00020000,  %iLldpEventLogPath%
+HKR,, TypesSupported,   0x00010001, 7
+
+; CopyFiles sections
+[ilp60x64_CopyFiles]
+ilp60x64.sys,,,2
+
+[MessageDll_CopyFiles]
+LLDPMsg.dll,,,2
+
+[DestinationDirs]
+ilp60x64_CopyFiles = 12
+MessageDll_CopyFiles = 11
+
+[SourceDisksNames]
+1 = %DISKNAME%,,,
+
+[SourceDisksFiles]
+ilp60x64.sys = 1
+LLDPMsg.dll = 1 
+
+[Strings]
+Intel = "Intel"
+DISKNAME="Intel(R) PRO/10GbE Driver Disk"
+iLldpProt_ProtDesc2 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpProt_ProtDesc3 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpEventLogPath = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\drivers\ilp60x64.sys"
+; This text shows up in Network Connection property page when LLDP protocol is selected.
+iLldpProt_HelpText = "A driver to support DCB on capable devices"
+
+[Strings.0804] ; Chinese (Simplified)
+Intel = "Intel"
+DISKNAME="Intel(R) PRO/10GbE Driver Disk"
+iLldpProt_ProtDesc2 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpProt_ProtDesc3 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpEventLogPath = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\LLDPMsg.dll"
+; This text shows up in Network Connection property page when LLDP protocol is selected.
+iLldpProt_HelpText = "‘⁄ºÊ»›…Ë±∏…œ÷ß≥÷ DCB µƒ«˝∂Ø≥Ã–Ú"
+
+[Strings.0404] ; Chinese (Traditional)
+Intel = "Intel"
+DISKNAME="Intel(R) PRO/10GbE Driver Disk"
+iLldpProt_ProtDesc2 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpProt_ProtDesc3 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpEventLogPath = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\LLDPMsg.dll"
+; This text shows up in Network Connection property page when LLDP protocol is selected.
+iLldpProt_HelpText = "§‰¥©¶≥•\Ø‡∏À∏m§W§ß DCB ™∫≈X∞ µ{¶°"
+
+[Strings.0407] ; German (Germany)
+Intel = "Intel"
+DISKNAME="Intel(R) PRO/10GbE Driver Disk"
+iLldpProt_ProtDesc2 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpProt_ProtDesc3 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpEventLogPath = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\LLDPMsg.dll"
+; This text shows up in Network Connection property page when LLDP protocol is selected.
+iLldpProt_HelpText = "Ein Treiber, der DBC auf geeigneten Ger‰ten unterst¸tzt"
+
+[Strings.0C0A] ; Spanish (Spain)
+Intel = "Intel"
+DISKNAME="Intel(R) PRO/10GbE Driver Disk"
+iLldpProt_ProtDesc2 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpProt_ProtDesc3 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpEventLogPath = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\LLDPMsg.dll"
+; This text shows up in Network Connection property page when LLDP protocol is selected.
+iLldpProt_HelpText = "Un controlador para admitir DCB en dispositivos compatibles"
+
+[Strings.040C] ; French (France)
+Intel = "Intel"
+DISKNAME="Intel(R) PRO/10GbE Driver Disk"
+iLldpProt_ProtDesc2 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpProt_ProtDesc3 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpEventLogPath = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\LLDPMsg.dll"
+; This text shows up in Network Connection property page when LLDP protocol is selected.
+iLldpProt_HelpText = "Un pilote assurant la prise en charge de DCB sur les pÈriphÈriques compatibles"
+
+[Strings.0410] ; Italian (Italy)
+Intel = "Intel"
+DISKNAME="Intel(R) PRO/10GbE Driver Disk"
+iLldpProt_ProtDesc2 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpProt_ProtDesc3 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpEventLogPath = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\LLDPMsg.dll"
+; This text shows up in Network Connection property page when LLDP protocol is selected.
+iLldpProt_HelpText = "Driver per supportare DCB sui dispositivi compatibili"
+
+[Strings.0411] ; Japanese (Japan)
+Intel = "Intel"
+DISKNAME="Intel(R) PRO/10GbE Driver Disk"
+iLldpProt_ProtDesc2 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpProt_ProtDesc3 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpEventLogPath = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\LLDPMsg.dll"
+; This text shows up in Network Connection property page when LLDP protocol is selected.
+iLldpProt_HelpText = "ëŒâûÉfÉoÉCÉXÇ≈ DCB ÇÉTÉ|Å[ÉgÇ∑ÇÈÉhÉâÉCÉoÅ["
+
+[Strings.0412] ; Korean (Korea)
+Intel = "Intel"
+DISKNAME="Intel(R) PRO/10GbE Driver Disk"
+iLldpProt_ProtDesc2 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpProt_ProtDesc3 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpEventLogPath = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\LLDPMsg.dll"
+; This text shows up in Network Connection property page when LLDP protocol is selected.
+iLldpProt_HelpText = "¿Âƒ°ø°º≠ DCB∏¶ ¡ˆø¯«œ¥¬ µÂ∂Û¿Ãπˆ"
+
+[Strings.0416] ; Portuguese (Brazil)
+Intel = "Intel"
+DISKNAME="Intel(R) PRO/10GbE Driver Disk"
+iLldpProt_ProtDesc2 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpProt_ProtDesc3 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpEventLogPath = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\LLDPMsg.dll"
+; This text shows up in Network Connection property page when LLDP protocol is selected.
+iLldpProt_HelpText = "Driver para suportar DCB em dispositivos habilitados"
+
+[Strings.0C04] ; Chinese (Traditional)
+Intel = "Intel"
+DISKNAME="Intel(R) PRO/10GbE Driver Disk"
+iLldpProt_ProtDesc2 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpProt_ProtDesc3 = "Intel(R) Ethernet LLDP Protocol Driver"
+iLldpEventLogPath = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\LLDPMsg.dll"
+; This text shows up in Network Connection property page when LLDP protocol is selected.
+iLldpProt_HelpText = "§‰¥©¶≥•\Ø‡∏À∏m§W§ß DCB ™∫≈X∞ µ{¶°"

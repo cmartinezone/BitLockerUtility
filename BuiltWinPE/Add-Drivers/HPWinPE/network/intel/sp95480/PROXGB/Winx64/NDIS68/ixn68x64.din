@@ -1,0 +1,77 @@
+;******************************************************************************
+;**                            INTEL CONFIDENTIAL                            **
+;**                                                                          **
+;**        Copyright 2018 Intel Corporation All Rights Reserved.             **
+;**                                                                          **
+;**  The material contained or described herein and all documents related    **
+;**  to such material ("Material") are owned by Intel Corporation or its     **
+;**  suppliers or licensors. Title to the Material remains with Intel        **
+;**  Corporation or its suppliers and licensors. The Material contains trade **
+;**  secrets and proprietary and confidential information of Intel or its    **
+;**  suppliers and licensors. The Material is protected by worldwide         **
+;**  copyright and trade secret laws and treaty provisions. No part of the   **
+;**  Material may be used, copied, reproduced, modified, published,          **
+;**  uploaded, posted, transmitted, distributed, or disclosed in any way     **
+;**  without Intel’s prior express written permission.                       **
+;**                                                                          **
+;**  No license under any patent, copyright, trade secret or other           **
+;**  intellectual property right is granted to or conferred upon you by      **
+;**  disclosure or delivery of the Materials, either expressly, by           **
+;**  implication, inducement, estoppel or otherwise. Any license under such  **
+;**  intellectual property rights must be express and approved by Intel in   **
+;**  writing.                                                                **
+;******************************************************************************
+;
+;*******************************************************************************
+; ixn68x64.din
+[Version]
+Signature   = "$Windows NT$"
+SetupClass  = BASE
+Provider    = %Intel%
+
+[Manufacturer]
+%Intel%     = Intel
+
+[ControlFlags]
+
+[Intel]
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+DefaultDestDir          = 11
+ixgbe.DelFiles          = 12
+CoInstaller.DelFiles    = 11
+UnInstall.DelFiles      = 11
+
+;----------------------------------------------------------------------------
+; Uninstall
+[8259x.Uninstall]
+DelFiles        = ixgbe.DelFiles, CoInstaller.DelFiles, UnInstall.DelFiles
+DelReg          = 8259x.DelReg
+
+[ixgbe.DelFiles]
+ixn68x64.sys,,,1
+
+[CoInstaller.DelFiles]
+NicCo36.dll,,,1
+NicCo4.dll,,,1
+NicInIXN.dll,,,1
+ixnmsg.dll,,,1
+
+[UnInstall.DelFiles]
+Prounstl.exe,,,1
+ixn68x64.din,,,1
+
+[8259x.DelReg]
+HKLM,Software\Microsoft\Windows\CurrentVersion\Uninstall\PROSet
+HKLM,Software\INTEL\Prounstl
+HKLM,Software\INTEL\NIC
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Intel                    = "Intel"
+

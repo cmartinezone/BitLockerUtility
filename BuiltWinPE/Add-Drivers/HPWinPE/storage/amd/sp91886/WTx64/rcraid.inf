@@ -1,0 +1,116 @@
+;-----------------------------------------------------------------------------
+;
+; rcraid.inf = Installation for AMD-RAID device driver
+;
+; (c)2012-2018 Advanced Micro Devices, Inc.
+;
+;-----------------------------------------------------------------------------
+; - This version supports Windows 10.
+; - Class and ClassGUID specify the type of driver and must match
+;     (see $DDKPATH/inc/api/devguid.h).
+; - Driver provided by Advanced Micro Devices, Inc. for AMD-RAID 7.2 software.
+;   (7.2.0-00057)
+;-----------------------------------------------------------------------------
+
+
+;-----------------------------------------------------------------------------
+[Version]
+Signature = "$Windows NT$"
+Class = SCSIAdapter
+ClassGUID = {4D36E97B-E325-11CE-BFC1-08002BE10318}
+Provider = %AMD%
+CatalogFile = rcraid.cat
+DriverVer = 05/14/2018,7.2.0.00057
+PnpLockDown = 0
+DriverPackageDisplayName = %rcraid_Desc%
+DriverPackageType = PlugAndPlay
+
+;-----------------------------------------------------------------------------
+[SourceDisksNames]
+1 = %rcraid_Desc%
+
+;-----------------------------------------------------------------------------
+[SourceDisksFiles]
+rcraid.sys = 1
+
+;-----------------------------------------------------------------------------
+[DestinationDirs]
+DefaultDestDir = 12   ;%WinDir%\System32\Drivers directory on NT-based systems
+
+;-----------------------------------------------------------------------------
+[ControlFlags]
+ExcludeFromSelect = *
+
+;-----------------------------------------------------------------------------
+[Manufacturer]
+%AMD% = AMD,ntamd64
+
+;-----------------------------------------------------------------------------
+[AMD.ntamd64]
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7905&subsys_8265103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7916&subsys_835B103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7805&subsys_2215103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7805&subsys_805A103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7805&subsys_805C103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7805&subsys_225F103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7905&subsys_8461103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7916&subsys_83E7103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7916&subsys_8460103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7805&subsys_2B17103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7805&subsys_2B35103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7805&subsys_2B52103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7905&subsys_8463103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7916&subsys_83E8103C
+%rcraid_Desc%=rcraid_Inst,PCI\VEN_1022&DEV_7916&subsys_8462103C
+
+;-----------------------------------------------------------------------------
+[rcraid_Inst]
+CopyFiles = DefaultDestDir
+
+;-----------------------------------------------------------------------------
+[DefaultDestDir]
+rcraid.sys,,,0x00002004
+
+;-----------------------------------------------------------------------------
+[rcraid_Inst.Services]
+AddService = rcraid,0x00000002,rcraid_Service_Inst
+
+;-----------------------------------------------------------------------------
+[rcraid_Service_Inst]
+ServiceType   = 1                    ; SERVICE_KERNEL_DRIVER
+StartType     = 0                    ; SERVICE_BOOT_START
+ErrorControl  = 2                    ; SERVICE_ERROR_SEVERE
+ServiceBinary = %12%\rcraid.sys
+DelReg = rcraid_Inst_DelReg
+AddReg = rcraid_Inst_AddReg
+
+;-----------------------------------------------------------------------------
+[rcraid_Inst_DelReg]
+HKR, "Parameters\PnpInterface", 5
+HKR, "Parameters\Device", "NumberOfRequests"
+HKR, "Parameters", "BusType"
+HKR, "Parameters\Device", "EnableHIPM"
+HKR, "Parameters\Device", "EnableDIPM"
+HKR, "Parameters\Device", "EnableAN"
+HKR, "Parameters\Device", "EnableZPODD"
+HKR, "Parameters\Device", "DriverParameter"
+HKR, "Parameters\Device", "EnableNCQ"
+
+;-----------------------------------------------------------------------------
+[rcraid_Inst_AddReg]
+HKR, "Parameters\PnpInterface", 5, 0x00010001, 0x00000001
+HKR, "Parameters\Device", "NumberOfRequests", 0x00010001, 254
+HKR, "Parameters", "BusType", 0x00010001, 0x00000008
+HKR, "Parameters\Device", "EnableHIPM", 0x00010001, 0x00000000 
+HKR, "Parameters\Device", "EnableDIPM", 0x00010001, 0xFFFFFFFF 
+HKR, "Parameters\Device", "EnableAN", 0x00010001, 0X00000000
+HKR, "Parameters\Device", "EnableZPODD", 0x00010001, 0X00000001
+HKR, "Parameters\Device", "DriverParameter", 0x00000000, "CSMI=Limited;"
+HKR, "Parameters\Device", "EnableNCQ", 0x00010001, 0X00000000
+HKLM,"System\CurrentControlSet\Services\Disk","TimeOutValue",0x00010001,0x0000003C
+
+;-----------------------------------------------------------------------------
+[Strings]
+AMD = "Advanced Micro Devices, Inc."
+rcraid_Desc = "AMD-RAID Controller [storport]"
+

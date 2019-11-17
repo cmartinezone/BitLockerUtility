@@ -1,0 +1,2174 @@
+;*******************************************************************************
+;**                                                                           **
+;**                            INTEL CONFIDENTIAL                             **
+;**                                                                           **
+;**        Copyright 2007-2015 Intel Corporation All Rights Reserved.         **
+;**                                                                           **
+;**  The material contained or described herein and all documents related     **
+;**  to such material ("Material") are owned by Intel Corporation or its      **
+;**  suppliers or licensors. Title to the Material remains with Intel         **
+;**  Corporation or its suppliers and licensors. The Material contains trade  **
+;**  secrets and proprietary and confidential information of Intel or its     **
+;**  suppliers and licensors. The Material is protected by worldwide          **
+;**  copyright and trade secret laws and treaty provisions. No part of the    **
+;**  Material may be used, copied, reproduced, modified, published,           **
+;**  uploaded, posted, transmitted, distributed, or disclosed in any way      **
+;**  without Intel's prior express written permission.                        **
+;**                                                                           **
+;**  No license under any patent, copyright, trade secret or other            **
+;**  intellectual property right is granted to or conferred upon you by       **
+;**  disclosure or delivery of the Materials, either expressly, by            **
+;**  implication, inducement, estoppel or otherwise. Any license under such   **
+;**  intellectual property rights must be express and approved by Intel in    **
+;**  writing.                                                                 **
+;**                                                                           **
+;*******************************************************************************
+;
+;*******************************************************************************
+; INF for Intel(R) 10 Gigabit PCIe Network Adapters
+;*******************************************************************************
+;
+
+[Version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Intel%
+CatalogFile = ixn65x64.cat
+DriverVer   = 04/24/2015,3.10.162.1
+
+[Manufacturer]
+%Intel%     = Intel, NTamd64.10.0
+
+[Intel]
+
+[Intel.NTamd64.10.0]
+; DisplayName                       Section     DeviceID
+; -----------                       -------     --------
+%O10A6.DeviceDesc%                  = NO_DRV,   PCI\VEN_8086&DEV_10A6
+%N10F8.KX4.KR.Dual.Description%     = N10F8_NoSec, PCI\VEN_8086&DEV_10F8&SUBSYS_000C8086    
+%N10F9.Generic.Description%         = N10FC,    PCI\VEN_8086&DEV_10F9
+%N10FB.CopperDA.Dual.Description%   = N10FC,    PCI\VEN_8086&DEV_10FB&SUBSYS_00028086
+%N10FB.SFI.Single.Description%      = N10FB_SP, PCI\VEN_8086&DEV_10FB&SUBSYS_000A8086
+%N10FB.SFI.Single.Description%      = N10FB_SP, PCI\VEN_8086&DEV_10FB&SUBSYS_00068086
+%N10FB.SFI.Dual.Description%        = N10FB,    PCI\VEN_8086&DEV_10FB&SUBSYS_00038086
+%N10FB.SFI.Dual.Description%        = N10FB,    PCI\VEN_8086&DEV_10FB&SUBSYS_000C8086
+%N10FB.SFI.Dual.Description%        = N10FB,    PCI\VEN_8086&DEV_10FB&SUBSYS_7A128086
+%N10FB.Generic.Description%         = N10FB,    PCI\VEN_8086&DEV_10FB
+%N10FC.Generic.Description%         = N10FC,    PCI\VEN_8086&DEV_10FC
+%N1529.Generic.Description%         = N10FB,    PCI\VEN_8086&DEV_1529
+%N1557.Generic.Description%         = N10FB_SP, PCI\VEN_8086&DEV_1557
+%N151C.Copper.Dual.Description%     = N151C,    PCI\VEN_8086&DEV_151C&SUBSYS_A02C8086
+%N151C.Copper.Dual.Description%     = N151C,    PCI\VEN_8086&DEV_151C&SUBSYS_A21C8086
+%N151C.Copper.Dual.Description%     = N151C,    PCI\VEN_8086&DEV_151C&SUBSYS_A03C8086
+%N151C.Copper.Dual.Sun.Description% = N151C,    PCI\VEN_8086&DEV_151C&SUBSYS_7B13108E
+%N151C.Generic.Description%         = N151C,    PCI\VEN_8086&DEV_151C
+%N154A.SFI.Quad.Description%        = N154A,    PCI\VEN_8086&DEV_154A&SUBSYS_011A8086
+%N154A.SFI.Quad.Description%        = N154A,    PCI\VEN_8086&DEV_154A&SUBSYS_011B8086
+%N154A.SFI.Quad.Description%        = N154A,    PCI\VEN_8086&DEV_154A&SUBSYS_011C8086
+%N1558.QSFP.Quad.Description%       = N1558,    PCI\VEN_8086&DEV_1558&SUBSYS_011A8086
+%N1558.QSFP.Quad.Description%       = N1558,    PCI\VEN_8086&DEV_1558&SUBSYS_011B8086
+
+[NO_DRV]
+Characteristics    = 0x01
+Include            = machine.inf
+Needs              = NO_DRV
+
+[NO_DRV.Services]
+Include            = machine.inf
+Needs              = NO_DRV.Services
+
+; ------------------------------------------------------
+; Intel(R) 10 Gigabit X520 Server Adapters
+; ------------------------------------------------------
+
+[N10FB]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+Port1FunctionNumber = 0
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg, DCB.reg, Uninstall.reg
+AddReg             = FCoE.reg, IPSec.reg,  Dualspeed.reg, Force10G.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N10FB.Services]
+AddService = %ServiceName%, 0x12, Service, EventLog
+
+[N10FB.HW]
+Include            = machine.inf
+Needs              = PciSriovSupported, PciIoSpaceNotRequired
+AddReg             = MSI.reg
+
+[N10FB.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) 10 Gigabit X520-1 Server Adapters
+; ------------------------------------------------------
+
+[N10FB_SP]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg, DCB.reg, Uninstall.reg
+AddReg             = FCoE.reg, IPSec.reg,  Dualspeed.reg, Force10G.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N10FB_SP.Services]
+AddService = %ServiceName%, 0x12, Service, EventLog
+
+[N10FB_SP.HW]
+Include            = machine.inf
+Needs              = PciSriovSupported, PciIoSpaceNotRequired
+AddReg             = MSI.reg
+
+[N10FB_SP.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) 82599 10 Gigabit Dual Port Network Connection
+; ------------------------------------------------------
+[N10FC]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+Port1FunctionNumber = 0
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg, DCB.reg, Uninstall.reg
+AddReg             = FCoE.reg, IPSec.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N10FC.Services]
+AddService = %ServiceName%, 0x12, Service, EventLog
+
+[N10FC.HW]
+Include            = machine.inf
+Needs              = PciSriovSupported, PciIoSpaceNotRequired
+AddReg             = MSI.reg
+
+[N10FC.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; -----------------------------------------------
+; Intel(R) Ethernet Server Adapter X520-T1/T2
+; -----------------------------------------------
+[N151C]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+Port1FunctionNumber = 0
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg, DCB.reg, Uninstall.reg
+AddReg             = NoFCoE.reg, IPSec.reg,  Dualspeed.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N151C.Services]
+AddService = %ServiceName%, 0x12, Service, EventLog
+
+[N151C.HW]
+Include            = machine.inf
+Needs              = PciSriovSupported, PciIoSpaceNotRequired
+AddReg             = MSI.reg
+
+[N151C.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz
+; ------------------------------------------------------
+[N10F8_NoSec]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+Port1FunctionNumber = 0
+DelReg             = Advanced.DelReg
+DelReg             = IPSec.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg, DCB.reg, Uninstall.reg
+AddReg             = FCoE.reg, NoIPSec.reg, SmartSpeed.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N10F8_NoSec.Services]
+AddService = %ServiceName%, 0x12, Service, EventLog
+
+[N10F8_NoSec.HW]
+Include            = machine.inf
+Needs              = PciSriovSupported, PciIoSpaceNotRequired
+AddReg             = MSI.reg
+
+[N10F8_NoSec.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInK.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) Ethernet Converged Network Adapter X520-4
+; ------------------------------------------------------
+[N154A]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+Port1FunctionNumber = 0
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg, DCB.reg, Uninstall.reg
+AddReg             = FCoE.reg, IPSec.reg,  Dualspeed.reg, Force10G.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N154A.Services]
+AddService = %ServiceName%, 0x12, Service, EventLog
+
+[N154A.HW]
+Include            = machine.inf
+Needs              = PciSriovSupported, PciIoSpaceNotRequired
+AddReg             = MSI.reg
+
+[N154A.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKQP.reg
+CopyFiles          = CoInstallerCopyFiles
+
+; ------------------------------------------------------
+; Intel(R) Ethernet Converged Network Adapter X520-Q1
+; ------------------------------------------------------
+[N1558]
+Characteristics    = 0x84 ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5 ; PCI
+Port1FunctionNumber = 0
+DelReg             = Advanced.DelReg
+AddReg             = Default.reg, RSS.reg, LLI.reg, DCB.reg, Uninstall.reg
+AddReg             = FCoE.reg, IPSec.reg,  Forcespeed.reg
+CopyFiles          = CopyFiles, MessageDll.CopyFiles, Uninstall.CopyFiles
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+
+[N1558.Services]
+AddService = %ServiceName%, 0x12, Service, EventLog
+
+[N1558.HW]
+Include            = machine.inf
+Needs              = PciSriovSupported, PciIoSpaceNotRequired
+AddReg             = MSI.reg
+
+[N1558.CoInstallers]
+AddReg             = CoInstaller_AddReg, CoInKQP.reg
+CopyFiles          = CoInstallerCopyFiles
+
+;-------------------------------------------------------------------------------
+; Registry Settings
+;-------------------------------------------------------------------------------
+[Default.reg]
+HKR, Ndi\Interfaces,                            UpperRange,             0, "ndis5,illdpprot,IFCoE"
+HKR, Ndi\Interfaces,                            LowerRange,             0, "ethernet"
+HKR, Ndi,                                       Service,                0, %ServiceName%
+
+; *FlowControl
+HKR, Ndi\Params\*FlowControl,                   ParamDesc,              0, %FlowControl%
+HKR, Ndi\Params\*FlowControl,                   default,                0, "3"
+HKR, Ndi\Params\*FlowControl\Enum,              "0",                    0, %Disabled%
+HKR, Ndi\Params\*FlowControl\Enum,              "1",                    0, %FlowControl_TxOnly%
+HKR, Ndi\Params\*FlowControl\Enum,              "2",                    0, %FlowControl_RxOnly%
+HKR, Ndi\Params\*FlowControl\Enum,              "3",                    0, %FlowControl_Full%
+HKR, Ndi\Params\*FlowControl,                   type,                   0, "enum"
+
+; Force FlowControl on
+HKR,,                                           *FlowControl,           0, "3"
+
+; *TransmitBuffers
+HKR, Ndi\params\*TransmitBuffers,               ParamDesc,              0, %TransmitBuffers%
+HKR, Ndi\params\*TransmitBuffers,               default,                0, "512"
+HKR, Ndi\params\*TransmitBuffers,               min,                    0, "128"
+HKR, Ndi\params\*TransmitBuffers,               max,                    0, "16384"
+HKR, Ndi\params\*TransmitBuffers,               step,                   0, "64"
+HKR, Ndi\params\*TransmitBuffers,               Base,                   0, "10"
+HKR, Ndi\params\*TransmitBuffers,               type,                   0, "int"
+
+; *ReceiveBuffers
+HKR, Ndi\params\*ReceiveBuffers,                ParamDesc,              0, %ReceiveBuffers%
+HKR, Ndi\params\*ReceiveBuffers,                default,                0, "512"
+HKR, Ndi\params\*ReceiveBuffers,                min,                    0, "128"
+HKR, Ndi\params\*ReceiveBuffers,                max,                    0, "4096"
+HKR, Ndi\params\*ReceiveBuffers,                step,                   0, "64"
+HKR, Ndi\params\*ReceiveBuffers,                Base,                   0, "10"
+HKR, Ndi\params\*ReceiveBuffers,                type,                   0, "int"
+
+; Set MinHardwareOwnedPacketCount to 32
+HKR,,                                           MinHardwareOwnedPacketCount,   0, "32"
+
+; *TCPChecksumOffloadIPv4
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,        ParamDesc,              0, %TCPChksumOffv4%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,        default,                0, "3"
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,   "0",                    0, %Disabled%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,   "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,   "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4\Enum,   "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv4,        type,                   0, "enum"
+
+; *TCPChecksumOffloadIPv6
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6,        ParamDesc,              0, %TCPChksumOffv6%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6,        default,                0, "3"
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\Enum,   "0",                    0, %Disabled%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\Enum,   "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\Enum,   "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6\Enum,   "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*TCPChecksumOffloadIPv6,        type,                   0, "enum"
+
+; *UDPChecksumOffloadIPv4
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,        ParamDesc,              0, %UDPChksumOffv4%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,        default,                0, "3"
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,   "0",                    0, %Disabled%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,   "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,   "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4\Enum,   "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv4,        type,                   0, "enum"
+
+; *UDPChecksumOffloadIPv6
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6,        ParamDesc,              0, %UDPChksumOffv6%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6,        default,                0, "3"
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\Enum,   "0",                    0, %Disabled%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\Enum,   "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\Enum,   "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6\Enum,   "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*UDPChecksumOffloadIPv6,        type,                   0, "enum"
+
+; *IPChecksumOffloadIPv4
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,         ParamDesc,              0, %IPChksumOffv4%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,         default,                0, "3"
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,    "0",                    0, %Disabled%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,    "1",                    0, %ChksumOffTx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,    "2",                    0, %ChksumOffRx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,    "3",                    0, %ChksumOffTxRx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,         type,                   0, "enum"
+
+; Network Address
+HKR, Ndi\params\NetworkAddress,                 ParamDesc,              0, %LAA%
+HKR, Ndi\params\NetworkAddress,                 Default,                0, ""
+HKR, Ndi\params\NetworkAddress,                 type,                   0, "edit"
+HKR, NDI\params\NetworkAddress,                 LimitText,              0, "12"
+HKR, NDI\params\NetworkAddress,                 UpperCase,              0, "1"
+HKR, NDI\params\NetworkAddress,                 optional,               0, "1"
+
+;Log Link State Event
+HKR,Ndi\Params\LogLinkStateEvent,               ParamDesc,              0, %LogLinkState%
+HKR,Ndi\Params\LogLinkStateEvent,               Type,                   0, "enum"
+HKR,Ndi\Params\LogLinkStateEvent,               Default,                0, "51"
+HKR,Ndi\Params\LogLinkStateEvent\Enum,          "51",                   0, %Enabled%
+HKR,Ndi\Params\LogLinkStateEvent\Enum,          "16",                   0, %Disabled%
+HKR,,                                           LogLinkStateEvent,      0, "51"
+
+; Interrupt Throttle Rate
+HKR, Ndi\Params\ITR,                            ParamDesc,              0, %InterruptThrottleRate%
+HKR, Ndi\Params\ITR,                            default,                0, "65535"
+HKR, Ndi\Params\ITR\Enum,                       "65535",                0, %Adaptive%
+HKR, Ndi\Params\ITR\Enum,                       "2000",                 0, %Extreme%
+HKR, Ndi\Params\ITR\Enum,                       "950",                  0, %High%
+HKR, Ndi\Params\ITR\Enum,                       "488",                  0, %Medium%
+HKR, Ndi\Params\ITR\Enum,                       "200",                  0, %Low%
+HKR, Ndi\Params\ITR\Enum,                       "0",                    0, %Off%
+HKR, Ndi\Params\ITR,                            type,                   0, "enum"
+
+; *PriorityVLANTag
+HKR, Ndi\Params\*PriorityVLANTag,               ParamDesc,              0, %PriorityVLANTag2%
+HKR, Ndi\Params\*PriorityVLANTag,               default,                0, "3"
+HKR, Ndi\Params\*PriorityVLANTag\Enum,          "0",                    0, %PriorityVlanDisabled2%
+HKR, Ndi\Params\*PriorityVLANTag\Enum,          "1",                    0, %PriorityEnabled2%
+HKR, Ndi\Params\*PriorityVLANTag\Enum,          "2",                    0, %VlanEnabled%
+HKR, Ndi\Params\*PriorityVLANTag\Enum,          "3",                    0, %PriorityVlanEnabled2%
+HKR, Ndi\Params\*PriorityVLANTag,               type,                   0, "enum"
+
+; *InterruptModeration
+HKR, Ndi\Params\*InterruptModeration,           ParamDesc,              0, %InterruptModeration%
+HKR, Ndi\Params\*InterruptModeration,           default,                0, "1"
+HKR, Ndi\Params\*InterruptModeration\Enum,      "0",                    0, %Disabled%
+HKR, Ndi\Params\*InterruptModeration\Enum,      "1",                    0, %Enabled%
+HKR, Ndi\Params\*InterruptModeration,           type,                   0, "enum"
+
+; *LsoV2IPv4
+HKR, Ndi\Params\*LsoV2IPv4,                     ParamDesc,              0, %LsoV2IPv4%
+HKR, Ndi\Params\*LsoV2IPv4,                     default,                0, "1"
+HKR, Ndi\Params\*LsoV2IPv4\Enum,                "0",                    0, %Disabled%
+HKR, Ndi\Params\*LsoV2IPv4\Enum,                "1",                    0, %Enabled%
+HKR, Ndi\Params\*LsoV2IPv4,                     type,                   0, "enum"
+
+; *LsoV1IPv4
+HKR,,                                           *LsoV1IPv4,             0, "0"
+
+; *LsoV2IPv6
+HKR, Ndi\Params\*LsoV2IPv6,                     ParamDesc,              0, %LsoV2IPv6%
+HKR, Ndi\Params\*LsoV2IPv6,                     default,                0, "1"
+HKR, Ndi\Params\*LsoV2IPv6\Enum,                "0",                    0, %Disabled%
+HKR, Ndi\Params\*LsoV2IPv6\Enum,                "1",                    0, %Enabled%
+HKR, Ndi\Params\*LsoV2IPv6,                     type,                   0, "enum"
+
+; *JumboPacket
+HKR, Ndi\Params\*JumboPacket,                   ParamDesc,              0, %JumboPacket%
+HKR, Ndi\Params\*JumboPacket,                   default,                0, "1514"
+HKR, Ndi\Params\*JumboPacket\Enum,              "1514",                 0, %Disabled%
+HKR, Ndi\Params\*JumboPacket\Enum,              "4088",                 0, %Bytes4088%
+HKR, Ndi\Params\*JumboPacket\Enum,              "9014",                 0, %Bytes9014%
+HKR, Ndi\Params\*JumboPacket,                   type,                   0, "enum"
+
+; *RSCIPv4
+HKR, Ndi\Params\*RSCIPv4,                       ParamDesc,              0, %RSCIPv4%
+HKR, Ndi\Params\*RSCIPv4,                       default,                0, "1"
+HKR, Ndi\Params\*RSCIPv4\Enum,                  "0",                    0, %Disabled%
+HKR, Ndi\Params\*RSCIPv4\Enum,                  "1",                    0, %Enabled%
+HKR, Ndi\Params\*RSCIPv4,                       type,                   0, "enum"
+
+; *QOS
+HKR, Ndi\Params\*QOS,                           ParamDesc,              0, %QOS%
+HKR, Ndi\Params\*QOS,                           default,                0, "0"
+HKR, Ndi\Params\*QOS,                           type,                   0, "enum"
+HKR, Ndi\Params\*QOS\Enum,                      "0",                    0, %Disabled%
+HKR, Ndi\Params\*QOS\Enum,                      "1",                    0, %Enabled%
+
+; *VMQ
+HKR, Ndi\Params\*VMQ,                           ParamDesc,              0, %VMQ%
+HKR, Ndi\Params\*VMQ,                           default,                0, "1"
+HKR, Ndi\Params\*VMQ,                           type,                   0, "enum"
+HKR, Ndi\Params\*VMQ\Enum,                      "0",                    0, %Disabled%
+HKR, Ndi\Params\*VMQ\Enum,                      "1",                    0, %Enabled%
+HKR,,                                           VMQSupported,           0, "1"
+
+; *SRIOV
+HKR, Ndi\Params\*SRIOV,                         ParamDesc,              0, %Sriov%
+HKR, Ndi\Params\*SRIOV,                         default,                0, "1"
+HKR, Ndi\Params\*SRIOV,                         type,                   0, "enum"
+HKR, Ndi\Params\*SRIOV\Enum,                    "0",                    0, %Disabled%
+HKR, Ndi\Params\*SRIOV\Enum,                    "1",                    0, %Enabled%
+
+; SRIOV Default switch configuration
+HKR, NicSwitches\0,*Flags,                                              0x00010001,       0x06
+HKR, NicSwitches\0,*SwitchType,                                         0x00010001,       1
+HKR, NicSwitches\0,*SwitchId,                                           0x00010001,       0
+HKR, NicSwitches\0,*SwitchName,                                         0,                "DefaultSwitchName"
+HKR, NicSwitches\0,*NumVFs,                                             0x00010001,       62
+HKR, NicSwitches\0,*NumVPorts,                                          0x00010001,       64
+HKR, NicSwitches\0,*NumQueuePairsForDefaultVPort,                       0x00010001,       1
+HKR, NicSwitches\0,*NumQueuePairsForNonDefaultVPorts,                   0x00010001,       63
+
+; *PacketDirect
+HKR, Ndi\Params\*PacketDirect,                  ParamDesc,              0, "Packet Direct"
+HKR, Ndi\Params\*PacketDirect,                  default,                0, "1"
+HKR, Ndi\Params\*PacketDirect,                  type,                   0, "enum"
+HKR, Ndi\Params\*PacketDirect\Enum,             "0",                    0, %Disabled%
+HKR, Ndi\Params\*PacketDirect\Enum,             "1",                    0, %Enabled%
+
+; Miscellanous defaults
+HKR,,                                           MulticastFilterType,    0, "0"
+HKR,,                                           VlanFiltering,          0, "0"
+
+[FCoE.reg]
+HKR,,                                              EnableFcoeOffload,      2, "1"
+; FcoeStartingNumaNode
+HKR, PROSetNdi\Params\FCoEStartingNumaNodeId,      ParamDesc,              0, %FCoEStartingNumaNodeId%
+HKR, PROSetNdi\params\FCoEStartingNumaNodeId,      default,                0, "0"
+HKR, PROSetNdi\params\FCoEStartingNumaNodeId,      min,                    0, "0"
+HKR, PROSetNdi\params\FCoEStartingNumaNodeId,      max,                    0, "15"
+HKR, PROSetNdi\params\FCoEStartingNumaNodeId,      step,                   0, "1"
+HKR, PROSetNdi\params\FCoEStartingNumaNodeId,      Base,                   0, "10"
+HKR, PROSetNdi\params\FCoEStartingNumaNodeId,      type,                   0, "int"
+HKR,,                                          FCoEStartingNumaNodeId,     2, "0"
+
+; FcoeNumaNodeCount
+HKR, PROSetNdi\Params\FCoENumaNodeCount,           ParamDesc,              0, %FCoENumaNodeCount%
+HKR, PROSetNdi\params\FCoENumaNodeCount,           default,                0, "1"
+HKR, PROSetNdi\params\FCoENumaNodeCount,           min,                    0, "1"
+HKR, PROSetNdi\params\FCoENumaNodeCount,           max,                    0, "7"
+HKR, PROSetNdi\params\FCoENumaNodeCount,           step,                   0, "1"
+HKR, PROSetNdi\params\FCoENumaNodeCount,           Base,                   0, "10"
+HKR, PROSetNdi\params\FCoENumaNodeCount,           type,                   0, "int"
+HKR,,                                          FCoENumaNodeCount,          2, "1"
+
+; FCoEStartingRSSCoreNumber
+HKR, PROSetNdi\Params\FCoEStartingRSSCoreNumber,   ParamDesc,              0, %FCoEStartingRSSCoreNumber%
+HKR, PROSetNdi\params\FCoEStartingRSSCoreNumber,   default,                0, "0"
+HKR, PROSetNdi\params\FCoEStartingRSSCoreNumber,   min,                    0, "0"
+HKR, PROSetNdi\params\FCoEStartingRSSCoreNumber,   max,                    0, "15"
+HKR, PROSetNdi\params\FCoEStartingRSSCoreNumber,   step,                   0, "1"
+HKR, PROSetNdi\params\FCoEStartingRSSCoreNumber,   Base,                   0, "10"
+HKR, PROSetNdi\params\FCoEStartingRSSCoreNumber,   type,                   0, "int"
+HKR,,                                          FCoEStartingRSSCoreNumber,  2, "0"
+
+[NoFCoE.reg]
+HKR, Ndi\Interfaces,                            UpperRange,             0, "ndis5,illdpprot"
+HKR,,                                           EnableFcoeOffload,      0, "0"
+
+[Dualspeed.reg]
+HKR, Ndi\params\*SpeedDuplex,                   ParamDesc,              0, %SpeedDuplex%
+HKR, Ndi\params\*SpeedDuplex,                   default,                0, "0"
+HKR, Ndi\params\*SpeedDuplex,                   type,                   0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,              "0",                    0, %AutoNegotiation%
+HKR, Ndi\params\*SpeedDuplex\enum,              "6",                    0, %1000Mb_Full_Duplex%
+
+[Force10G.reg]
+HKR, Ndi\params\*SpeedDuplex\enum,              "7",                    0, %10Gb_Full_Duplex%
+
+[Forcespeed.reg]
+HKR, Ndi\params\*SpeedDuplex,                   ParamDesc,              0, %SpeedDuplex%
+HKR, Ndi\params\*SpeedDuplex,                   default,                0, "7"
+HKR, Ndi\params\*SpeedDuplex,                   type,                   0, "enum"
+HKR, Ndi\params\*SpeedDuplex\enum,              "6",                    0, %1000Mb_Full_Duplex%
+HKR, Ndi\params\*SpeedDuplex\enum,              "7",                    0, %10Gb_Full_Duplex%
+
+[RSS.reg]
+; NumRssQueues
+HKR, Ndi\Params\*NumRssQueues,                   ParamDesc,              0, %NumRssQueues2%
+HKR, Ndi\Params\*NumRssQueues,                   default,                0, "8"
+HKR, Ndi\Params\*NumRssQueues,                   type,                   0, "enum"
+HKR, Ndi\Params\*NumRssQueues\Enum,              "1",                    0, %1queue%
+HKR, Ndi\Params\*NumRssQueues\Enum,              "2",                    0, %2queues%
+HKR, Ndi\Params\*NumRssQueues\Enum,              "4",                    0, %4queues%
+HKR, Ndi\Params\*NumRssQueues\Enum,              "8",                    0, %8queues%
+HKR, Ndi\Params\*NumRssQueues\Enum,              "16",                   0, %16queues%
+
+; *RSSProfile
+HKR, Ndi\Params\*RSSProfile,                   ParamDesc,              0, %RSSProfile%
+HKR, Ndi\Params\*RSSProfile,                   default,                0, "1"
+HKR, Ndi\Params\*RSSProfile,                   type,                   0, "enum"
+HKR, Ndi\Params\*RSSProfile\Enum,              "1",                    0, %Closest_Processor%
+HKR, Ndi\Params\*RSSProfile\Enum,              "2",                    0, %Closest_Processor_Static%
+HKR, Ndi\Params\*RSSProfile\Enum,              "3",                    0, %NUMA_Scaling%
+HKR, Ndi\Params\*RSSProfile\Enum,              "4",                    0, %NUMA_Scaling_Static%
+HKR, Ndi\Params\*RSSProfile\Enum,              "5",                    0, %Conservative_Scaling%
+
+; *RSS
+HKR, Ndi\Params\*RSS,                           ParamDesc,              0, %RSS%
+HKR, Ndi\Params\*RSS,                           default,                0, "1"
+HKR, Ndi\Params\*RSS,                           type,                   0, "enum"
+HKR, Ndi\Params\*RSS\Enum,                      "0",                    0, %Disabled%
+HKR, Ndi\Params\*RSS\Enum,                      "1",                    0, %Enabled%
+
+; *RssBaseProcNumber
+HKR, Ndi\params\*RssBaseProcNumber,             ParamDesc,              0, %RssBaseProcNumber%
+HKR, Ndi\params\*RssBaseProcNumber,             default,                0, "0"
+HKR, Ndi\params\*RssBaseProcNumber,             min,                    0, "0"
+HKR, Ndi\params\*RssBaseProcNumber,             max,                    0, "63"
+HKR, Ndi\params\*RssBaseProcNumber,             step,                   0, "1"
+HKR, Ndi\params\*RssBaseProcNumber,             Optional,               0, "0"
+HKR, Ndi\params\*RssBaseProcNumber,             type,                   0, "int"
+
+; *NumaNodeId
+HKR, Ndi\params\*NumaNodeId,                    ParamDesc,              0, %NumaNodeId%
+HKR, Ndi\params\*NumaNodeId,                    default,                0, "65535"
+HKR, Ndi\params\*NumaNodeId,                    type,                   0, "enum"
+HKR, Ndi\params\*NumaNodeId\Enum,               "65535",                0, %default%
+HKR, Ndi\params\*NumaNodeId\Enum,               "0",                    0, %node0%
+HKR, Ndi\params\*NumaNodeId\Enum,               "1",                    0, %node1%
+HKR, Ndi\params\*NumaNodeId\Enum,               "2",                    0, %node2%
+HKR, Ndi\params\*NumaNodeId\Enum,               "3",                    0, %node3%
+HKR, Ndi\params\*NumaNodeId\Enum,               "4",                    0, %node4%
+HKR, Ndi\params\*NumaNodeId\Enum,               "5",                    0, %node5%
+HKR, Ndi\params\*NumaNodeId\Enum,               "6",                    0, %node6%
+HKR, Ndi\params\*NumaNodeId\Enum,               "7",                    0, %node7%
+
+; *MaxRssProcessors
+HKR, Ndi\params\*MaxRssProcessors,              ParamDesc,              0, %MaxRssProcessors%
+HKR, Ndi\params\*MaxRssProcessors,              default,                0, "16"
+HKR, Ndi\params\*MaxRssProcessors,              type,                   0, "enum"
+HKR, Ndi\params\*MaxRssProcessors\Enum,         "1",                    0, "1"
+HKR, Ndi\params\*MaxRssProcessors\Enum,         "2",                    0, "2"
+HKR, Ndi\params\*MaxRssProcessors\Enum,         "4",                    0, "4"
+HKR, Ndi\params\*MaxRssProcessors\Enum,         "8",                    0, "8"
+HKR, Ndi\params\*MaxRssProcessors\Enum,         "16",                   0, "16"
+
+[LLI.reg]
+HKR, PROSetNdi\Params\EnableLLI,                ParamDesc,              0, %EnableLLI%
+HKR, PROSetNdi\Params\EnableLLI,                default,                0, "0"
+HKR, PROSetNdi\Params\EnableLLI,                type,                   0, "enum"
+HKR, PROSetNdi\Params\EnableLLI\Enum,           "0",                    0, %Disabled%
+HKR, PROSetNdi\Params\EnableLLI\Enum,           "1",                    0, %LLIPortBased%
+HKR, PROSetNdi\Params\EnableLLI\Enum,           "2",                    0, %LLIPSHBased%
+HKR,,                                           EnableLLI,              2, "0"
+HKR, PROSetNdi\Params\LLIPorts,                 ParamDesc,              0, %LLIPorts%
+HKR, PROSetNdi\Params\LLIPorts,                 default,                0, ""
+HKR, PROSetNdi\Params\LLIPorts,                 type,                   0, "edit"
+HKR, PROSetNdi\Params\LLIPorts,                 UpperCase,              0, "1"
+HKR, PROSetNdi\Params\LLIPorts,                 optional,               0, "1"
+HKR, PROSetNdi\Params\LLIPorts,                 multi_string,           0, "1"
+HKR,,                                           LLIPorts,               0x00010002, ""
+
+[NoDCB.reg]
+HKR, Ndi\Interfaces,                            UpperRange,             0, "ndis5"
+HKR,,                                           EnableFcoeOffload,      0, "0"
+
+[DCB.reg]
+HKR, DcbCfg,                                     DcbPfcAdvertise,       2, "1"
+HKR, DcbCfg,                                     DcbPfcEnable,          2, "1"
+HKR, DcbCfg,                                     DcbPfcWilling,         2, "1"
+HKR, DcbCfg,                                     DcbPgAdvertise,        2, "1"
+HKR, DcbCfg,                                     DcbPgEnable,           2, "1"
+HKR, DcbCfg,                                     DcbPgWilling,          2, "1"
+HKR, DcbCfg,                                     Bw0DetailTx,           2, "Bandwidth Group 0"
+HKR, DcbCfg,                                     Bw0DetailRx,           2, "Bandwidth Group 0"
+HKR, DcbCfg,                                     Bw0PercentageRx,       2, "13"
+HKR, DcbCfg,                                     Bw0PercentageTx,       2, "13"
+HKR, DcbCfg,                                     Bw1DetailTx,           2, "Bandwidth Group 1"
+HKR, DcbCfg,                                     Bw1DetailRx,           2, "Bandwidth Group 1"
+HKR, DcbCfg,                                     Bw1PercentageRx,       2, "13"
+HKR, DcbCfg,                                     Bw1PercentageTx,       2, "13"
+HKR, DcbCfg,                                     Bw2DetailTx,           2, "Bandwidth Group 2"
+HKR, DcbCfg,                                     Bw2DetailRx,           2, "Bandwidth Group 2"
+HKR, DcbCfg,                                     Bw2PercentageRx,       2, "13"
+HKR, DcbCfg,                                     Bw2PercentageTx,       2, "13"
+HKR, DcbCfg,                                     Bw3DetailTx,           2, "Bandwidth Group 3"
+HKR, DcbCfg,                                     Bw3DetailRx,           2, "Bandwidth Group 3"
+HKR, DcbCfg,                                     Bw3PercentageRx,       2, "13"
+HKR, DcbCfg,                                     Bw3PercentageTx,       2, "13"
+HKR, DcbCfg,                                     Bw4DetailTx,           2, "Bandwidth Group 4"
+HKR, DcbCfg,                                     Bw4DetailRx,           2, "Bandwidth Group 4"
+HKR, DcbCfg,                                     Bw4PercentageRx,       2, "12"
+HKR, DcbCfg,                                     Bw4PercentageTx,       2, "12"
+HKR, DcbCfg,                                     Bw5DetailTx,           2, "Bandwidth Group 5"
+HKR, DcbCfg,                                     Bw5DetailRx,           2, "Bandwidth Group 5"
+HKR, DcbCfg,                                     Bw5PercentageRx,       2, "12"
+HKR, DcbCfg,                                     Bw5PercentageTx,       2, "12"
+HKR, DcbCfg,                                     Bw6DetailTx,           2, "Bandwidth Group 6"
+HKR, DcbCfg,                                     Bw6DetailRx,           2, "Bandwidth Group 6"
+HKR, DcbCfg,                                     Bw6PercentageRx,       2, "12"
+HKR, DcbCfg,                                     Bw6PercentageTx,       2, "12"
+HKR, DcbCfg,                                     Bw7DetailTx,           2, "Bandwidth Group 7"
+HKR, DcbCfg,                                     Bw7DetailRx,           2, "Bandwidth Group 7"
+HKR, DcbCfg,                                     Bw7PercentageRx,       2, "12"
+HKR, DcbCfg,                                     Bw7PercentageTx,       2, "12"
+HKR, DcbCfg\St0Config,                           DcbAppData,            0x00000003 , "00"
+HKR, DcbCfg\St0Config,                           DcbAppAdvertise,       2, "0"
+HKR, DcbCfg\St0Config,                           DcbAppEnable,          2, "1"
+HKR, DcbCfg\St0Config,                           DcbAppWilling,         2, "1"
+HKR, DcbCfg\St0Config,                           DcbLLinkAdvertise,     2, "1"
+HKR, DcbCfg\St0Config,                           DcbLLinkEnable,        2, "1"
+HKR, DcbCfg\St0Config,                           DcbLLinkWilling,       2, "1"
+HKR, DcbCfg\St1Config,                           DcbAppData,            0x00000003 , "00"
+HKR, DcbCfg\St1Config,                           DcbAppAdvertise,       2, "0"
+HKR, DcbCfg\St1Config,                           DcbAppEnable,          2, "1"
+HKR, DcbCfg\St1Config,                           DcbAppWilling,         2, "1"
+HKR, DcbCfg\Tc0Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc0Config\Rx,                        BwID,                  2, "0"
+HKR, DcbCfg\Tc0Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc0Config\Rx,                        UptoTc,                2, "1"
+HKR, DcbCfg\Tc0Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc0Config\Tx,                        BwID,                  2, "0"
+HKR, DcbCfg\Tc0Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc0Config\Tx,                        UptoTc,                2, "1"
+HKR, DcbCfg\Tc0Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc1Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc1Config\Rx,                        BwID,                  2, "1"
+HKR, DcbCfg\Tc1Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc1Config\Rx,                        UptoTc,                2, "2"
+HKR, DcbCfg\Tc1Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc1Config\Tx,                        BwID,                  2, "1"
+HKR, DcbCfg\Tc1Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc1Config\Tx,                        UptoTc,                2, "2"
+HKR, DcbCfg\Tc1Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc2Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc2Config\Rx,                        BwID,                  2, "2"
+HKR, DcbCfg\Tc2Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc2Config\Rx,                        UptoTc,                2, "4"
+HKR, DcbCfg\Tc2Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc2Config\Tx,                        BwID,                  2, "2"
+HKR, DcbCfg\Tc2Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc2Config\Tx,                        UptoTc,                2, "4"
+HKR, DcbCfg\Tc2Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc3Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc3Config\Rx,                        BwID,                  2, "3"
+HKR, DcbCfg\Tc3Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc3Config\Rx,                        UptoTc,                2, "8"
+HKR, DcbCfg\Tc3Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc3Config\Tx,                        BwID,                  2, "3"
+HKR, DcbCfg\Tc3Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc3Config\Tx,                        UptoTc,                2, "8"
+HKR, DcbCfg\Tc3Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc4Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc4Config\Rx,                        BwID,                  2, "4"
+HKR, DcbCfg\Tc4Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc4Config\Rx,                        UptoTc,                2, "16"
+HKR, DcbCfg\Tc4Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc4Config\Tx,                        BwID,                  2, "4"
+HKR, DcbCfg\Tc4Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc4Config\Tx,                        UptoTc,                2, "16"
+HKR, DcbCfg\Tc4Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc5Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc5Config\Rx,                        BwID,                  2, "5"
+HKR, DcbCfg\Tc5Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc5Config\Rx,                        UptoTc,                2, "32"
+HKR, DcbCfg\Tc5Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc5Config\Tx,                        BwID,                  2, "5"
+HKR, DcbCfg\Tc5Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc5Config\Tx,                        UptoTc,                2, "32"
+HKR, DcbCfg\Tc5Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc6Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc6Config\Rx,                        BwID,                  2, "6"
+HKR, DcbCfg\Tc6Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc6Config\Rx,                        UptoTc,                2, "64"
+HKR, DcbCfg\Tc6Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc6Config\Tx,                        BwID,                  2, "6"
+HKR, DcbCfg\Tc6Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc6Config\Tx,                        UptoTc,                2, "64"
+HKR, DcbCfg\Tc6Config\Tx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc7Config,                           Pfc,                   2, "1"
+HKR, DcbCfg\Tc7Config\Rx,                        BwID,                  2, "7"
+HKR, DcbCfg\Tc7Config\Rx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc7Config\Rx,                        UptoTc,                2, "128"
+HKR, DcbCfg\Tc7Config\Rx,                        StrictPriority,        2, "0"
+HKR, DcbCfg\Tc7Config\Tx,                        BwID,                  2, "7"
+HKR, DcbCfg\Tc7Config\Tx,                        BwPercentage,          2, "100"
+HKR, DcbCfg\Tc7Config\Tx,                        UptoTc,                2, "128"
+HKR, DcbCfg\Tc7Config\Tx,                        StrictPriority,        2, "0"
+
+[MSI.reg]
+HKR, "Interrupt Management", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MSISupported, 0x00010001, 1
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MessageNumberLimit, 0x00010001, 18
+
+[IPSec.reg]
+; IPSec capabilities
+HKR, Ndi\Params\*IPsecOffloadV2,                        ParamDesc,              0, %IPsecOffloadV2%
+HKR, Ndi\Params\*IPsecOffloadV2,                        default,                0, "3"    
+HKR, Ndi\Params\*IPsecOffloadV2\Enum,                   "0",                    0, %Disabled%
+HKR, Ndi\Params\*IPsecOffloadV2\Enum,                   "1",                    0, %IPsecAH%
+HKR, Ndi\Params\*IPsecOffloadV2\Enum,                   "2",                    0, %IPsecESP%
+HKR, Ndi\Params\*IPsecOffloadV2\Enum,                   "3",                    0, %IPsecAHESP%
+HKR, Ndi\Params\*IPsecOffloadV2,                        type,                   0, "enum"
+
+[NoIPSec.reg]
+HKR,,                                                   IPSecurity,             0, "0"
+
+[Powermgmt.reg]
+; EnablePME
+HKR,Ndi\Params\EnablePME,                 ParamDesc,                    0, %Enable_PME%
+HKR,Ndi\Params\EnablePME,                 Type,                         0, "enum"
+HKR,Ndi\Params\EnablePME,                 Default,                      0, "0"
+HKR,Ndi\Params\EnablePME\Enum,            "1",                          0, %Enabled%
+HKR,Ndi\Params\EnablePME\Enum,            "0",                          0, %Disabled%
+
+[AdvPowermgmt.reg]
+; *WakeOnPattern
+HKR,Ndi\Params\*WakeOnPattern,            ParamDesc,                    0, %WakeOnPattern%
+HKR,Ndi\Params\*WakeOnPattern,            Type,                         0, "enum"
+HKR,Ndi\Params\*WakeOnPattern,            Default,                      0, "1"
+HKR,Ndi\Params\*WakeOnPattern\Enum,       "1",                          0, %Enabled%
+HKR,Ndi\Params\*WakeOnPattern\Enum,       "0",                          0, %Disabled%
+
+; *WakeOnMagicPacket
+HKR,Ndi\Params\*WakeOnMagicPacket,        ParamDesc,                    0, %WakeOnMagicPacket%
+HKR,Ndi\Params\*WakeOnMagicPacket,        Type,                         0, "enum"
+HKR,Ndi\Params\*WakeOnMagicPacket,        Default,                      0, "1"
+HKR,Ndi\Params\*WakeOnMagicPacket\Enum,   "1",                          0, %Enabled%
+HKR,Ndi\Params\*WakeOnMagicPacket\Enum,   "0",                          0, %Disabled%
+
+[PMEEnabled.reg]
+HKR,,                                     EnablePME,                    0, "1"
+
+[WakeOnSlot.reg]
+HKR,,                                     WakeOnSlot,                   0, 0
+
+[SmartSpeed.reg]
+HKR,Ndi\Params\SmartSpeed,                ParamDesc,                    0, %SmartSpeed%
+HKR,Ndi\Params\SmartSpeed,                Type,                         0, "enum"
+HKR,Ndi\Params\SmartSpeed,                Default,                      0, "0"
+HKR,Ndi\Params\SmartSpeed\Enum,           "0",                          0, %Enabled%
+HKR,Ndi\Params\SmartSpeed\Enum,           "2",                          0, %Disabled%
+
+[Advanced.DelReg]
+HKR, Ndi\Params
+HKR, PROSetNdi\Params
+HKR, PROSetNdi\NdiExt
+HKR,, EnableDca
+
+[IPSec.DelReg]
+HKR,, *IPsecOffloadV2
+
+[AddEventLog]
+HKR,, EventMessageFile, 0x00020000, %EventLogMessageDllPath%
+HKR,, TypesSupported,   0x00010001, 7
+
+;-----------------------------------------------------------------------------
+; Uninstall parameters
+;-----------------------------------------------------------------------------
+[Uninstall.reg]
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10A6, 0, "10A6"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10F9, 0, "10F9"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 151C, 0, "151C"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10FB, 0, "10FB"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10FC, 0, "10FC"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1529, 0, "1529"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1557, 0, "1557"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10F8, 0, "10F8"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 152A, 0, "152A"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 154D, 0, "154D"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 10F7, 0, "10F7"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1507, 0, "1507"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1514, 0, "1514"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1517, 0, "1517"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 154A, 0, "154A"
+HKLM,Software\Intel\Prounstl\SupportedDevices\8086, 1558, 0, "1558"
+HKLM,Software\Intel\Prounstl\Dins, ixn65x64.din, 0, "8259x.Uninstall"
+HKLM,Software\Intel\Prounstl\Services, %ServiceName%, 0, ixn65x64.sys
+
+;-----------------------------------------------------------------------------
+; Driver "service" installation settings
+;-----------------------------------------------------------------------------
+[Service]
+DisplayName     = %Service.Displayname%
+ServiceType     = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType       = 3 ;%SERVICE_DEMAND_START%
+ErrorControl    = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary   = %12%\ixn65x64.sys
+LoadOrderGroup  = NDIS
+AddReg             = Service_AddReg
+
+[Service_AddReg]
+HKR,, BootFlags, 0x00010001, 0x1
+
+;-----------------------------------------------------------------------------
+; Event Log settings
+;-----------------------------------------------------------------------------
+
+[EventLog]
+AddReg             = AddEventLog
+
+;-----------------------------------------------------------------------------
+; Coinstaller installation
+;-----------------------------------------------------------------------------
+
+[CoInstallerCopyFiles]
+NicCo4.dll,,,0x00000010 ;don't overwrite
+NicInIXN.dll
+
+[CoInstaller_AddReg]
+HKR,, CoInstallers32, 0x00010000, "NicCo4.dll,NicCoInstallerEntry"
+HKR,, NicCoPlugins, 0x00010000, "NicInIXN.dll,NicCoInstallerEntry"
+
+[CoInK.reg]
+HKR,, CoInstallFlag, 0x00010001, 0x00201000
+
+[CoInKPM.reg]
+HKR,, CoInstallFlag, 0x00010001, 0x00201400
+
+[CoInKQP.reg]
+HKR,, CoInstallFlag, 0x00010001, 0x00201800
+
+[MessageDll.CopyFiles]
+ixnmsg.dll,,,2
+
+[Uninstall.CopyFiles]
+ixn65x64.din,,,2
+
+[CopyFiles]
+ixn65x64.sys,,,2
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;-----------------------------------------------------------------------------
+[DestinationDirs]
+CopyFiles          = 12
+DefaultDestDir          = 11
+Uninstall.CopyFiles          = 11
+CoInstallerCopyFiles          = 11
+MessageDll.CopyFiles          = 11
+
+[SourceDisksNames]
+1 = %DiskName%,,,
+
+;-----------------------------------------------------------------------------
+; SourceDisksFiles
+;-----------------------------------------------------------------------------
+[SourceDisksFiles]
+ixn65x64.sys  = 1
+ixn65x64.din  = 1
+ixnmsg.dll   = 1
+NicCo4.dll    = 1
+NicInIXN.dll  = 1
+
+[Strings]
+EnableLLI                       = "Low Latency Interrupts"
+LLIPorts                        = "Low Latency Interrupt Ports"
+LLIPortBased                    = "Port-Based"
+LLIPSHBased                     = "PSH Flag-Based"
+InterruptModeration             = "Interrupt Moderation"
+InterruptThrottleRate           = "Interrupt Moderation Rate"
+Adaptive                        = "Adaptive"
+Extreme                         = "Extreme"
+High                            = "High"
+Medium                          = "Medium"
+Low                             = "Low"
+IPChksumOffv4                   = "IPv4 Checksum Offload"
+TCPChksumOffv4                  = "TCP Checksum Offload (IPv4)"
+UDPChksumOffv4                  = "UDP Checksum Offload (IPv4)"
+LsoV2IPv4                       = "Large Send Offload V2 (IPv4)"
+TCPChksumOffv6                  = "TCP Checksum Offload (IPv6)"
+UDPChksumOffv6                  = "UDP Checksum Offload (IPv6)"
+LsoV2IPv6                       = "Large Send Offload V2 (IPv6)"
+ChksumOffTxRx                   = "Rx & Tx Enabled"
+ChksumOffTx                     = "Tx Enabled"
+ChksumOffRx                     = "Rx Enabled"
+TransmitBuffers                 = "Transmit Buffers"
+ReceiveBuffers                  = "Receive Buffers"
+RSS                             = "Receive Side Scaling"
+NumRssQueues2                   = "Maximum Number of RSS Queues"
+RSSProfile                      = "RSS load balancing profile"
+Closest_Processor               = "ClosestProcessor"
+Closest_Processor_Static        = "ClosestProcessorStatic"
+NUMA_Scaling                    = "NUMAScaling"
+NUMA_Scaling_Static             = "NUMAScalingStatic"
+Conservative_Scaling            = "ConservativeScaling"
+RssBaseProcNumber               = "Starting RSS CPU"
+MaxRssProcessors                = "Maximum Number of RSS Processors"
+NumaNodeId                      = "Preferred NUMA node"
+default                         = "System Default"
+node0                           = "Node 0"
+node1                           = "Node 1"
+node2                           = "Node 2"
+node3                           = "Node 3"
+node4                           = "Node 4"
+node5                           = "Node 5"
+node6                           = "Node 6"
+node7                           = "Node 7"
+1queue                          = "1 Queue"
+2queues                         = "2 Queues"
+4queues                         = "4 Queues"
+8queues                         = "8 Queues"
+16queues                        = "16 Queues"
+IPsecOffloadV2                  = "IPsec Offload"
+IPsecAH                         = "Auth Header Enabled"
+IPsecESP                        = "ESP Enabled"
+IPSecAHESP                      = "Auth Header & ESP Enabled"
+FCoEStartingNumaNodeId          = "FCoE Starting NUMA Node"
+FCoENumaNodeCount               = "FCoE NUMA Node Count"
+FCoEStartingRSSCoreNumber       = "FCoE Starting RSS Core Number"
+FlowControl                     = "Flow Control"
+FlowControl_RxOnly              = "Rx Enabled"
+FlowControl_TxOnly              = "Tx Enabled"
+FlowControl_Full                = "Rx & Tx Enabled"
+PriorityVLANTag2                = "Packet Priority & VLAN"
+PriorityVlanDisabled2           = "Packet Priority & VLAN Disabled"
+PriorityEnabled2                = "Packet Priority Enabled"
+PriorityVlanEnabled2            = "Packet Priority & VLAN Enabled"
+VlanEnabled                     = "VLAN Enabled"
+SpeedDuplex                     = "Speed & Duplex"
+AutoNegotiation                 = "Auto Negotiation"
+1000Mb_Full_Duplex              = "1.0 Gbps Full Duplex"
+10Gb_Full_Duplex                = "10 Gbps Full Duplex"
+Off                             = "Off"
+Enabled                         = "Enabled"
+Disabled                        = "Disabled"
+Bytes4088                       = "4088 Bytes"
+Bytes9014                       = "9014 Bytes"
+LAA                             = "Locally Administered Address"
+JumboPacket                     = "Jumbo Packet"
+RSCIPv4                         = "Recv Segment Coalescing (IPv4)"
+LogLinkState                    = "Log Link State Event"
+Enable_PME                      = "Enable PME"
+WakeOnMagicPacket               = "Wake on Magic Packet"
+WakeOnPattern                   = "Wake on Pattern Match"
+VMQ                             = "Virtual Machine Queues"
+SRIOV                           = "SR-IOV"
+QOS                             = "NDIS QOS"
+SmartSpeed                      = "Smart Speed"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\drivers\ixn65x64.sys"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+N154A.SFI.Quad.Description        = "Intel(R) Ethernet Converged Network Adapter X520-4"
+N1558.QSFP.Quad.Description       = "Intel(R) Ethernet Converged Network Adapter X520-Q1"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0804] ; Chinese (Simplified)
+EnableLLI                       ="µÕ—”≥Ÿ÷–∂œ"
+LLIPorts                        ="µÕ—”≥Ÿ÷–∂œ∂Àø⁄"
+LLIPortBased                    ="ª˘”⁄∂Àø⁄µƒ"
+LLIPSHBased                     ="ª˘”⁄ PSH ±Íº«µƒ"
+InterruptModeration             ="÷–∂œ≤√æˆ"
+InterruptThrottleRate           ="÷–∂œ≤√æˆ¬ "
+Adaptive                        ="  ”¶–‘"
+Extreme                         ="º´÷µ"
+High                            ="∏ﬂ"
+Medium                          ="÷–"
+Low                             ="µÕ"
+IPChksumOffv4                   ="IPv4 –£—È∫Õ∑÷‘ÿ¥´ ‰"
+TCPChksumOffv4                  ="TCP –£—È∫Õ∑÷‘ÿ¥´ ‰ (IPv4)"
+UDPChksumOffv4                  ="UDP –£—È∫Õ∑÷‘ÿ¥´ ‰ (IPv4)"
+LsoV2IPv4                       ="¥Û–Õ∑¢ÀÕ∑÷‘ÿ V2 (IPv4)"
+TCPChksumOffv6                  ="TCP –£—È∫Õ∑÷‘ÿ¥´ ‰ (IPv6)"
+UDPChksumOffv6                  ="UDP –£—È∫Õ∑÷‘ÿ¥´ ‰ (IPv6)"
+LsoV2IPv6                       ="¥Û–Õ∑¢ÀÕ∑÷‘ÿ V2 (IPv6)"
+ChksumOffTxRx                   ="“—∆Ù”√ Rx ∫Õ Tx"
+ChksumOffTx                     ="“—∆Ù”√ Tx"
+ChksumOffRx                     ="“—∆Ù”√ Rx"
+TransmitBuffers                 ="¥´ ‰ª∫≥Â«¯"
+ReceiveBuffers                  ="Ω” ’ª∫≥Â«¯"
+RSS                             ="Ω” ’∑Ωµ˜’˚"
+NumRssQueues2                   ="RSS ∂”¡–µƒ◊Ó¥Û ˝ƒø"
+RSSProfile                      ="RSS ∏∫‘ÿ∆Ω∫‚≈‰÷√ Ω"
+Closest_Processor               ="◊ÓΩ¸µƒ¥¶¿Ì∆˜"
+Closest_Processor_Static        ="◊ÓΩ¸µƒ¥¶¿Ì∆˜£®æ≤Ã¨£©"
+NUMA_Scaling                    ="NUMA µ˜’˚"
+NUMA_Scaling_Static             ="NUMA µ˜’˚£®æ≤Ã¨£©"
+Conservative_Scaling            ="±£ ÿµ˜’˚"
+RssBaseProcNumber               ="∆Ù∂Ø RSS CPU"
+MaxRssProcessors                ="RSS ¥¶¿Ì∆˜µƒ◊Ó¥Û ˝ƒø"
+NumaNodeId                      =" ◊—°µƒ NUMA Ω⁄µ„"
+default                         ="œµÕ≥ƒ¨»œ÷µ"
+node0                           ="Ω⁄µ„ 0"
+node1                           ="Ω⁄µ„ 1"
+node2                           ="Ω⁄µ„ 2"
+node3                           ="Ω⁄µ„ 3"
+node4                           ="Ω⁄µ„ 4"
+node5                           ="Ω⁄µ„ 5"
+node6                           ="Ω⁄µ„ 6"
+node7                           ="Ω⁄µ„ 7"
+1queue                          ="1 ∏ˆ∂”¡–"
+2queues                         ="2 ∏ˆ∂”¡–"
+4queues                         ="4 ∏ˆ∂”¡–"
+8queues                         ="8 ∏ˆ∂”¡–"
+16queues                        ="16 ∏ˆ∂”¡–"
+IPsecOffloadV2                  ="IPsec ∑÷‘ÿ"
+IPsecAH                         ="“—∆Ù”√ Auth Header"
+IPsecESP                        ="“—∆Ù”√ ESP"
+IPSecAHESP                      ="“—∆Ù”√ Auth Header ∫Õ ESP"
+FCoEStartingNumaNodeId          ="FCoE ∆ º NUMA Ω⁄µ„"
+FCoENumaNodeCount               ="FCoE NUMA Ω⁄µ„º∆ ˝"
+FCoEStartingRSSCoreNumber       ="FCoE ∆ º RSS ∫À–ƒ ˝"
+FlowControl                     ="¡˜¡øøÿ÷∆"
+FlowControl_RxOnly              ="“—∆Ù”√ Rx"
+FlowControl_TxOnly              ="“—∆Ù”√ Tx"
+FlowControl_Full                ="“—∆Ù”√ Rx ∫Õ Tx"
+PriorityVLANTag2                =" ˝æ›∞¸”≈œ»º∂∫Õ VLAN"
+PriorityVlanDisabled2           ="“—Ω˚”√ ˝æ›∞¸”≈œ»º∂∫Õ VLAN"
+PriorityEnabled2                ="“—∆Ù”√ ˝æ›∞¸”≈œ»º∂"
+PriorityVlanEnabled2            ="“—∆Ù”√ ˝æ›∞¸”≈œ»º∂∫Õ VLAN"
+VlanEnabled                     ="“—∆Ù”√ VLAN"
+SpeedDuplex                     ="ÀŸ∂»∫ÕÀ´π§"
+AutoNegotiation                 ="◊‘∂Ø–≠…Ã"
+1000Mb_Full_Duplex              ="1.0 Gbps »´À´π§"
+10Gb_Full_Duplex                ="10 Gbps »´À´π§"
+Off                             ="πÿ±’"
+Enabled                         ="∆Ù”√"
+Disabled                        ="Ω˚”√"
+Bytes4088                       ="4088 ◊÷Ω⁄"
+Bytes9014                       ="9014 ◊÷Ω⁄"
+LAA                             ="±æµÿπ‹¿Ìµÿ÷∑"
+JumboPacket                     ="æﬁ÷° ˝æ›∞¸"
+RSCIPv4                         ="Ω” ’∆¨∂œΩ·∫œ (IPv4)"
+LogLinkState                    ="º«¬º¡¥Ω”◊¥Ã¨ ¬º˛"
+Enable_PME                      ="∆Ù”√ PME"
+WakeOnMagicPacket               ="ªΩ–—ƒß∞¸"
+WakeOnPattern                   ="ªΩ–—ƒ£ Ω∆•≈‰"
+VMQ                             ="–Èƒ‚ª˙∂”¡–"
+SRIOV                           ="SR-IOV"
+QOS                             ="NDIS QOS"
+SmartSpeed                      ="÷«ƒ‹ÀŸ∂»"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+N154A.SFI.Quad.Description        = "Intel(R) Ethernet Converged Network Adapter X520-4"
+N1558.QSFP.Quad.Description       = "Intel(R) Ethernet Converged Network Adapter X520-Q1"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0404] ; Chinese (Traditional)
+EnableLLI                       ="ßC©µøß√¬_"
+LLIPorts                        ="ßC©µøß√¬_≥s±µ∞"
+LLIPortBased                    ="≥s±µ∞¨∞∞Ú¬¶"
+LLIPSHBased                     ="PSH ∫X∏π¨∞∞Ú¬¶"
+InterruptModeration             ="ß√¬_Ω’∏`"
+InterruptThrottleRate           ="ß√¬_∏`¨yª÷≥t≤v"
+Adaptive                        ="Ω’æ„© "
+Extreme                         ="∑•∞™"
+High                            ="∞™"
+Medium                          ="§§"
+Low                             ="ßC"
+IPChksumOffv4                   ="IPv4 ¿À¨d≠»®¯∏¸"
+TCPChksumOffv4                  ="TCP ¿À¨d≠»®¯∏¸ (IPv4)"
+UDPChksumOffv4                  ="UDP ¿À¨d≠»®¯∏¸ (IPv4)"
+LsoV2IPv4                       ="§j∂q∂«∞e®¯∏¸ V2 (IPv4)"
+TCPChksumOffv6                  ="TCP ¿À¨d≠»®¯∏¸ (IPv6)"
+UDPChksumOffv6                  ="UDP ¿À¨d≠»®¯∏¸ (IPv6)"
+LsoV2IPv6                       ="§j∂q∂«∞e®¯∏¸ V2 (IPv6)"
+ChksumOffTxRx                   ="Rx ªP Tx §w±“•Œ"
+ChksumOffTx                     ="Tx §w±“•Œ"
+ChksumOffRx                     ="Rx §w±“•Œ"
+TransmitBuffers                 ="∂«øÈΩwΩƒ∞œ"
+ReceiveBuffers                  ="±µ¶¨ΩwΩƒ∞œ"
+RSS                             ="±µ¶¨∫›Ω’æ„§Ò≤v"
+NumRssQueues2                   ="RSS ¶Ó¶C™∫≥Ã§jº∆•ÿ"
+RSSProfile                      ="RSS ∏¸∂q•≠ø≈≥]©w¿…"
+Closest_Processor               ="≥Ã±µ™Ò™∫≥B≤zæπ"
+Closest_Processor_Static        ="≥Ã±µ™Ò™∫≥B≤zæπ°]¿R∫A°^"
+NUMA_Scaling                    ="NUMA Ω’æ„"
+NUMA_Scaling_Static             ="NUMA Ω’æ„°]¿R∫A°^"
+Conservative_Scaling            ="´O¶uΩ’æ„"
+RssBaseProcNumber               ="±“∞  RSS CPU"
+MaxRssProcessors                ="RSS ≥B≤zæπ™∫≥Ã§jº∆•ÿ"
+NumaNodeId                      ="∞æ¶n™∫ NUMA ∏`¬I"
+default                         ="®t≤Œπw≥]≠»"
+node0                           ="∏`¬I 0"
+node1                           ="∏`¬I 1"
+node2                           ="∏`¬I 2"
+node3                           ="∏`¬I 3"
+node4                           ="∏`¬I 4"
+node5                           ="∏`¬I 5"
+node6                           ="∏`¬I 6"
+node7                           ="∏`¬I 7"
+1queue                          ="1 ≠”¶Ó¶C"
+2queues                         ="2 ≠”¶Ó¶C"
+4queues                         ="4 ≠”¶Ó¶C"
+8queues                         ="8 ≠”¶Ó¶C"
+16queues                        ="16 ≠”¶Ó¶C"
+IPsecOffloadV2                  ="IPsec ®¯∏¸"
+IPsecAH                         ="º–√Dª{√“ (Auth Header) §w±“•Œ"
+IPsecESP                        ="ESP §w±“•Œ"
+IPSecAHESP                      ="º–√Dª{√“ (Auth Header) ªP ESP §w±“•Œ"
+FCoEStartingNumaNodeId          ="FCoE ±“∞  NUMA ∏`¬I"
+FCoENumaNodeCount               ="FCoE NUMA ∏`¬Iº∆"
+FCoEStartingRSSCoreNumber       ="FCoE ±“∞  RSS Æ÷§ﬂ∏πΩX"
+FlowControl                     ="¨y∂q±±®Ó"
+FlowControl_RxOnly              ="Rx §w±“•Œ"
+FlowControl_TxOnly              ="Tx §w±“•Œ"
+FlowControl_Full                ="Rx ªP Tx §w±“•Œ"
+PriorityVLANTag2                ="´ •]¿u•˝∂∂ß«ªP VLAN"
+PriorityVlanDisabled2           ="´ •]¿u•˝∂∂ß«ªP VLAN §w∞±•Œ"
+PriorityEnabled2                ="´ •]¿u•˝∂∂ß«§w±“•Œ"
+PriorityVlanEnabled2            ="´ •]¿u•˝∂∂ß«ªP VLAN §w±“•Œ"
+VlanEnabled                     ="VLAN §w±“•Œ"
+SpeedDuplex                     ="≥t´◊ªP¬˘§u"
+AutoNegotiation                 ="¶€∞ •ÊØA"
+1000Mb_Full_Duplex              ="1.0 Gbps •˛¬˘§u"
+10Gb_Full_Duplex                ="10 Gbps •˛¬˘§u"
+Off                             ="√ˆ≥¨"
+Enabled                         ="±“•Œ"
+Disabled                        ="∞±•Œ"
+Bytes4088                       ="4088 ¶Ï§∏≤’"
+Bytes9014                       ="9014 ¶Ï§∏≤’"
+LAA                             ="•ª¶a∫ﬁ≤z¶Ïß}"
+JumboPacket                     ="∂W§j´¨´ •]"
+RSCIPv4                         ="±µ¶¨∞œ¨qµ≤¶X (IPv4)"
+LogLinkState                    ="µnø˝≥sµ≤™¨∫A®∆•Û"
+Enable_PME                      ="±“•Œ PME"
+WakeOnMagicPacket               ="≥ÍøÙØ´©_´ •]"
+WakeOnPattern                   ="ºÀ¶°§ÒπÔ≥ÍøÙ"
+VMQ                             ="µÍ¿¿æ˜æπ¶Ó¶C"
+SRIOV                           ="SR-IOV"
+QOS                             ="NDIS QOS"
+SmartSpeed                      ="¶€∞ §¡¥´≥t´◊"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+N154A.SFI.Quad.Description        = "Intel(R) Ethernet Converged Network Adapter X520-4"
+N1558.QSFP.Quad.Description       = "Intel(R) Ethernet Converged Network Adapter X520-Q1"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0407] ; German (Germany)
+EnableLLI                       ="Low Latency Interrupts (LLIs)"
+LLIPorts                        ="LLI-Anschl¸sse"
+LLIPortBased                    ="Anschlussbasiert"
+LLIPSHBased                     ="PSH markierungsbasiert"
+InterruptModeration             ="Interrupt-Drosselung"
+InterruptThrottleRate           ="Interrupt-Drosselungsrate"
+Adaptive                        ="Adaptiv"
+Extreme                         ="Extrem"
+High                            ="Hoch"
+Medium                          ="Mittel"
+Low                             ="Niedrig"
+IPChksumOffv4                   ="IPv4-Pr¸fsummen abladen"
+TCPChksumOffv4                  ="TCP-Pr¸fsummen abladen (IPv4)"
+UDPChksumOffv4                  ="UDP-Pr¸fsummen abladen (IPv4)"
+LsoV2IPv4                       ="Large-Send-Offload V2 (IPv4)"
+TCPChksumOffv6                  ="TCP-Pr¸fsummen abladen (IPv6)"
+UDPChksumOffv6                  ="UDP-Pr¸fsummen abladen (IPv6)"
+LsoV2IPv6                       ="Large-Send-Offload V2 (IPv6)"
+ChksumOffTxRx                   ="Rx und Tx aktiviert"
+ChksumOffTx                     ="Tx aktiviert"
+ChksumOffRx                     ="Rx aktiviert"
+TransmitBuffers                 ="‹bertragungspuffer"
+ReceiveBuffers                  ="Empfangspuffer"
+RSS                             ="RSS (Empfangsseitige Skalierung)"
+NumRssQueues2                   ="Max. Anzahl RSS-Warteschlangen"
+RSSProfile                      ="RSS-Load-Balancing-Profil"
+Closest_Processor               ="N‰chster Prozessor"
+Closest_Processor_Static        ="N‰chster Prozessor (statisch)"
+NUMA_Scaling                    ="NUMA-Skalierung"
+NUMA_Scaling_Static             ="NUMA-Skalierung (statisch)"
+Conservative_Scaling            ="Konservative Skalierung"
+RssBaseProcNumber               ="Start-RSS-CPU"
+MaxRssProcessors                ="Max. Anzahl RSS-CPUs"
+NumaNodeId                      ="Bevorzugter NUMA-Knoten"
+default                         ="Systemstandard"
+node0                           ="Knoten 0"
+node1                           ="Knoten 1"
+node2                           ="Knoten 2"
+node3                           ="Knoten 3"
+node4                           ="Knoten 4"
+node5                           ="Knoten 5"
+node6                           ="Knoten 6"
+node7                           ="Knoten 7"
+1queue                          ="1 Warteschlange"
+2queues                         ="2 Warteschlangen"
+4queues                         ="4 Warteschlangen"
+8queues                         ="8 Warteschlangen"
+16queues                        ="16 Warteschlangen"
+IPsecOffloadV2                  ="IPsec abladen"
+IPsecAH                         ="Auth.-Header aktiviert"
+IPsecESP                        ="ESP aktiviert"
+IPSecAHESP                      ="Auth.-Header und ESP aktiviert"
+FCoEStartingNumaNodeId          ="FCoE ñ Start-NUMA-Knoten"
+FCoENumaNodeCount               ="FCoE ñ Anzahl NUMA-Knoten"
+FCoEStartingRSSCoreNumber       ="FCoE ñ Start-RSS-Core-Zahl"
+FlowControl                     ="Flusssteuerung"
+FlowControl_RxOnly              ="Rx aktiviert"
+FlowControl_TxOnly              ="Tx aktiviert"
+FlowControl_Full                ="Rx und Tx aktiviert"
+PriorityVLANTag2                ="Paketpriorit‰t und VLAN"
+PriorityVlanDisabled2           ="Paketpriorit‰t und VLAN deaktiviert"
+PriorityEnabled2                ="Paketpriorit‰t aktiviert"
+PriorityVlanEnabled2            ="Paketpriorit‰t und VLAN aktiviert"
+VlanEnabled                     ="VLAN aktiviert"
+SpeedDuplex                     ="Geschwindigkeit & Duplex"
+AutoNegotiation                 ="Automatische Aushandlung"
+1000Mb_Full_Duplex              ="1,0 Gbit/s Vollduplex"
+10Gb_Full_Duplex                ="10 Gbit/s Vollduplex"
+Off                             ="Aus"
+Enabled                         ="Aktiviert"
+Disabled                        ="Deaktiviert"
+Bytes4088                       ="4088 Byte"
+Bytes9014                       ="9014 Byte"
+LAA                             ="Lokal verwaltete Adresse"
+JumboPacket                     ="Jumbo Packet"
+RSCIPv4                         ="Recv.-Segment-Coalescing (IPv4)"
+LogLinkState                    ="Verbindungsereignis protokollieren"
+Enable_PME                      ="PME aktivieren"
+WakeOnMagicPacket               ="Akt. ¸ber Magic Packet"
+WakeOnPattern                   ="Akt. bei Muster¸bereinstimmung"
+VMQ                             ="Virtuelle Maschinen-Warteschlangen"
+SRIOV                           ="SR-IOV"
+QOS                             ="NDIS-QoS"
+SmartSpeed                      ="Smart Speed"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+N154A.SFI.Quad.Description        = "Intel(R) Ethernet Converged Network Adapter X520-4"
+N1558.QSFP.Quad.Description       = "Intel(R) Ethernet Converged Network Adapter X520-Q1"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0C0A] ; Spanish (Spain)
+EnableLLI                       ="Interrupciones de baja latencia"
+LLIPorts                        ="Puertos de interrupciones de baja latencia"
+LLIPortBased                    ="Basado en puerto"
+LLIPSHBased                     ="Basado en indicador PSH"
+InterruptModeration             ="ModeraciÛn de interrupciones"
+InterruptThrottleRate           ="Velocidad de obstrucciÛn de la interrupciÛn"
+Adaptive                        ="AdaptaciÛn"
+Extreme                         ="Extremo"
+High                            ="Alto"
+Medium                          ="Medio"
+Low                             ="Bajo"
+IPChksumOffv4                   ="Descarga de suma de comprobaciÛn de IPv4"
+TCPChksumOffv4                  ="Descarga de suma de comprobaciÛn TCP (IPv4)"
+UDPChksumOffv4                  ="Descarga de suma de comprobaciÛn UDP (IPv4)"
+LsoV2IPv4                       ="Descarga grande de envÌo V2 (IPv4)"
+TCPChksumOffv6                  ="Descarga de suma de comprobaciÛn TCP (IPv6)"
+UDPChksumOffv6                  ="Descarga de suma de comprobaciÛn UDP (IPv6)"
+LsoV2IPv6                       ="Descarga grande de envÌo V2 (IPv6)"
+ChksumOffTxRx                   ="RecepciÛn y transmisiÛn habilitadas"
+ChksumOffTx                     ="TransmisiÛn habilitada"
+ChksumOffRx                     ="RecepciÛn habilitada"
+TransmitBuffers                 ="B˙feres de transmisiÛn"
+ReceiveBuffers                  ="B˙feres de recepciÛn"
+RSS                             ="Receive Side Scaling"
+NumRssQueues2                   ="N˙mero m·ximo de colas de RSS"
+RSSProfile                      ="Perfil de distribuciÛn de carga de RSS"
+Closest_Processor               ="Procesador m·s parecido"
+Closest_Processor_Static        ="Procesador est·tico m·s parecido"
+NUMA_Scaling                    ="Escalado NUMA"
+NUMA_Scaling_Static             ="Escalado est·tico NUMA"
+Conservative_Scaling            ="Escalado conservador"
+RssBaseProcNumber               ="CPU RSS inicial"
+MaxRssProcessors                ="N˙mero m·ximo de procesadores de RSS"
+NumaNodeId                      ="Nodo NUMA preferido"
+default                         ="Config. predeterminada del sistema"
+node0                           ="Nodo 0"
+node1                           ="Nodo 1"
+node2                           ="Nodo 2"
+node3                           ="Nodo 3"
+node4                           ="Nodo 4"
+node5                           ="Nodo 5"
+node6                           ="Nodo 6"
+node7                           ="Nodo 7"
+1queue                          ="1 cola"
+2queues                         ="2 colas"
+4queues                         ="4 colas"
+8queues                         ="8 colas"
+16queues                        ="16 colas"
+IPsecOffloadV2                  ="Descarga de IPsec"
+IPsecAH                         ="Encabezado de autenticaciÛn habilitado"
+IPsecESP                        ="ESP habilitado"
+IPSecAHESP                      ="Encabezado de autenticaciÛn y ESP habilitados"
+FCoEStartingNumaNodeId          ="Nodo NUMA FCoE inicial"
+FCoENumaNodeCount               ="N˙mero de nodos NUMA FCoE"
+FCoEStartingRSSCoreNumber       ="N˙mero de n˙cleo RSS de FCoE inicial"
+FlowControl                     ="Control de flujo"
+FlowControl_RxOnly              ="RecepciÛn habilitada"
+FlowControl_TxOnly              ="TransmisiÛn habilitada"
+FlowControl_Full                ="RecepciÛn y transmisiÛn habilitadas"
+PriorityVLANTag2                ="Prioridad de paquetes y VLAN "
+PriorityVlanDisabled2           ="Prioridad de paquetes y VLAN deshabilitadas"
+PriorityEnabled2                ="Prioridad de paquetes habilitada"
+PriorityVlanEnabled2            ="Prioridad de paquetes y VLAN habilitadas"
+VlanEnabled                     ="VLAN habilitada"
+SpeedDuplex                     ="Velocidad y d˙plex"
+AutoNegotiation                 ="NegociaciÛn autom·tica"
+1000Mb_Full_Duplex              ="D˙plex completo a 1,0 Gbps"
+10Gb_Full_Duplex                ="D˙plex completo a 10 Gbps"
+Off                             ="Desactivado"
+Enabled                         ="Habilitado"
+Disabled                        ="Deshabilitado"
+Bytes4088                       ="4088 bytes"
+Bytes9014                       ="9014 bytes"
+LAA                             ="DirecciÛn administrada localmente"
+JumboPacket                     ="Paquete jumbo"
+RSCIPv4                         ="UniÛn de segmentos de recepciÛn (IPv4)"
+LogLinkState                    ="Registrar sucesos del estado del enlace"
+Enable_PME                      ="Activar PME"
+WakeOnMagicPacket               ="Activar en Magic Packet"
+WakeOnPattern                   ="Activar al coincidir el patrÛn"
+VMQ                             ="Colas de m·quina virtual"
+SRIOV                           ="SR-IOV"
+QOS                             ="NDIS QOS"
+SmartSpeed                      ="Smart Speed"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+N154A.SFI.Quad.Description        = "Intel(R) Ethernet Converged Network Adapter X520-4"
+N1558.QSFP.Quad.Description       = "Intel(R) Ethernet Converged Network Adapter X520-Q1"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.040C] ; French (France)
+EnableLLI                       ="Interruptions ‡ faible latence"
+LLIPorts                        ="Ports d'interruption ‡ faible latence"
+LLIPortBased                    ="BasÈ sur le port"
+LLIPSHBased                     ="BasÈ sur le drapeau PSH"
+InterruptModeration             ="Gestion des interruptions"
+InterruptThrottleRate           ="Taux de gestion des interruptions"
+Adaptive                        ="Variable"
+Extreme                         ="ExtrÍme"
+High                            ="Haut"
+Medium                          ="Moyen"
+Low                             ="Faible"
+IPChksumOffv4                   ="DÈlester somme de contrÙle IPv4"
+TCPChksumOffv4                  ="DÈlester somme de contrÙle TCP (IPv4)"
+UDPChksumOffv4                  ="DÈlester somme de contrÙle UDP (IPv4)"
+LsoV2IPv4                       ="DÈlester envoi important v2 (IPv4)"
+TCPChksumOffv6                  ="DÈlester somme de contrÙle TCP (IPv6)"
+UDPChksumOffv6                  ="DÈlester somme de contrÙle UDP (IPv6)"
+LsoV2IPv6                       ="DÈlester envoi important v2 (IPv6)"
+ChksumOffTxRx                   ="Rx et Tx activÈes"
+ChksumOffTx                     ="Tx activÈe"
+ChksumOffRx                     ="Rx activÈe"
+TransmitBuffers                 ="Tampons d'Èmission"
+ReceiveBuffers                  ="Tampons de rÈception"
+RSS                             ="Receive Side Scaling"
+NumRssQueues2                   ="Nombre maximum de files d'attente RSS"
+RSSProfile                      ="Profil d'Èquilibrage de la charge RSS"
+Closest_Processor               ="Processeur le plus proche"
+Closest_Processor_Static        ="Processeur statique le plus proche"
+NUMA_Scaling                    ="Scaling NUMA"
+NUMA_Scaling_Static             ="Scaling statique NUMA"
+Conservative_Scaling            ="Scaling conservatif"
+RssBaseProcNumber               ="DÈmarrage de la fonctionnalitÈ RSS des processeurs"
+MaxRssProcessors                ="Nombre maximum de processeurs RSS"
+NumaNodeId                      ="Noeud NUMA prÈfÈrÈ"
+default                         ="Valeurs systËme par dÈfaut"
+node0                           ="Noeud 0"
+node1                           ="Noeud 1"
+node2                           ="Noeud 2"
+node3                           ="Noeud 3"
+node4                           ="Noeud 4"
+node5                           ="Noeud 5"
+node6                           ="Noeud 6"
+node7                           ="Noeud 7"
+1queue                          ="1 file d'attente"
+2queues                         ="2 files d'attente"
+4queues                         ="4 files d'attente"
+8queues                         ="8 files d'attente"
+16queues                        ="16 files d'attente"
+IPsecOffloadV2                  ="DÈlestage sÈcuritÈ IP"
+IPsecAH                         ="En-tÍte auth. activÈ"
+IPsecESP                        ="ESP activÈ"
+IPSecAHESP                      ="En-tÍte auth. et ESP activÈs"
+FCoEStartingNumaNodeId          ="Noeud NUMA de dÈpart FCoE"
+FCoENumaNodeCount               ="Nombre de noeuds NUMA FCoE"
+FCoEStartingRSSCoreNumber       ="NumÈro de cúur RSS de dÈpart FCoE"
+FlowControl                     ="ContrÙle de flux"
+FlowControl_RxOnly              ="Rx activÈe"
+FlowControl_TxOnly              ="Tx activÈe"
+FlowControl_Full                ="Rx et Tx activÈes"
+PriorityVLANTag2                ="PrioritÈ des paquets et VLAN"
+PriorityVlanDisabled2           ="PrioritÈ des paquets et VLAN dÈsactivÈs"
+PriorityEnabled2                ="PrioritÈ des paquets activÈe"
+PriorityVlanEnabled2            ="PrioritÈ des paquets et VLAN activÈs"
+VlanEnabled                     ="VLAN activÈ"
+SpeedDuplex                     ="Vitesse et duplex"
+AutoNegotiation                 ="NÈgociation automatique"
+1000Mb_Full_Duplex              ="1,0 Gbit/s Duplex intÈgral"
+10Gb_Full_Duplex                ="10 Gbit/s Duplex intÈgral"
+Off                             ="DÈsactivÈ(e)"
+Enabled                         ="ActivÈ(e)"
+Disabled                        ="DÈsactivÈ(e)"
+Bytes4088                       ="4088 octets"
+Bytes9014                       ="9014 octets"
+LAA                             ="Adresse administrÈe localement"
+JumboPacket                     ="Paquet Ètendu"
+RSCIPv4                         ="Coalition matÈrielle des segments entrants (IPv4)"
+LogLinkState                    ="Consigner les ÈvÈnements díÈtat de liaison"
+Enable_PME                      ="Activer PME"
+WakeOnMagicPacket               ="Wake on Magic Packet"
+WakeOnPattern                   ="Wake on Pattern Match"
+VMQ                             ="Files d'attente d'ordinateurs virtuels"
+SRIOV                           ="SR-IOV"
+QOS                             ="NDIS QOS"
+SmartSpeed                      ="Smart Speed"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+N154A.SFI.Quad.Description        = "Intel(R) Ethernet Converged Network Adapter X520-4"
+N1558.QSFP.Quad.Description       = "Intel(R) Ethernet Converged Network Adapter X520-Q1"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0410] ; Italian (Italy)
+EnableLLI                       ="Interrupt a bassa latenza"
+LLIPorts                        ="Porte di interrupt a bassa latenza"
+LLIPortBased                    ="Basato su porta"
+LLIPSHBased                     ="Basato su flag PSH"
+InterruptModeration             ="Interrompi moderazione"
+InterruptThrottleRate           ="Velocit‡ di rallentamento dell'interrupt"
+Adaptive                        ="Adattivo"
+Extreme                         ="Estremo"
+High                            ="Alto"
+Medium                          ="Medio"
+Low                             ="Basso"
+IPChksumOffv4                   ="Offload di checksum IPv4"
+TCPChksumOffv4                  ="Offload di checksum TCP (IPv4)"
+UDPChksumOffv4                  ="Offload di checksum UDP (IPv4)"
+LsoV2IPv4                       ="Large Send Offload V2 (IPv4)"
+TCPChksumOffv6                  ="Offload di checksum TCP (IPv6)"
+UDPChksumOffv6                  ="Offload di checksum UDP (IPv6)"
+LsoV2IPv6                       ="Large Send Offload V2 (IPv6)"
+ChksumOffTxRx                   ="Rx e Tx abilitate"
+ChksumOffTx                     ="Tx abilitata"
+ChksumOffRx                     ="Rx abilitata"
+TransmitBuffers                 ="Trasmetti buffer"
+ReceiveBuffers                  ="Ricevi buffer"
+RSS                             ="Receive Side Scaling"
+NumRssQueues2                   ="Numero massimo di code RSS"
+RSSProfile                      ="Profilo di bilanciamento del carico RSS"
+Closest_Processor               ="Processore pi˘ simile"
+Closest_Processor_Static        ="Processore statico pi˘ simile"
+NUMA_Scaling                    ="Scaling NUMA"
+NUMA_Scaling_Static             ="Scaling statico NUMA"
+Conservative_Scaling            ="Scaling conservativo"
+RssBaseProcNumber               ="Avvio di CPU RSS"
+MaxRssProcessors                ="Numero massimo di processori RSS"
+NumaNodeId                      ="Nodo NUMA preferito"
+default                         ="Impostazioni predefinite sistema"
+node0                           ="Nodo 0"
+node1                           ="Nodo 1"
+node2                           ="Nodo 2"
+node3                           ="Nodo 3"
+node4                           ="Nodo 4"
+node5                           ="Nodo 5"
+node6                           ="Nodo 6"
+node7                           ="Nodo 7"
+1queue                          ="1 coda"
+2queues                         ="2 code"
+4queues                         ="4 code"
+8queues                         ="8 code"
+16queues                        ="16 code"
+IPsecOffloadV2                  ="Offload IPsec"
+IPsecAH                         ="Intestazione di autenticazione abilitata"
+IPsecESP                        ="ESP abilitato"
+IPSecAHESP                      ="Intestazione di autenticazione ed ESP abilitati"
+FCoEStartingNumaNodeId          ="Nodo NUMA iniziale FCoE"
+FCoENumaNodeCount               ="Numero di nodi NUMA FCoE"
+FCoEStartingRSSCoreNumber       ="Numero di core RSS iniziali FCoE"
+FlowControl                     ="Controllo del flusso"
+FlowControl_RxOnly              ="Rx abilitata"
+FlowControl_TxOnly              ="Tx abilitata"
+FlowControl_Full                ="Rx e Tx abilitate"
+PriorityVLANTag2                ="Priorit‡ pacchetti e VLAN"
+PriorityVlanDisabled2           ="Priorit‡ pacchetti e VLAN disattivate"
+PriorityEnabled2                ="Priorit‡ pacchetti attivata"
+PriorityVlanEnabled2            ="Priorit‡ pacchetti e VLAN attivate"
+VlanEnabled                     ="VLAN abilitata"
+SpeedDuplex                     ="Velocit‡ e duplex"
+AutoNegotiation                 ="Negoziazione automatica"
+1000Mb_Full_Duplex              ="1.0 Gbps Full Duplex"
+10Gb_Full_Duplex                ="10 Gbps Full Duplex"
+Off                             ="Disattivato"
+Enabled                         ="Attivato"
+Disabled                        ="Disattivato"
+Bytes4088                       ="4088 byte"
+Bytes9014                       ="9014 byte"
+LAA                             ="Indirizzo amministrato localmente"
+JumboPacket                     ="Pacchetto Jumbo"
+RSCIPv4                         ="Unione dei segmenti di ricezione (IPv4)"
+LogLinkState                    ="Registra evento stato del collegamento"
+Enable_PME                      ="Abilita PME"
+WakeOnMagicPacket               ="Attiva su pacchetto Magic"
+WakeOnPattern                   ="Attiva su Pattern Match"
+VMQ                             ="Code macchine virtuali"
+SRIOV                           ="SR-IOV"
+QOS                             ="NDIS QOS"
+SmartSpeed                      ="Smart Speed"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+N154A.SFI.Quad.Description        = "Intel(R) Ethernet Converged Network Adapter X520-4"
+N1558.QSFP.Quad.Description       = "Intel(R) Ethernet Converged Network Adapter X520-Q1"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0411] ; Japanese (Japan)
+EnableLLI                       ="í·ÉåÉCÉeÉìÉVÅ[äÑÇËçûÇ›"
+LLIPorts                        ="í·ÉåÉCÉeÉìÉVÅ[äÑÇËçûÇ›É|Å[Ég"
+LLIPortBased                    ="É|Å[Ég ÉxÅ[ÉX"
+LLIPSHBased                     ="PSH ÉtÉâÉO ÉxÅ[ÉX"
+InterruptModeration             ="äÑÇËçûÇ›â¡å∏"
+InterruptThrottleRate           ="äÑÇËçûÇ›â¡å∏ó¶"
+Adaptive                        ="ÉAÉ_ÉvÉeÉBÉu"
+Extreme                         ="ç≈ëÂ"
+High                            ="çÇ"
+Medium                          ="íÜ"
+Low                             ="í·"
+IPChksumOffv4                   ="IPv4 É`ÉFÉbÉNÉTÉÄÇÃÉIÉtÉçÅ[Éh"
+TCPChksumOffv4                  ="TCP É`ÉFÉbÉNÉTÉÄÇÃÉIÉtÉçÅ[Éh (IPv4)"
+UDPChksumOffv4                  ="UDP É`ÉFÉbÉNÉTÉÄÇÃÉIÉtÉçÅ[Éh (IPv4)"
+LsoV2IPv4                       ="ëÂó ëóêMÉIÉtÉçÅ[Éh V2 (IPv4)"
+TCPChksumOffv6                  ="TCP É`ÉFÉbÉNÉTÉÄÇÃÉIÉtÉçÅ[Éh (IPv6)"
+UDPChksumOffv6                  ="UDP É`ÉFÉbÉNÉTÉÄÇÃÉIÉtÉçÅ[Éh (IPv6)"
+LsoV2IPv6                       ="ëÂó ëóêMÉIÉtÉçÅ[Éh V2 (IPv6)"
+ChksumOffTxRx                   ="éÛêM/ëóêM óLå¯"
+ChksumOffTx                     ="ëóêM óLå¯"
+ChksumOffRx                     ="éÛêM óLå¯"
+TransmitBuffers                 ="ëóêMÉoÉbÉtÉ@"
+ReceiveBuffers                  ="éÛêMÉoÉbÉtÉ@"
+RSS                             ="éÛêMë§ÉXÉPÅ[ÉäÉìÉO"
+NumRssQueues2                   ="RSS ÉLÉÖÅ[ÇÃç≈ëÂêî"
+RSSProfile                      ="RSS ÉçÅ[ÉhÅEÉoÉâÉìÉVÉìÉOÅEÉvÉçÉtÉ@ÉCÉã"
+Closest_Processor               ="ç≈Ç‡ãﬂÇ¢ÉvÉçÉZÉbÉTÅ["
+Closest_Processor_Static        ="ç≈Ç‡ãﬂÇ¢ÉvÉçÉZÉbÉTÅ[ÅEÉXÉ^ÉeÉBÉbÉN"
+NUMA_Scaling                    ="NUMA ÉXÉPÅ[ÉäÉìÉO"
+NUMA_Scaling_Static             ="NUMA ÉXÉPÅ[ÉäÉìÉOÅEÉXÉ^ÉeÉBÉbÉN"
+Conservative_Scaling            ="ÉRÉìÉTÅ[ÉoÉeÉBÉuÅEÉXÉPÅ[ÉäÉìÉO"
+RssBaseProcNumber               ="RSS CPU ÇÃäJén"
+MaxRssProcessors                ="RSS ÉvÉçÉZÉbÉTÅ[ÇÃç≈ëÂêî"
+NumaNodeId                      ="óDêÊ NUMA ÉmÅ[Éh"
+default                         ="ÉVÉXÉeÉÄÉfÉtÉHÉãÉg"
+node0                           ="ÉmÅ[Éh 0"
+node1                           ="ÉmÅ[Éh 1"
+node2                           ="ÉmÅ[Éh 2"
+node3                           ="ÉmÅ[Éh 3"
+node4                           ="ÉmÅ[Éh 4"
+node5                           ="ÉmÅ[Éh 5"
+node6                           ="ÉmÅ[Éh 6"
+node7                           ="ÉmÅ[Éh 7"
+1queue                          ="1 ÉLÉÖÅ["
+2queues                         ="2 ÉLÉÖÅ["
+4queues                         ="4 ÉLÉÖÅ["
+8queues                         ="8 ÉLÉÖÅ["
+16queues                        ="16 ÉLÉÖÅ["
+IPsecOffloadV2                  ="IPSec ÉIÉtÉçÅ[Éh"
+IPsecAH                         ="îFèÿÉwÉbÉ_Å[óLå¯"
+IPsecESP                        ="ESP óLå¯"
+IPSecAHESP                      ="îFèÿÉwÉbÉ_Å[Ç∆ ESP óLå¯"
+FCoEStartingNumaNodeId          ="FCoE äJén NUMA ÉmÅ[Éh"
+FCoENumaNodeCount               ="FCoE NUMA ÉmÅ[ÉhÉJÉEÉìÉg"
+FCoEStartingRSSCoreNumber       ="FCoE äJén RSS ÉRÉAî‘çÜ"
+FlowControl                     ="ÉtÉçÅ[êßå‰"
+FlowControl_RxOnly              ="éÛêM óLå¯"
+FlowControl_TxOnly              ="ëóêM óLå¯"
+FlowControl_Full                ="éÛêM/ëóêM óLå¯"
+PriorityVLANTag2                ="ÉpÉPÉbÉgóDêÊìxÇ∆ VLAN"
+PriorityVlanDisabled2           ="ÉpÉPÉbÉgóDêÊìxÇ∆ VLAN ñ≥å¯"
+PriorityEnabled2                ="ÉpÉPÉbÉgóDêÊìxóLå¯"
+PriorityVlanEnabled2            ="ÉpÉPÉbÉgóDêÊìxÇ∆ VLAN óLå¯"
+VlanEnabled                     ="VLAN óLå¯"
+SpeedDuplex                     ="ë¨ìxÇ∆ÉfÉÖÉvÉåÉbÉNÉX"
+AutoNegotiation                 ="ÉIÅ[ÉgÉlÉSÉVÉGÅ[ÉVÉáÉì"
+1000Mb_Full_Duplex              ="1.0 Gbps ëSìÒèdí êM"
+10Gb_Full_Duplex                ="10 Gbps ëSìÒèdí êM"
+Off                             ="ÉIÉt"
+Enabled                         ="óLå¯"
+Disabled                        ="ñ≥å¯"
+Bytes4088                       ="4088 ÉoÉCÉg"
+Bytes9014                       ="9014 ÉoÉCÉg"
+LAA                             ="ÉçÅ[ÉJÉãä«óùÇ≥ÇÍÇÈÉAÉhÉåÉX"
+JumboPacket                     ="ÉWÉÉÉìÉ{ ÉpÉPÉbÉg"
+RSCIPv4                         ="éÛêMë§ÉZÉOÉÅÉìÉgÅEÉRÉAÉåÉVÉìÉO (IPv4)"
+LogLinkState                    ="ÉäÉìÉN ÉXÉeÅ[Ég ÉCÉxÉìÉgÇÃÉçÉO"
+Enable_PME                      ="PME ÇÉIÉìÇ…Ç∑ÇÈ"
+WakeOnMagicPacket               ="Wake On Magic Packet"
+WakeOnPattern                   ="Wake on Pattern Match"
+VMQ                             ="âºëzÉ}ÉVÉìÉLÉÖÅ["
+SRIOV                           ="SR-IOV"
+QOS                             ="NDIS QOS"
+SmartSpeed                      ="ÉXÉ}Å[ÉgÉXÉsÅ[Éh"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+N154A.SFI.Quad.Description        = "Intel(R) Ethernet Converged Network Adapter X520-4"
+N1558.QSFP.Quad.Description       = "Intel(R) Ethernet Converged Network Adapter X520-Q1"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0412] ; Korean (Korea)
+EnableLLI                       ="≥∑¿∫ ¥Î±‚ Ω√∞£ ¿Œ≈Õ∑¥∆Æ"
+LLIPorts                        ="≥∑¿∫ ¥Î±‚ Ω√∞£ ¿Œ≈Õ∑¥∆Æ ∆˜∆Æ"
+LLIPortBased                    ="∆˜∆Æ ±‚π›"
+LLIPSHBased                     ="PSH «√∑°±◊ ±‚π›"
+InterruptModeration             ="¿Œ≈Õ∑¥∆Æ ¡∂¿˝"
+InterruptThrottleRate           ="¿Œ≈Õ∑¥∆Æ ¡∂¿˝ º”µµ"
+Adaptive                        ="¿˚¿¿"
+Extreme                         ="√÷¥Î"
+High                            ="≥Ù¿Ω"
+Medium                          ="¡ﬂ∞£"
+Low                             ="≥∑¿Ω"
+IPChksumOffv4                   ="IPv4 √º≈©º∂ ø¿«¡∑ŒµÂ"
+TCPChksumOffv4                  ="TCP √º≈©º∂ ø¿«¡∑ŒµÂ(IPv4)"
+UDPChksumOffv4                  ="UDP √º≈©º∂ ø¿«¡∑ŒµÂ(IPv4)"
+LsoV2IPv4                       ="¥Î«¸ ¿¸º€ ø¿«¡∑ŒµÂ V2(IPv4)"
+TCPChksumOffv6                  ="TCP √º≈©º∂ ø¿«¡∑ŒµÂ(IPv6)"
+UDPChksumOffv6                  ="UDP √º≈©º∂ ø¿«¡∑ŒµÂ(IPv6)"
+LsoV2IPv6                       ="¥Î«¸ ¿¸º€ ø¿«¡∑ŒµÂ V2(IPv6)"
+ChksumOffTxRx                   ="Rx & Tx »∞º∫»≠µ "
+ChksumOffTx                     ="Tx »∞º∫»≠µ "
+ChksumOffRx                     ="Rx »∞º∫»≠µ "
+TransmitBuffers                 ="¿¸º€ πˆ∆€"
+ReceiveBuffers                  ="ºˆΩ≈ πˆ∆€"
+RSS                             ="ºˆΩ≈√¯ πË¿≤"
+NumRssQueues2                   ="√÷¥Î RSS ¥Î±‚ø≠ ºˆ"
+RSSProfile                      ="RSS ∑ŒµÂ πÎ∑±ΩÃ «¡∑Œ∆ƒ¿œ"
+Closest_Processor               ="∞°¿Â ∞°±ÓøÓ «¡∑Œººº≠"
+Closest_Processor_Static        ="∞°¿Â ∞°±ÓøÓ «¡∑Œººº≠(¡§¿˚)"
+NUMA_Scaling                    ="NUMA ¡∂¡§"
+NUMA_Scaling_Static             ="NUMA ¡∂¡§(¡§¿˚)"
+Conservative_Scaling            ="∫∏ºˆ¿˚ ¡∂¡§"
+RssBaseProcNumber               ="RSS CPU Ω√¿€"
+MaxRssProcessors                ="√÷¥Î RSS «¡∑Œººº≠ ºˆ"
+NumaNodeId                      ="±‚∫ª º≥¡§ NUMA ≥ÎµÂ"
+default                         ="Ω√Ω∫≈€ ±‚∫ª∞™"
+node0                           ="≥ÎµÂ 0"
+node1                           ="≥ÎµÂ 1"
+node2                           ="≥ÎµÂ 2"
+node3                           ="≥ÎµÂ 3"
+node4                           ="≥ÎµÂ 4"
+node5                           ="≥ÎµÂ 5"
+node6                           ="≥ÎµÂ 6"
+node7                           ="≥ÎµÂ 7"
+1queue                          ="1∞≥¿« ¥Î±‚ø≠"
+2queues                         ="2∞≥¿« ¥Î±‚ø≠"
+4queues                         ="4∞≥¿« ¥Î±‚ø≠"
+8queues                         ="8∞≥¿« ¥Î±‚ø≠"
+16queues                        ="16∞≥¿« ¥Î±‚ø≠"
+IPsecOffloadV2                  ="IPsec ø¿«¡∑ŒµÂ"
+IPsecAH                         ="Auth «Ï¥ı »∞º∫»≠µ "
+IPsecESP                        ="ESP »∞º∫»≠µ "
+IPSecAHESP                      ="Auth «Ï¥ı π◊ ESP »∞º∫»≠µ "
+FCoEStartingNumaNodeId          ="FCoE Ω√¿€ NUMA ≥ÎµÂ"
+FCoENumaNodeCount               ="FCoE NUMA ≥ÎµÂ ƒ´øÓ∆Æ"
+FCoEStartingRSSCoreNumber       ="FCoE Ω√¿€ RSS ƒ⁄æÓ π¯»£"
+FlowControl                     ="»Â∏ß ¡¶æÓ"
+FlowControl_RxOnly              ="Rx »∞º∫»≠µ "
+FlowControl_TxOnly              ="Tx »∞º∫»≠µ "
+FlowControl_Full                ="Rx & Tx »∞º∫»≠µ "
+PriorityVLANTag2                ="∆–≈∂ øÏº±º¯¿ß π◊ VLAN"
+PriorityVlanDisabled2           ="∆–≈∂ øÏº±º¯¿ß π◊ VLAN ∫Ò»∞º∫»≠µ "
+PriorityEnabled2                ="∆–≈∂ øÏº±º¯¿ß »∞º∫»≠µ "
+PriorityVlanEnabled2            ="∆–≈∂ øÏº±º¯¿ß π◊ VLAN »∞º∫»≠µ "
+VlanEnabled                     ="VLAN »∞º∫»≠µ "
+SpeedDuplex                     ="º”µµ π◊ ¿Ã¡ﬂ"
+AutoNegotiation                 ="¿⁄µø «˘ªÛ"
+1000Mb_Full_Duplex              ="1.0 Gbps ¿¸¿Ã¡ﬂ"
+10Gb_Full_Duplex                ="10 Gbps ¿¸¿Ã¡ﬂ"
+Off                             ="ø¿«¡"
+Enabled                         ="»∞º∫»≠µ "
+Disabled                        ="∫Ò»∞º∫»≠µ "
+Bytes4088                       ="4088πŸ¿Ã∆Æ"
+Bytes9014                       ="9014πŸ¿Ã∆Æ"
+LAA                             ="∑Œƒ√ ∞¸∏Æ ¡÷º“"
+JumboPacket                     ="¡°∫∏ ∆–≈∂"
+RSCIPv4                         ="ºˆΩ≈ ºº±◊∏’∆Æ ≈Î«’(IPv4)"
+LogLinkState                    ="∏µ≈© ªÛ≈¬ ¿Ã∫•∆Æ ±‚∑œ"
+Enable_PME                      ="PME »∞º∫»≠"
+WakeOnMagicPacket               ="Wake on Magic Packet"
+WakeOnPattern                   ="Wake on Pattern Match"
+VMQ                             ="∞°ªÛ Ω√Ω∫≈€ ¥Î±‚ø≠"
+SRIOV                           ="SR-IOV"
+QOS                             ="NDIS QOS"
+SmartSpeed                      ="Ω∫∏∂∆Æ Ω∫««µÂ"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+N154A.SFI.Quad.Description        = "Intel(R) Ethernet Converged Network Adapter X520-4"
+N1558.QSFP.Quad.Description       = "Intel(R) Ethernet Converged Network Adapter X520-Q1"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0416] ; Portuguese (Brazil)
+EnableLLI                       ="InterrupÁıes de baixa latÍncia"
+LLIPorts                        ="Portas de interrupÁıes de baixa latÍncia"
+LLIPortBased                    ="Baseado em porta"
+LLIPSHBased                     ="Baseado no sinalizador PSH"
+InterruptModeration             ="ModeraÁ„o de interrupÁıes"
+InterruptThrottleRate           ="Taxa de moderaÁ„o de interrupÁıes"
+Adaptive                        ="Adaptativa"
+Extreme                         ="Extremo"
+High                            ="Alto"
+Medium                          ="MÈdio"
+Low                             ="Baixo"
+IPChksumOffv4                   ="Descarga de Checksum IPv4"
+TCPChksumOffv4                  ="Descarga de Checksum de TCP (IPv4)"
+UDPChksumOffv4                  ="Descarga de Checksum UDP (IPv4)"
+LsoV2IPv4                       ="Descarga de envio grande V2 (IPv4)"
+TCPChksumOffv6                  ="Descarga de Checksum de TCP (IPv6)"
+UDPChksumOffv6                  ="Descarga de Checksum UDP (IPv6)"
+LsoV2IPv6                       ="Descarga de envio grande V2 (IPv6)"
+ChksumOffTxRx                   ="Rx e TX habilitadas"
+ChksumOffTx                     ="Tx habilitada"
+ChksumOffRx                     ="Rx habilitada"
+TransmitBuffers                 ="Buffers de transmiss„o"
+ReceiveBuffers                  ="Buffers de recepÁ„o"
+RSS                             ="Escala de recepÁ„o"
+NumRssQueues2                   ="N∫ m·x. de filas de RSS"
+RSSProfile                      ="Perfil de equilÌbrio de carga de RSS"
+Closest_Processor               ="Processador mais prÛximo"
+Closest_Processor_Static        ="Processador est·tico mais prÛximo"
+NUMA_Scaling                    ="Escala NUMA"
+NUMA_Scaling_Static             ="Escala est·tica NUMA"
+Conservative_Scaling            ="Escala conservadora"
+RssBaseProcNumber               ="Iniciando a CPU de RSS"
+MaxRssProcessors                ="N∫ m·x. de processadores de RSS"
+NumaNodeId                      ="NÛ NUMA preferencial"
+default                         ="Padr„o do sistema"
+node0                           ="NÛ 0"
+node1                           ="NÛ 1"
+node2                           ="NÛ 2"
+node3                           ="NÛ 3"
+node4                           ="NÛ 4"
+node5                           ="NÛ 5"
+node6                           ="NÛ 6"
+node7                           ="NÛ 7"
+1queue                          ="1 fila"
+2queues                         ="2 filas"
+4queues                         ="4 filas"
+8queues                         ="8 Filas"
+16queues                        ="16 Filas"
+IPsecOffloadV2                  ="Descarregamento do IPsec"
+IPsecAH                         ="CabeÁalho de autorizaÁ„o ativado"
+IPsecESP                        ="ESP habilitado"
+IPSecAHESP                      ="CabeÁalho de autorizaÁ„o e ESP habilitados"
+FCoEStartingNumaNodeId          ="NÛ NUMA inicial de FCoE"
+FCoENumaNodeCount               ="Total de nÛs NUMA de FCoE"
+FCoEStartingRSSCoreNumber       ="N˙mero n˙cleo de RSS inicial de FCoE"
+FlowControl                     ="Controle de fluxo"
+FlowControl_RxOnly              ="Rx habilitada"
+FlowControl_TxOnly              ="Tx habilitada"
+FlowControl_Full                ="Rx e TX habilitadas"
+PriorityVLANTag2                ="Prioridade de pacotes e VLAN"
+PriorityVlanDisabled2           ="Prioridade de pacotes e VLAN desabilitadas"
+PriorityEnabled2                ="Prioridade de pacotes habilitada"
+PriorityVlanEnabled2            ="Prioridade de pacotes e VLAN habilitadas"
+VlanEnabled                     ="VLAN habilitada"
+SpeedDuplex                     ="Velocidade e duplex"
+AutoNegotiation                 ="NegociaÁ„o autom·tica"
+1000Mb_Full_Duplex              ="1,0 Gbps/Full duplex"
+10Gb_Full_Duplex                ="10 Mbps/Half duplex"
+Off                             ="Desligado"
+Enabled                         ="Habilitada"
+Disabled                        ="Desabilitada"
+Bytes4088                       ="4088 Bytes"
+Bytes9014                       ="9014 Bytes"
+LAA                             ="EndereÁo administrado localmente (LAA)"
+JumboPacket                     ="Pacote grande"
+RSCIPv4                         ="CoalescÍncia de segmentos recebidos (IPv4)"
+LogLinkState                    ="Evento de estado de link de registro"
+Enable_PME                      ="Habilitar PME"
+WakeOnMagicPacket               ="Ativar com Magic Packet"
+WakeOnPattern                   ="Despertar quando padr„o coincide"
+VMQ                             ="Filas de m·quina virtual"
+SRIOV                           ="SR-IOV"
+QOS                             ="QOS de NDIS"
+SmartSpeed                      ="Smart Speed"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+N154A.SFI.Quad.Description        = "Intel(R) Ethernet Converged Network Adapter X520-4"
+N1558.QSFP.Quad.Description       = "Intel(R) Ethernet Converged Network Adapter X520-Q1"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+
+[Strings.0C04] ; Chinese (Traditional)
+EnableLLI                       ="ßC©µøß√¬_"
+LLIPorts                        ="ßC©µøß√¬_≥s±µ∞"
+LLIPortBased                    ="≥s±µ∞¨∞∞Ú¬¶"
+LLIPSHBased                     ="PSH ∫X∏π¨∞∞Ú¬¶"
+InterruptModeration             ="ß√¬_Ω’∏`"
+InterruptThrottleRate           ="ß√¬_∏`¨yª÷≥t≤v"
+Adaptive                        ="Ω’æ„© "
+Extreme                         ="∑•∞™"
+High                            ="∞™"
+Medium                          ="§§"
+Low                             ="ßC"
+IPChksumOffv4                   ="IPv4 ¿À¨d≠»®¯∏¸"
+TCPChksumOffv4                  ="TCP ¿À¨d≠»®¯∏¸ (IPv4)"
+UDPChksumOffv4                  ="UDP ¿À¨d≠»®¯∏¸ (IPv4)"
+LsoV2IPv4                       ="§j∂q∂«∞e®¯∏¸ V2 (IPv4)"
+TCPChksumOffv6                  ="TCP ¿À¨d≠»®¯∏¸ (IPv6)"
+UDPChksumOffv6                  ="UDP ¿À¨d≠»®¯∏¸ (IPv6)"
+LsoV2IPv6                       ="§j∂q∂«∞e®¯∏¸ V2 (IPv6)"
+ChksumOffTxRx                   ="Rx ªP Tx §w±“•Œ"
+ChksumOffTx                     ="Tx §w±“•Œ"
+ChksumOffRx                     ="Rx §w±“•Œ"
+TransmitBuffers                 ="∂«øÈΩwΩƒ∞œ"
+ReceiveBuffers                  ="±µ¶¨ΩwΩƒ∞œ"
+RSS                             ="±µ¶¨∫›Ω’æ„§Ò≤v"
+NumRssQueues2                   ="RSS ¶Ó¶C™∫≥Ã§jº∆•ÿ"
+RSSProfile                      ="RSS ∏¸∂q•≠ø≈≥]©w¿…"
+Closest_Processor               ="≥Ã±µ™Ò™∫≥B≤zæπ"
+Closest_Processor_Static        ="≥Ã±µ™Ò™∫≥B≤zæπ°]¿R∫A°^"
+NUMA_Scaling                    ="NUMA Ω’æ„"
+NUMA_Scaling_Static             ="NUMA Ω’æ„°]¿R∫A°^"
+Conservative_Scaling            ="´O¶uΩ’æ„"
+RssBaseProcNumber               ="±“∞  RSS CPU"
+MaxRssProcessors                ="RSS ≥B≤zæπ™∫≥Ã§jº∆•ÿ"
+NumaNodeId                      ="∞æ¶n™∫ NUMA ∏`¬I"
+default                         ="®t≤Œπw≥]≠»"
+node0                           ="∏`¬I 0"
+node1                           ="∏`¬I 1"
+node2                           ="∏`¬I 2"
+node3                           ="∏`¬I 3"
+node4                           ="∏`¬I 4"
+node5                           ="∏`¬I 5"
+node6                           ="∏`¬I 6"
+node7                           ="∏`¬I 7"
+1queue                          ="§@≠”¶Ó¶C"
+2queues                         ="®‚≠”¶Ó¶C"
+4queues                         ="•|≠”¶Ó¶C"
+8queues                         ="§K≠”¶Ó¶C"
+16queues                        ="§Q§ª≠”¶Ó¶C"
+IPsecOffloadV2                  ="IPsec ®¯∏¸"
+IPsecAH                         ="º–√Dª{√“ (Auth Header) §w±“•Œ"
+IPsecESP                        ="ESP §w±“•Œ"
+IPSecAHESP                      ="º–√Dª{√“ (Auth Header) ªP ESP §w±“•Œ"
+FCoEStartingNumaNodeId          ="FCoE ±“∞  NUMA ∏`¬I"
+FCoENumaNodeCount               ="FCoE NUMA ∏`¬Iº∆"
+FCoEStartingRSSCoreNumber       ="FCoE ±“∞  RSS Æ÷§ﬂ∏πΩX"
+FlowControl                     ="¨y∂q±±®Ó"
+FlowControl_RxOnly              ="Rx §w±“•Œ"
+FlowControl_TxOnly              ="Tx §w±“•Œ"
+FlowControl_Full                ="Rx ªP Tx §w±“•Œ"
+PriorityVLANTag2                ="´ •]¿u•˝∂∂ß«ªP VLAN"
+PriorityVlanDisabled2           ="´ •]¿u•˝∂∂ß«ªP VLAN §w∞±•Œ"
+PriorityEnabled2                ="ÆM•Û¿u•˝∂∂ß«§w±“•Œ"
+PriorityVlanEnabled2            ="´ •]¿u•˝∂∂ß«ªP VLAN §w±“•Œ"
+VlanEnabled                     ="VLAN §w±“•Œ"
+SpeedDuplex                     ="≥t´◊ªP¬˘§u"
+AutoNegotiation                 ="¶€∞ •ÊØA"
+1000Mb_Full_Duplex              ="1.0 Gbps •˛¬˘§u"
+10Gb_Full_Duplex                ="10 Gbps •˛¬˘§u"
+Off                             ="√ˆ≥¨"
+Enabled                         ="±“•Œ"
+Disabled                        ="∞±•Œ"
+Bytes4088                       ="4088 ¶Ï§∏≤’"
+Bytes9014                       ="9014 ¶Ï§∏≤’"
+LAA                             ="•ª¶a∫ﬁ≤z¶Ïß}"
+JumboPacket                     ="∂W§j´¨´ •]"
+RSCIPv4                         ="±µ¶¨∞œ¨qµ≤¶X (IPv4)"
+LogLinkState                    ="µnø˝≥sµ≤™¨∫A®∆•Û"
+Enable_PME                      ="±“•Œ PME"
+WakeOnMagicPacket               ="≥ÍøÙØ´©_´ •]"
+WakeOnPattern                   ="ØS© ¨€≤≈≥ÍøÙ"
+VMQ                             ="µÍ¿¿æ˜æπ¶Ó¶C"
+SRIOV                           ="SR-IOV"
+QOS                             ="NDIS QOS"
+SmartSpeed                      ="¶€∞ §¡¥´≥t´◊"
+ServiceName                     = "ixgbn"
+Intel                           = "Intel"
+EventLogMessageDllPath          = "%SystemRoot%\System32\netevent.dll;%SystemRoot%\System32\ixnmsg.dll"
+DiskName                        = "Intel(R) PRO/10GbE Driver Disk"
+Service.Displayname             = "Intel(R) PRO/10GbE PCIe-N Network Connection Driver"
+
+;-----------------------------------------------------------------------------
+; Device Description Strings
+;-----------------------------------------------------------------------------
+O10A6.DeviceDesc                  = "Intel(R) 82599 Multi-Function Network Device"
+N10F8.KX4.KR.Dual.Description     = "Intel(R) Ethernet X520 10GbE Dual Port KX4-KR Mezz"
+N10F9.Generic.Description         = "Intel(R) 82599 10 Gigabit CX4 Dual Port Network Connection"
+N10FB.SFI.Single.Description      = "Intel(R) Ethernet Server Adapter X520-1"
+N10FB.SFI.Dual.Description        = "Intel(R) Ethernet Server Adapter X520-2"
+N10FB.CopperDA.Dual.Description   = "Intel(R) Ethernet Server Adapter X520-DA2"
+N10FB.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N10FC.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection"
+N1529.Generic.Description         = "Intel(R) 82599 10 Gigabit Dual Port Network Connection with FCoE"
+N1557.Generic.Description         = "Intel(R) 82599 10 Gigabit Network Connection"
+N151C.Copper.Dual.Description     = "Intel(R) Ethernet Server Adapter X520-T2"
+N151C.Copper.Dual.Sun.Description = "Sun Dual 10GBASE-T LP"
+N151C.Generic.Description         = "Intel(R) 82599 10 Gigabit TN Network Connection"
+N154A.SFI.Quad.Description        = "Intel(R) Ethernet Converged Network Adapter X520-4"
+N1558.QSFP.Quad.Description       = "Intel(R) Ethernet Converged Network Adapter X520-Q1"
+
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+;-----------------------------------------------------------------------------
+

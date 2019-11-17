@@ -1,0 +1,284 @@
+<instrumentationManifest
+  xmlns         = "http://schemas.microsoft.com/win/2004/08/events"
+  xmlns:trace   = "http://schemas.microsoft.com/win/2004/08/events/trace"
+  xmlns:win     = "http://manifests.microsoft.com/win/2004/08/windows/events"
+  xmlns:xs      = "http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi     = "http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://schemas.microsoft.com/win/2004/08/events eventman.xsd"
+>
+  <instrumentation>
+    <counters
+      xmlns             = "http://schemas.microsoft.com/win/2005/12/counters"
+      xmlns:auto-ns1    = "http://schemas.microsoft.com/win/2004/08/events"
+      schemaVersion     = "1.1"
+    >
+      <provider
+        callback              = "custom"
+        applicationIdentity   = "basp.sys"
+        providerType          = "kernelMode"
+        providerName          = "Broadcom Advanced Server Program Driver"
+        providerGuid          = "{54BF9FEE-E2C8-4a45-AF50-583BACF325AE}"
+      >
+        <counterSet
+          guid        = "{BB833EA3-CA37-4c13-A0E0-9EDFBC2BA208}"
+          uri         = "Broadcom.Basp.GenStatistics"
+          name        = "Basp General Statistics"
+          description = "Basp teaming general statistic counters"
+          symbol      = "GenStatistics"
+          instances   = "multiple"
+        >
+          <structs>
+            <struct
+              name  = "gen_statistics"
+              type  = "BLF_PERF_COUNTERS"
+            />
+          </structs>
+
+          <counter
+            id          = "1"
+            uri         = "Broadcom.Basp.GenStatistics.stat_send"
+            name        = "Send Packet Count"
+            struct      = "gen_statistics"
+            field       = "stat_send"
+            description = "The number of packets requested to send"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "2"
+            uri         = "Broadcom.Basp.GenStatistics.stat_send_pause_discard"
+            name        = "Send Packets Pause Discard"
+            struct      = "gen_statistics"
+            field       = "stat_send_pause_discard"
+            description = "The number of send packets discarded while paused"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "3"
+            uri         = "Broadcom.Basp.GenStatistics.stat_send_discarded"
+            name        = "Send Packets Discarded"
+            struct      = "gen_statistics"
+            field       = "stat_send_discarded"
+            description = "The number of send packets discarded while not ready"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "4"
+            uri         = "Broadcom.Basp.GenStatistics.stat_send_dispatched"
+            name        = "Send Packets Dispatched"
+            struct      = "gen_statistics"
+            field       = "stat_send_dispatched"
+            description = "The number of send packets forwarded to miniport"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "5"
+            uri         = "Broadcom.Basp.GenStatistics.stat_send_completed_success"
+            name        = "Send Packets Completed Successfully"
+            struct      = "gen_statistics"
+            field       = "stat_send_completed_success"
+            description = "The number of send packets succesfully forwarded"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "6"
+            uri         = "Broadcom.Basp.GenStatistics.stat_send_completed_error"
+            name        = "Send Packets Completed with an Error"
+            struct      = "gen_statistics"
+            field       = "stat_send_completed_error"
+            description = "The number of send packets returned with an error"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "7"
+            uri         = "Broadcom.Basp.GenStatistics.stat_send_nb_l2"
+            name        = "Send Net Buffers L2"
+            struct      = "gen_statistics"
+            field       = "stat_send_nb_l2"
+            description = "The number of net buffers sent on the L2 path"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "8"
+            uri         = "Broadcom.Basp.GenStatistics.stat_send_nb_l4"
+            name        = "Send Net Buffers L4"
+            struct      = "gen_statistics"
+            field       = "stat_send_nb_l4"
+            description = "The number of net buffers sent on the L4 path"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "9"
+            uri         = "Broadcom.Basp.GenStatistics.stat_send_bytes_l2"
+            name        = "Send Bytes L2"
+            struct      = "gen_statistics"
+            field       = "stat_send_bytes_l2"
+            description = "The number of bytes sent on the L2 path"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "10"
+            uri         = "Broadcom.Basp.GenStatistics.stat_send_bytes_l4"
+            name        = "Send Bytes L4"
+            struct      = "gen_statistics"
+            field       = "stat_send_bytes_l4"
+            description = "The number of bytes sent on the L4 path"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "11"
+            uri         = "Broadcom.Basp.GenStatistics.stat_recv"
+            name        = "Receive Packet Count"
+            struct      = "gen_statistics"
+            field       = "stat_recv"
+            description = "The number of packets requested to receive"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "12"
+            uri         = "Broadcom.Basp.GenStatistics.stat_recv_pause_discard"
+            name        = "Received Packets Pause Discard"
+            struct      = "gen_statistics"
+            field       = "stat_recv_pause_discard"
+            description = "The number of recieve packets discarded while paused"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "13"
+            uri         = "Broadcom.Basp.GenStatistics.stat_recv_discarded"
+            name        = "Received Packets Discarded"
+            struct      = "gen_statistics"
+            field       = "stat_recv_discarded"
+            description = "The number of receive packets discarded while not ready"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "14"
+            uri         = "Broadcom.Basp.GenStatistics.stat_recv_indicated"
+            name        = "Received Packets Indicated"
+            struct      = "gen_statistics"
+            field       = "stat_recv_indicated"
+            description = "The number of receive packets indicated to ndis"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "15"
+            uri         = "Broadcom.Basp.GenStatistics.stat_recv_resources"
+            name        = "Received Packets Resources"
+            struct      = "gen_statistics"
+            field       = "stat_recv_resources"
+            description = "The number of recieive packets indicated with resources"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "16"
+            uri         = "Broadcom.Basp.GenStatistics.stat_recv_returned"
+            name        = "Received Packet Returned"
+            struct      = "gen_statistics"
+            field       = "stat_recv_returned"
+            description = "The number of receive packets returned to the miniport"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "17"
+            uri         = "Broadcom.Basp.GenStatistics.stat_recv_nb_l2"
+            name        = "Received Net Buffers L2"
+            struct      = "gen_statistics"
+            field       = "stat_recv_nb_l2"
+            description = "The number of net buffers received on the L2 path"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "18"
+            uri         = "Broadcom.Basp.GenStatistics.stat_recv_nb_l4"
+            name        = "Received Net Buffers L4"
+            struct      = "gen_statistics"
+            field       = "stat_recv_nb_l4"
+            description = "The number of net buffers received on the L4 path"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "19"
+            uri         = "Broadcom.Basp.GenStatistics.stat_recv_bytes_l2"
+            name        = "Received Bytes L2"
+            struct      = "gen_statistics"
+            field       = "stat_recv_bytes_l2"
+            description = "The number of bytes received on the L2 path"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "20"
+            uri         = "Broadcom.Basp.GenStatistics.stat_recv_bytes_l4"
+            name        = "Received Bytes L4"
+            struct      = "gen_statistics"
+            field       = "stat_recv_bytes_l4"
+            description = "The number of bytes received on the L4 path"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "21"
+            uri         = "Broadcom.Basp.GenStatistics.toe_tcp_count"
+            name        = "Toe Tcp Count "
+            struct      = "gen_statistics"
+            field       = "toe_tcp_count"
+            description = "The number of tcp connections offloaded"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+          <counter
+            id          = "22"
+            uri         = "Broadcom.Basp.GenStatistics.toe_capacity"
+            name        = "Toe Capacity"
+            struct      = "gen_statistics"
+            field       = "toe_capacity"
+            description = "The maximum number of offload connections allowed"
+            type        = "perf_counter_rawcount"
+            detailLevel = "standard">
+          </counter>
+
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+</instrumentationManifest>
+

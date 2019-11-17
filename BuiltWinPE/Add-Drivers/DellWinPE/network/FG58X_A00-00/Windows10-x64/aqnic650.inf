@@ -1,0 +1,811 @@
+;*************************************************************************
+;* Copyright (C) 2014-2017 Aquantia Corporation.  All rights reserved.   *
+;*                                                                       *
+;* Aquantia AQtion Network Adapter                                       *
+;*                                                                       *
+;* aqnic650.inf                                                          *
+;*************************************************************************
+
+[Version]
+Signature   = "$Windows NT$"
+Class       = Net
+ClassGUID   = {4d36e972-e325-11ce-bfc1-08002be10318}
+Provider    = %Aquantia%
+DriverVer=12/25/2017,2.1.001.0
+PnpLockDown = 1
+CatalogFile = aqnic650.cat
+
+
+[Manufacturer]
+%Aquantia% = Aquantia, NTamd64.10.0
+
+[Aquantia]
+; Empty section to block legacy operating systems that don't understand TargetOSVersion
+
+[Aquantia.NTamd64.10.0]
+; DisplayName                    Section                    DeviceID
+; -----------------------------------------------------------------------------------------------
+%Atlantic-10G.DeviceDesc%        = Atlantic10G,             PCI\VEN_1D6A&DEV_D107&SUBSYS_00011D6A&REV_02
+%Atlantic-5G.DeviceDesc%         = Atlantic5G,              PCI\VEN_1D6A&DEV_D108&SUBSYS_00011D6A&REV_02
+%Atlantic-2.5G.DeviceDesc%       = Atlantic2.5G,            PCI\VEN_1D6A&DEV_D109&SUBSYS_00011D6A&REV_02
+%Atlantic-10G.DeviceDesc%        = Atlantic10G,             PCI\VEN_1D6A&DEV_07B1&SUBSYS_00011D6A&REV_02 ;AQC107
+%Atlantic-5G.DeviceDesc%         = Atlantic5G,              PCI\VEN_1D6A&DEV_08B1&SUBSYS_00011D6A&REV_02 ;AQC108
+%Atlantic-2.5G.DeviceDesc%       = Atlantic2.5G,            PCI\VEN_1D6A&DEV_09B1&SUBSYS_00011D6A&REV_02 ;AQC109
+
+%Atlantic-5G.DeviceDesc%         = Atlantic5G,              PCI\VEN_1D6A&DEV_11B1&SUBSYS_00011D6A&REV_02 ;AQC111
+%Atlantic-2.5G.DeviceDesc%       = Atlantic2.5G,            PCI\VEN_1D6A&DEV_12B1&SUBSYS_00011D6A&REV_02 ;AQC112
+
+%Felicity.DeviceDesc%            = Atlantic10G,             PCI\VEN_1D6A&DEV_D100&SUBSYS_00011D6A&REV_02
+%Felicity.DeviceDesc%            = Atlantic5G,              PCI\VEN_1D6A&DEV_D100&SUBSYS_00041D6A&REV_02
+%Felicity.DeviceDesc%            = Atlantic10G,             PCI\VEN_1D6A&DEV_00B1&SUBSYS_00011D6A&REV_02 ;AQC100
+%Felicity.DeviceDesc%            = Atlantic5G,              PCI\VEN_1D6A&DEV_00B1&SUBSYS_00041D6A&REV_02 ;AQC100
+
+; S-parts
+%Atlantic-10G.DeviceDesc%        = Atlantic10G,             PCI\VEN_1D6A&DEV_87B1&SUBSYS_00011D6A&REV_02 ;AQC107S
+%Atlantic-5G.DeviceDesc%         = Atlantic5G,              PCI\VEN_1D6A&DEV_88B1&SUBSYS_00011D6A&REV_02 ;AQC108S
+%Atlantic-2.5G.DeviceDesc%       = Atlantic2.5G,            PCI\VEN_1D6A&DEV_89B1&SUBSYS_00011D6A&REV_02 ;AQC109S
+
+%Atlantic-5G.DeviceDesc%         = Atlantic5G,              PCI\VEN_1D6A&DEV_91B1&SUBSYS_00011D6A&REV_02 ;AQC111S
+%Atlantic-2.5G.DeviceDesc%       = Atlantic2.5G,            PCI\VEN_1D6A&DEV_92B1&SUBSYS_00011D6A&REV_02 ;AQC112S
+
+%Felicity.DeviceDesc%            = Atlantic10G,             PCI\VEN_1D6A&DEV_80B1&SUBSYS_00011D6A&REV_02 ;AQC100S
+%Felicity.DeviceDesc%            = Atlantic5G,              PCI\VEN_1D6A&DEV_80B1&SUBSYS_00041D6A&REV_02 ;AQC100S
+
+; *** PTT
+%SANLink3-10G.DeviceDesc%        = Atlantic10G,             PCI\VEN_1D6A&DEV_D107&SUBSYS_7202105A&REV_02
+%SANLink3-10G.DeviceDesc%        = Atlantic10G,             PCI\VEN_1D6A&DEV_87B1&SUBSYS_7202105A&REV_02
+%SANLink3-10G.SFP.DeviceDesc%    = Atlantic10G,             PCI\VEN_1D6A&DEV_80B1&SUBSYS_7201105A&REV_02
+
+; *** ASUS
+%Asus.ROG.DeviceDesc%            = Atlantic10G,             PCI\VEN_1D6A&DEV_D107&SUBSYS_872E1043&REV_02
+%Asus.ROG.DeviceDesc%            = Atlantic10G,             PCI\VEN_1D6A&DEV_07B1&SUBSYS_872E1043&REV_02
+%Asus.XG.DeviceDesc%             = Atlantic10G.Asus.XG,     PCI\VEN_1D6A&DEV_D107&SUBSYS_87411043&REV_02
+%Asus.XG.DeviceDesc%             = Atlantic10G.Asus.XG,     PCI\VEN_1D6A&DEV_07B1&SUBSYS_87411043&REV_02
+%Asus.XG.DeviceDesc%             = Atlantic10G.Asus.XG,     PCI\VEN_1D6A&DEV_07B1&SUBSYS_87421043&REV_02
+%Atlantic-10G.DeviceDesc%        = Atlantic10G.Asus.200F,   PCI\VEN_1D6A&DEV_D107&SUBSYS_200F1043&REV_02
+%Atlantic-10G.DeviceDesc%        = Atlantic10G.Asus.205F,   PCI\VEN_1D6A&DEV_D107&SUBSYS_205F1043&REV_02
+%Atlantic-10G.DeviceDesc%        = Atlantic10G.Asus.208F,   PCI\VEN_1D6A&DEV_D107&SUBSYS_208F1043&REV_02
+%Asus-10G.DeviceDesc%            = Atlantic10G,             PCI\VEN_1D6A&DEV_D107&SUBSYS_87571043&REV_02
+%Asus-10G.DeviceDesc%            = Atlantic10G,             PCI\VEN_1D6A&DEV_07B1&SUBSYS_87571043&REV_02
+%Asus-5G.DeviceDesc%             = Atlantic5G,              PCI\VEN_1D6A&DEV_D108&SUBSYS_875B1043&REV_02
+%Asus-5G.DeviceDesc%             = Atlantic5G,              PCI\VEN_1D6A&DEV_08B1&SUBSYS_875B1043&REV_02
+%Asus.AQC111C.DeviceDesc%        = Atlantic5G,              PCI\VEN_1D6A&DEV_11B1&SUBSYS_87721043&REV_02
+%Asus.AQC112C.DeviceDesc%        = Atlantic2.5G,            PCI\VEN_1D6A&DEV_12B1&SUBSYS_87751043&REV_02
+
+%Asus.SFP.DeviceDesc%            = Atlantic10G,             PCI\VEN_1D6A&DEV_D100&SUBSYS_874A1043&REV_02
+
+; *** Gigabyte
+%Atlantic-10G.DeviceDesc%        = Atlantic10G,             PCI\VEN_1D6A&DEV_D107&SUBSYS_E0001458&REV_02
+
+; *** ASRock
+%Atlantic-10G.DeviceDesc%        = Atlantic10G.PM.off,      PCI\VEN_1D6A&DEV_D107&SUBSYS_D1071849&REV_02
+%Atlantic-10G.DeviceDesc%        = Atlantic10G.PM.off,      PCI\VEN_1D6A&DEV_07B1&SUBSYS_D1071849&REV_02
+%Atlantic-5G.DeviceDesc%         = Atlantic5G.PM.off,       PCI\VEN_1D6A&DEV_D108&SUBSYS_D1081849&REV_02
+%Atlantic-5G.DeviceDesc%         = Atlantic5G.PM.off,       PCI\VEN_1D6A&DEV_08B1&SUBSYS_D1081849&REV_02
+
+; *** MSI
+%Atlantic-10G.DeviceDesc%        = Atlantic10G,             PCI\VEN_1D6A&DEV_D107&SUBSYS_B9121462&REV_02
+%Atlantic-10G.DeviceDesc%        = Atlantic10G,             PCI\VEN_1D6A&DEV_D107&SUBSYS_7A921462&REV_02
+%Atlantic-10G.DeviceDesc%        = Atlantic10G,             PCI\VEN_1D6A&DEV_D107&SUBSYS_12021462&REV_02
+%Atlantic-10G.DeviceDesc%        = Atlantic10G,             PCI\VEN_1D6A&DEV_07B1&SUBSYS_12021462&REV_02
+%Atlantic-10G.DeviceDesc%        = Atlantic10G,             PCI\VEN_1D6A&DEV_D107&SUBSYS_121C1462&REV_02
+%Atlantic-10G.DeviceDesc%        = Atlantic10G,             PCI\VEN_1D6A&DEV_07B1&SUBSYS_121C1462&REV_02
+
+; *** Super Micro
+%Atlantic-10G.DeviceDesc%        = Atlantic10G,             PCI\VEN_1D6A&DEV_07B1&SUBSYS_07B115D9&REV_02
+%Atlantic-5G.DeviceDesc%         = Atlantic5G,              PCI\VEN_1D6A&DEV_08B1&SUBSYS_08B115D9&REV_02
+%Atlantic-5G.DeviceDesc%         = Atlantic5G,              PCI\VEN_1D6A&DEV_D108&SUBSYS_097B15D9&REV_02
+%Atlantic-5G.DeviceDesc%         = Atlantic5G,              PCI\VEN_1D6A&DEV_D108&SUBSYS_098E15D9&REV_02
+%Atlantic-5G.DeviceDesc%         = Atlantic5G,              PCI\VEN_1D6A&DEV_D108&SUBSYS_D10815D9&REV_02
+
+; *** Caldigit
+%Caldigit.AQUA-X-10G.DeviceDesc% = Atlantic10G,             PCI\VEN_1D6A&DEV_87B1&SUBSYS_01701AB6&REV_02 ;AQC107S-B1
+%Caldigit.HULK3-10G.DeviceDesc%  = Atlantic10G,             PCI\VEN_1D6A&DEV_87B1&SUBSYS_01711AB6&REV_02 ;AQC107S-B1
+%Caldigit.Falcon-10G.DeviceDesc% = Atlantic10G,             PCI\VEN_1D6A&DEV_87B1&SUBSYS_01721AB6&REV_02 ;AQC107S-B1
+
+;================================================================================================
+
+;-------------------------------------------------------------------------------
+; Aquantia AQtion 10Gbit Network Adapter
+;
+[Atlantic10G]
+Characteristics    = 0x84  ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5     ; PCI
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+DelReg             = Cleanup.reg
+AddReg             = General.reg
+AddReg             = Speed.10G.reg
+AddReg             = CSO.reg
+AddReg             = LSO.reg
+AddReg             = RSS.reg
+AddReg             = RSC.reg
+AddReg             = PM.reg
+AddReg             = PM.WakeFromPowerOff.reg
+CopyFiles          = CopyFiles
+
+[Atlantic10G.hw]
+AddReg             = MSI.reg
+
+[Atlantic10G.Services]
+AddService         = %ServiceName%, 2, Service, EventLog
+
+
+[Atlantic10G.PM.off]
+Characteristics    = 0x84  ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5     ; PCI
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+DelReg             = Cleanup.reg
+AddReg             = General.reg
+AddReg             = Speed.10G.Reg
+AddReg             = CSO.reg
+AddReg             = LSO.reg
+AddReg             = RSS.reg
+AddReg             = RSC.reg
+AddReg             = PM.reg, PM.off.reg
+AddReg             = PM.WakeFromPowerOff.reg, PM.WakeFromPowerOff.off.reg
+CopyFiles          = CopyFiles
+
+[Atlantic10G.PM.off.hw]
+AddReg             = MSI.reg
+
+[Atlantic10G.PM.off.Services]
+AddService         = %ServiceName%, 2, Service, EventLog
+
+;-------------------------------------------------------------------------------
+; Aquantia AQtion 5Gbit Network Adapter
+;
+[Atlantic5G]
+Characteristics    = 0x84  ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5     ; PCI
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+DelReg             = Cleanup.reg
+AddReg             = General.reg
+AddReg             = Speed.5G.reg
+AddReg             = CSO.reg
+AddReg             = LSO.reg
+AddReg             = RSS.reg
+AddReg             = RSC.reg
+AddReg             = PM.reg
+AddReg             = PM.WakeFromPowerOff.reg
+CopyFiles          = CopyFiles
+
+[Atlantic5G.hw]
+AddReg             = MSI.reg
+
+[Atlantic5G.Services]
+AddService         = %ServiceName%, 2, Service, EventLog
+
+
+[Atlantic5G.PM.off]
+Characteristics    = 0x84  ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5     ; PCI
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+DelReg             = Cleanup.reg
+AddReg             = General.reg
+AddReg             = Speed.5G.Reg
+AddReg             = CSO.reg
+AddReg             = LSO.reg
+AddReg             = RSS.reg
+AddReg             = RSC.reg
+AddReg             = PM.reg, PM.off.reg
+AddReg             = PM.WakeFromPowerOff.reg, PM.WakeFromPowerOff.off.reg
+CopyFiles          = CopyFiles
+ 
+[Atlantic5G.PM.off.hw]
+AddReg             = MSI.reg
+ 
+[Atlantic5G.PM.off.Services]
+AddService         = %ServiceName%, 2, Service, EventLog
+
+;-------------------------------------------------------------------------------
+; Aquantia AQtion 2.5Gbit Network Adapter
+;
+[Atlantic2.5G]
+Characteristics    = 0x84  ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5     ; PCI
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+DelReg             = Cleanup.reg
+AddReg             = General.reg
+AddReg             = Speed.2.5G.Reg
+AddReg             = CSO.reg
+AddReg             = LSO.reg
+AddReg             = RSC.reg 
+AddReg             = RSS.reg
+AddReg             = PM.reg
+AddReg             = PM.WakeFromPowerOff.reg
+CopyFiles          = CopyFiles
+
+[Atlantic2.5G.hw]
+AddReg             = MSI.reg
+
+[Atlantic2.5G.Services]
+AddService         = %ServiceName%, 2, Service, EventLog
+
+
+;-------------------------------------------------------------------------------
+; Aquantia AQtion 10Gbit Network Adapter
+;
+[Atlantic10G.Asus.200F]
+Characteristics    = 0x84  ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5     ; PCI
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+DelReg             = Cleanup.reg
+AddReg             = General.reg
+AddReg             = Speed.10G.reg
+AddReg             = CSO.Reg
+AddReg             = LSO.Reg
+AddReg             = RSC.Reg
+AddReg             = RSS.Reg
+AddReg             = PM.reg
+AddReg             = PM.Asus.WakeFromPowerOff.reg, PM.WakeFromPowerOff.off.reg
+CopyFiles          = CopyFiles
+
+[Atlantic10G.Asus.200F.hw]
+AddReg             = MSI.reg
+
+[Atlantic10G.Asus.200F.Services]
+AddService         = %ServiceName%, 2, Service, EventLog
+
+;-------------------------------------------------------------------------------
+; Aquantia AQtion 10Gbit Network Adapter
+;
+[Atlantic10G.Asus.205F]
+Characteristics    = 0x84  ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5     ; PCI
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+DelReg             = Cleanup.reg
+AddReg             = General.reg
+AddReg             = Speed.10G.reg
+AddReg             = CSO.reg
+AddReg             = LSO.reg
+AddReg             = RSS.reg
+AddReg             = RSC.reg
+AddReg             = PM.reg
+AddReg             = PM.Asus.WakeFromPowerOff.reg
+CopyFiles          = CopyFiles
+ 
+[Atlantic10G.Asus.205F.hw]
+AddReg             = MSI.reg
+ 
+[Atlantic10G.Asus.205F.Services]
+AddService         = %ServiceName%, 2, Service, EventLog
+
+;-------------------------------------------------------------------------------
+; Aquantia AQtion 10Gbit Network Adapter
+;
+[Atlantic10G.Asus.208F]
+Characteristics    = 0x84  ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5     ; PCI
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+DelReg             = Cleanup.reg
+AddReg             = General.reg
+AddReg             = Speed.10G.reg
+AddReg             = CSO.reg
+AddReg             = LSO.reg
+AddReg             = RSS.reg
+AddReg             = RSC.reg
+AddReg             = PM.reg
+CopyFiles          = CopyFiles
+ 
+[Atlantic10G.Asus.208F.hw]
+AddReg             = MSI.reg
+ 
+[Atlantic10G.Asus.208F.Services]
+AddService         = %ServiceName%, 2, Service, EventLog
+
+;-------------------------------------------------------------------------------
+; ASUS XG-C100C 10G PCI-E Network Adapter
+;
+[Atlantic10G.Asus.XG]
+Characteristics    = 0x84  ; NCF_HAS_UI | NCF_PHYSICAL
+BusType            = 5     ; PCI
+*IfType            = 6     ; IF_TYPE_ETHERNET_CSMACD
+*MediaType         = 0     ; NdisMedium802_3
+*PhysicalMediaType = 14    ; NdisPhysicalMedium802_3
+DelReg             = Cleanup.reg
+AddReg             = General.reg
+AddReg             = Speed.10G.reg
+AddReg             = CSO.reg
+AddReg             = LSO.reg
+AddReg             = RSS.reg
+AddReg             = RSC.reg
+AddReg             = PM.PnPcaps.off.reg
+CopyFiles          = CopyFiles
+ 
+[Atlantic10G.Asus.XG.hw]
+AddReg             = MSI.reg
+ 
+[Atlantic10G.Asus.XG.Services]
+AddService         = %ServiceName%, 2, Service, EventLog
+
+
+;-------------------------------------------------------------------------------
+; Registry Settings
+;
+[General.reg]
+; Miniport Common
+HKR,    ,                                        BusNumber,              0, "0"
+HKR, Ndi,                                        Service,                0, %ServiceName%
+HKR, Ndi\Interfaces,                             UpperRange,             0, "ndis5"
+HKR, Ndi\Interfaces,                             LowerRange,             0, "ethernet"
+
+; FlowControl
+HKR, Ndi\Params\*FlowControl,                    ParamDesc,              0, %FlowControl%
+HKR, Ndi\Params\*FlowControl,                    Default,                0, "3"
+HKR, Ndi\Params\*FlowControl\Enum,               "0",                    0, %Disabled%
+HKR, Ndi\Params\*FlowControl\Enum,               "1",                    0, %FlowControl.TxOnly%
+HKR, Ndi\Params\*FlowControl\Enum,               "2",                    0, %FlowControl.RxOnly%
+HKR, Ndi\Params\*FlowControl\Enum,               "3",                    0, %FlowControl.Full%
+HKR, Ndi\Params\*FlowControl,                    Type,                   0, "enum"
+
+; JumboPacket
+HKR, Ndi\Params\*JumboPacket,                    ParamDesc,              0, %JumboPacket%
+HKR, Ndi\Params\*JumboPacket,                    Default,                0, "1514"
+HKR, Ndi\Params\*JumboPacket\Enum,               "1514",                 0, %Disabled%
+HKR, Ndi\Params\*JumboPacket\Enum,               "2040",                 0, %Jumbo.2040bytes%
+HKR, Ndi\Params\*JumboPacket\Enum,               "4088",                 0, %Jumbo.4088bytes%
+HKR, Ndi\Params\*JumboPacket\Enum,               "9014",                 0, %Jumbo.9014bytes%
+HKR, Ndi\Params\*JumboPacket\Enum,               "16348",                0, %Jumbo.16348bytes%
+HKR, Ndi\Params\*JumboPacket,                    Type,                   0, "enum"
+
+; Wait for Link
+HKR, Ndi\Params\WaitAutoNegComplete,             ParamDesc,              0, %WaitAutoNegComplete%
+HKR, Ndi\Params\WaitAutoNegComplete,             Default,                0, "2"
+HKR, Ndi\Params\WaitAutoNegComplete\Enum,        "0",                    0, %Off%
+HKR, Ndi\Params\WaitAutoNegComplete\Enum,        "1",                    0, %On%
+HKR, Ndi\Params\WaitAutoNegComplete\Enum,        "2",                    0, %AutoDetect%
+HKR, Ndi\Params\WaitAutoNegComplete,             Type,                   0, "enum"
+
+; Log Link State Event
+HKR, Ndi\Params\LogLinkStateEvent,               ParamDesc,              0, %LogLinkState%
+HKR, Ndi\Params\LogLinkStateEvent,               Default,                0, "1"
+HKR, Ndi\Params\LogLinkStateEvent\Enum,          "1",                    0, %Enabled%
+HKR, Ndi\Params\LogLinkStateEvent\Enum,          "0",                    0, %Disabled%
+HKR, Ndi\Params\LogLinkStateEvent,               Type,                   0, "enum"
+
+; Downshift retries
+HKR, Ndi\Params\Downshift,                       ParamDesc,              0, %Downshift%
+HKR, Ndi\Params\Downshift,                       Default,                0, "4"
+HKR, Ndi\Params\Downshift\Enum,                  "7",                    0, "7"
+HKR, Ndi\Params\Downshift\Enum,                  "6",                    0, "6"
+HKR, Ndi\Params\Downshift\Enum,                  "5",                    0, "5"
+HKR, Ndi\Params\Downshift\Enum,                  "4",                    0, "4"
+HKR, Ndi\Params\Downshift\Enum,                  "3",                    0, "3"
+HKR, Ndi\Params\Downshift\Enum,                  "2",                    0, "2"
+HKR, Ndi\Params\Downshift\Enum,                  "1",                    0, "1"
+HKR, Ndi\Params\Downshift\Enum,                  "0",                    0, %Disabled%
+HKR, Ndi\Params\Downshift,                       Type,                   0, "enum"
+
+; *InterruptModeration
+HKR, Ndi\Params\*InterruptModeration,            ParamDesc,              0, %InterruptModeration%
+HKR, Ndi\Params\*InterruptModeration,            Default,                0, "1"
+HKR, Ndi\Params\*InterruptModeration\Enum,       "0",                    0, %Disabled%
+HKR, Ndi\Params\*InterruptModeration\Enum,       "1",                    0, %Enabled%
+HKR, Ndi\Params\*InterruptModeration,            Type,                   0, "enum"
+
+; Interrupt Throttle Rate
+HKR, Ndi\Params\ITR,                             ParamDesc,              0, %InterruptThrottleRate%
+HKR, Ndi\Params\ITR,                             Default,                0, "65535"
+HKR, Ndi\Params\ITR\Enum,                        "65535",                0, %InterruptModeration.Adaptive%
+HKR, Ndi\Params\ITR\Enum,                        "2000",                 0, %InterruptModeration.Extreme%
+HKR, Ndi\Params\ITR\Enum,                        "950",                  0, %InterruptModeration.High%
+HKR, Ndi\Params\ITR\Enum,                        "488",                  0, %InterruptModeration.Medium%
+HKR, Ndi\Params\ITR\Enum,                        "200",                  0, %InterruptModeration.Low%
+HKR, Ndi\Params\ITR\Enum,                        "0",                    0, %Off%
+HKR, Ndi\Params\ITR,                             Type,                   0, "enum"
+
+; *TransmitBuffers
+HKR, Ndi\params\*TransmitBuffers,                ParamDesc,              0, %TransmitBuffers%
+HKR, Ndi\params\*TransmitBuffers,                Default,                0, "4096"
+HKR, Ndi\params\*TransmitBuffers,                Min,                    0, "256"
+HKR, Ndi\params\*TransmitBuffers,                Max,                    0, "8184"
+HKR, Ndi\params\*TransmitBuffers,                Step,                   0, "8"
+HKR, Ndi\params\*TransmitBuffers,                Base,                   0, "10"
+HKR, Ndi\params\*TransmitBuffers,                Type,                   0, "int"
+
+; *ReceiveBuffers
+HKR, Ndi\params\*ReceiveBuffers,                 ParamDesc,              0, %ReceiveBuffers%
+HKR, Ndi\params\*ReceiveBuffers,                 Default,                0, "512"
+HKR, Ndi\params\*ReceiveBuffers,                 Min,                    0, "128"
+HKR, Ndi\params\*ReceiveBuffers,                 Max,                    0, "4096"
+HKR, Ndi\params\*ReceiveBuffers,                 Step,                   0, "8"
+HKR, Ndi\params\*ReceiveBuffers,                 Base,                   0, "10"
+HKR, Ndi\params\*ReceiveBuffers,                 Type,                   0, "int"
+
+; Network Address
+HKR, Ndi\params\NetworkAddress,                  ParamDesc,              0, %LAA%
+HKR, Ndi\params\NetworkAddress,                  Default,                0, ""
+HKR, Ndi\params\NetworkAddress,                  Type,                   0, "edit"
+HKR, NDI\params\NetworkAddress,                  LimitText,              0, "12"
+HKR, NDI\params\NetworkAddress,                  UpperCase,              0, "1"
+HKR, NDI\params\NetworkAddress,                  Optional,               0, "1"
+
+; *PriorityVLANTag
+HKR, Ndi\Params\*PriorityVLANTag,                ParamDesc,              0, %PriorityVlanTag%
+HKR, Ndi\Params\*PriorityVLANTag,                Default,                0, "3"
+HKR, Ndi\Params\*PriorityVLANTag,                Type,                   0, "enum"
+HKR, Ndi\Params\*PriorityVLANTag\enum,           "0",                    0, %PriorityVlanTag.Disabled%
+HKR, Ndi\Params\*PriorityVLANTag\enum,           "1",                    0, %PriorityVlanTag.Priority%
+HKR, Ndi\Params\*PriorityVLANTag\enum,           "2",                    0, %PriorityVlanTag.Vlan%
+HKR, Ndi\Params\*PriorityVLANTag\enum,           "3",                    0, %PriorityVlanTag.Enabled%
+
+; VlanID
+HKR, Ndi\params\VlanID,                          ParamDesc,              0, %VlanID%
+HKR, Ndi\params\VlanID,                          Default,                0, "0"
+HKR, Ndi\params\VlanID,                          Type,                   0, "long"
+HKR, Ndi\params\VlanID,                          Min,                    0, "0"
+HKR, Ndi\params\VlanID,                          Max,                    0, "4094"
+HKR, Ndi\params\VlanID,                          Step,                   0, "1"
+HKR, Ndi\params\VlanID,                          Base,                   0, "10"
+
+; MonitorModeEnabled
+HKR, Ndi\Params\MonitorModeEnabled,              ParamDesc,              0, %MonitorModeEnabled%
+HKR, Ndi\Params\MonitorModeEnabled,              Default,                0, "0"
+HKR, Ndi\Params\MonitorModeEnabled,              Type,                   0, "enum"
+HKR, Ndi\Params\MonitorModeEnabled\Enum,         "0",                    0, %Disabled%
+HKR, Ndi\Params\MonitorModeEnabled\Enum,         "1",                    0, %Enabled%
+
+; *EEE
+HKR,Ndi\Params\*EEE,                             ParamDesc,              0, %EEE%
+HKR,Ndi\Params\*EEE,                             Type,                   0, "enum"
+HKR,Ndi\Params\*EEE,                             Default,                0, "0"
+HKR,Ndi\Params\*EEE\Enum,                        "1",                    0, %Enabled%
+HKR,Ndi\Params\*EEE\Enum,                        "0",                    0, %Disabled%
+
+; Common link speed parameters
+HKR, Ndi\params\LinkSpeed,                       ParamDesc,              0, %LinkSpeed%
+HKR, Ndi\params\LinkSpeed,                       Type,                   0, "enum"
+HKR, Ndi\params\LinkSpeed\enum,                  "8",                    0, "2.5G"
+HKR, Ndi\params\LinkSpeed\enum,                  "16",                   0, "1G"
+HKR, Ndi\params\LinkSpeed\enum,                  "32",                   0, "100M"
+
+[Speed.2.5G.reg]
+HKR, Ndi\params\LinkSpeed,                       Default,                0, "56"
+HKR, Ndi\params\LinkSpeed\enum,                  "56",                   0, %AutoNegotiation%
+
+[Speed.5G.reg]
+HKR, Ndi\params\LinkSpeed,                       Default,                0, "58"
+HKR, Ndi\params\LinkSpeed\enum,                  "2",                    0, "5G"
+HKR, Ndi\params\LinkSpeed\enum,                  "58",                   0, %AutoNegotiation%
+
+[Speed.10G.reg]
+HKR, Ndi\params\LinkSpeed,                       Default,                0, "59"
+HKR, Ndi\params\LinkSpeed\enum,                  "1",                    0, "10G"
+HKR, Ndi\params\LinkSpeed\enum,                  "2",                    0, "5G"
+HKR, Ndi\params\LinkSpeed\enum,                  "59",                   0, %AutoNegotiation%
+
+[LSO.reg]
+; *LsoV1IPv4
+HKR, Ndi\Params\*LsoV1IPv4,                      ParamDesc,              0, %LsoV1IPv4%
+HKR, Ndi\Params\*LsoV1IPv4,                      Default,                0, "1"
+HKR, Ndi\Params\*LsoV1IPv4\Enum,                 "0",                    0, %Disabled%
+HKR, Ndi\Params\*LsoV1IPv4\Enum,                 "1",                    0, %Enabled%
+HKR, Ndi\Params\*LsoV1IPv4,                      Type,                   0, "enum"
+; *LsoV2IPv4
+HKR, Ndi\Params\*LsoV2IPv4,                      ParamDesc,              0, %LsoV2IPv4%
+HKR, Ndi\Params\*LsoV2IPv4,                      Default,                0, "1"
+HKR, Ndi\Params\*LsoV2IPv4,                      Type,                   0, "enum"
+HKR, Ndi\Params\*LsoV2IPv4\Enum,                 "0",                    0, %Disabled%
+HKR, Ndi\Params\*LsoV2IPv4\Enum,                 "1",                    0, %Enabled%
+; *LsoV2IPv6
+HKR, Ndi\Params\*LsoV2IPv6,                      ParamDesc,              0, %LsoV2IPv6%
+HKR, Ndi\Params\*LsoV2IPv6,                      Default,                0, "1"
+HKR, Ndi\Params\*LsoV2IPv6,                      Type,                   0, "enum"
+HKR, Ndi\Params\*LsoV2IPv6\Enum,                 "0",                    0, %Disabled%
+HKR, Ndi\Params\*LsoV2IPv6\Enum,                 "1",                    0, %Enabled%
+
+; Checksum offload parameters
+[CSO.reg]
+; *IPChecksumOffloadIPv4
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,          ParamDesc,              0, %CsumOffload.IPv4%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,          Default,                0, "3"
+HKR, Ndi\Params\*IPChecksumOffloadIPv4,          Type,                   0, "enum"
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,     "0",                    0, %Disabled%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,     "1",                    0, %CsumOffload.Tx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,     "2",                    0, %CsumOffload.Rx%
+HKR, Ndi\Params\*IPChecksumOffloadIPv4\Enum,     "3",                    0, %CsumOffload.TxRx%
+; *TCPUDPChecksumOffloadIPv4
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv4,      ParamDesc,              0, %CsumOffload.TCPUDP.IPv4%
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv4,      Default,                0, "3"
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv4,      Type,                   0, "enum"
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv4\Enum, "0",                    0, %Disabled%
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv4\Enum, "1",                    0, %CsumOffload.Tx%
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv4\Enum, "2",                    0, %CsumOffload.Rx%
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv4\Enum, "3",                    0, %CsumOffload.TxRx%
+; *TCPUDPChecksumOffloadIPv6
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv6,      ParamDesc,              0, %CsumOffload.TCPUDP.IPv6%
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv6,      Default,                0, "3"
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv6,      Type,                   0, "enum"
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv6\Enum, "0",                    0, %Disabled%
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv6\Enum, "1",                    0, %CsumOffload.Tx%
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv6\Enum, "2",                    0, %CsumOffload.Rx%
+HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv6\Enum, "3",                    0, %CsumOffload.TxRx%
+
+;[CSO.off.reg]
+;HKR, Ndi\Params\*IPChecksumOffloadIPv4,          Default,               0, "0"
+;HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv4,      Default,               0, "0"
+;HKR, Ndi\Params\*TCPUDPChecksumOffloadIPv6,      Default,               0, "0"
+
+; Receive Segment Coalescing
+[RSC.reg]
+HKR, Ndi\Params\*RscIPv4,                        ParamDesc,              0, %RscIPv4%
+HKR, Ndi\Params\*RscIPv4,                        Default,                0, "1"
+HKR, Ndi\Params\*RscIPv4,                        Type,                   0, "enum"
+HKR, Ndi\Params\*RscIPv4\Enum,                   "0",                    0, %Disabled%
+HKR, Ndi\Params\*RscIPv4\Enum,                   "1",                    0, %Enabled%
+
+HKR, Ndi\Params\*RscIPv6,                        ParamDesc,              0, %RscIPv6%
+HKR, Ndi\Params\*RscIPv6,                        Default,                0, "1"
+HKR, Ndi\Params\*RscIPv6,                        Type,                   0, "enum"
+HKR, Ndi\Params\*RscIPv6\Enum,                   "0",                    0, %Disabled%
+HKR, Ndi\Params\*RscIPv6\Enum,                   "1",                    0, %Enabled%
+
+; Receive Side Scaling
+[RSS.reg]
+; *RSS
+HKR, Ndi\Params\*RSS,                            ParamDesc,              0, %RSS%
+HKR, Ndi\Params\*RSS,                            Default,                0, "1"
+HKR, Ndi\Params\*RSS,                            Type,                   0, "enum"
+HKR, Ndi\Params\*RSS\Enum,                       "0",                    0, %Disabled%
+HKR, Ndi\Params\*RSS\Enum,                       "1",                    0, %Enabled%
+; *NumRssQueues
+HKR, Ndi\Params\*NumRssQueues,                   ParamDesc,              0, %Rss.NumRssQueues%
+HKR, Ndi\Params\*NumRssQueues,                   Default,                0, "4"
+HKR, Ndi\Params\*NumRssQueues,                   Type,                   0, "enum"
+HKR, Ndi\Params\*NumRssQueues\Enum,              "1",                    0, %Rss.1queue%
+HKR, Ndi\Params\*NumRssQueues\Enum,              "2",                    0, %Rss.2queues%
+HKR, Ndi\Params\*NumRssQueues\Enum,              "4",                    0, %Rss.4queues%
+HKR, Ndi\Params\*NumRssQueues\Enum,              "8",                    0, %Rss.8queues%
+
+;-----------------------------------------------------------------------------
+; Power Management
+;
+[PM.reg]
+; *PMARPOffload
+HKR, Ndi\Params\*PMARPOffload,                   ParamDesc,              0, %ARPOffload%
+HKR, Ndi\Params\*PMARPOffload,                   Default,                0, "1"
+HKR, Ndi\Params\*PMARPOffload,                   Type,                   0, "enum"
+HKR, Ndi\Params\*PMARPOffload\Enum,              "1",                    0, %Enabled%
+HKR, Ndi\Params\*PMARPOffload\Enum,              "0",                    0, %Disabled%
+; *PMNSOffload
+HKR, Ndi\Params\*PMNSOffload,                    ParamDesc,              0, %NSOffload%
+HKR, Ndi\Params\*PMNSOffload,                    Default,                0, "1"
+HKR, Ndi\Params\*PMNSOffload,                    Type,                   0, "enum"
+HKR, Ndi\Params\*PMNSOffload\Enum,               "1",                    0, %Enabled%
+HKR, Ndi\Params\*PMNSOffload\Enum,               "0",                    0, %Disabled%
+; *WakeOnPattern
+HKR, Ndi\Params\*WakeOnPattern,                  ParamDesc,              0, %WakeOnPattern%
+HKR, Ndi\Params\*WakeOnPattern,                  Default,                0, "1"
+HKR, Ndi\Params\*WakeOnPattern,                  Type,                   0, "enum"
+HKR, Ndi\Params\*WakeOnPattern\Enum,             "1",                    0, %Enabled%
+HKR, Ndi\Params\*WakeOnPattern\Enum,             "0",                    0, %Disabled%
+; *WakeOnMagicPacket
+HKR, Ndi\Params\*WakeOnMagicPacket,              ParamDesc,              0, %WakeOnMagicPacket%
+HKR, Ndi\Params\*WakeOnMagicPacket,              Default,                0, "1"
+HKR, Ndi\Params\*WakeOnMagicPacket,              Type,                   0, "enum"
+HKR, Ndi\Params\*WakeOnMagicPacket\Enum,         "1",                    0, %Enabled%
+HKR, Ndi\Params\*WakeOnMagicPacket\Enum,         "0",                    0, %Disabled%
+; WakeOnLink
+HKR, Ndi\Params\WakeOnLink,                      ParamDesc,              0, %WakeOnLink%
+HKR, Ndi\Params\WakeOnLink,                      Default,                0, "0"
+HKR, Ndi\Params\WakeOnLink,                      Type,                   0, "enum"
+HKR, Ndi\Params\WakeOnLink\Enum,                 "0",                    0, %Disabled%
+HKR, Ndi\Params\WakeOnLink\Enum,                 "2",                    0, %Forced%
+; WakeOnPing
+HKR, Ndi\Params\WakeOnPing,                      ParamDesc,              0, %WakeOnPing%
+HKR, Ndi\Params\WakeOnPing,                      Default,                0, "0"
+HKR, Ndi\Params\WakeOnPing,                      Type,                   0, "enum"
+HKR, Ndi\Params\WakeOnPing\Enum,                 "1",                    0, %Enabled%
+HKR, Ndi\Params\WakeOnPing\Enum,                 "0",                    0, %Disabled%
+;
+HKR,,                                            EnablePME,              0, "1"
+HKR,,                                            WakeOnSlot,             0, 0
+HKR,,                                            PnPCapabilities,        0x10001, 0x0000
+
+[PM.off.reg]
+HKR,Ndi\Params\*PMARPOffload,                    Default,                0, "0"
+HKR,Ndi\Params\*PMNSOffload,                     Default,                0, "0"
+HKR,Ndi\Params\*WakeOnPattern,                   Default,                0, "0"
+HKR,Ndi\Params\*WakeOnMagicPacket,               Default,                0, "0"
+HKR,Ndi\Params\WakeOnLink,                       Default,                0, "0"
+HKR,Ndi\Params\WakeOnPing,                       Default,                0, "0"
+;
+HKR,,                                            PnPCapabilities,        0x10001, 0x18
+
+[PM.PnPcaps.off.reg]
+HKR,,                                            PnPCapabilities,        0x10001, 0x18
+
+[PM.WakeFromPowerOff.reg]
+; WakeFromPowerOff
+HKR,Ndi\Params\WakeFromPowerOff,                 ParamDesc,              0, %WakeFromPowerOff%
+HKR,Ndi\Params\WakeFromPowerOff,                 Default,                0, "1"
+HKR,Ndi\Params\WakeFromPowerOff,                 Type,                   0, "enum"
+HKR,Ndi\Params\WakeFromPowerOff\Enum,            "0",                    0, %Disabled%
+HKR,Ndi\Params\WakeFromPowerOff\Enum,            "1",                    0, %Enabled%
+
+[PM.Asus.WakeFromPowerOff.reg]
+; WakeFromPowerOff
+HKR,Ndi\Params\WakeFromPowerOff,                 ParamDesc,              0, %WakeFromPowerOff.Asus%
+HKR,Ndi\Params\WakeFromPowerOff,                 Default,                0, "1"
+HKR,Ndi\Params\WakeFromPowerOff,                 Type,                   0, "enum"
+HKR,Ndi\Params\WakeFromPowerOff\Enum,            "0",                    0, %Disabled%
+HKR,Ndi\Params\WakeFromPowerOff\Enum,            "1",                    0, %Enabled%
+
+[PM.WakeFromPowerOff.off.reg]
+HKR,Ndi\Params\WakeFromPowerOff,                 Default,                0, "0"
+
+
+;-------------------------------------------------------------------------------
+[MSI.reg]
+HKR, "Interrupt Management", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", 0x00000010
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MSISupported, 0x00010001, 1
+HKR, "Interrupt Management\MessageSignaledInterruptProperties", MessageNumberLimit, 0x00010001, 9
+HKR, "Interrupt Management\Affinity Policy", DevicePolicy,   0x00010001, 1
+HKR, "Interrupt Management\Affinity Policy", DevicePriority, 0x00010001, 3
+HKR, "Interrupt Management\Affinity Policy",,                0x00000010
+
+[Cleanup.reg]
+HKR, Ndi\Params
+
+
+;-----------------------------------------------------------------------------
+; Common Driver and Service
+;
+[CopyFiles]
+aqnic650.sys,,,2
+
+[Service]
+DisplayName        = %Service.DispName%
+ServiceType        = 1 ;%SERVICE_KERNEL_DRIVER%
+StartType          = 3 ;%SERVICE_DEMAND_START%
+ErrorControl       = 1 ;%SERVICE_ERROR_NORMAL%
+ServiceBinary      = %12%\aqnic650.sys
+LoadOrderGroup     = NDIS
+AddReg             = TextModeFlags.Reg
+
+;-------------------------------------------------------------------------------
+; EventLog and TextModeFlags
+;
+[EventLog]
+AddReg             = AddEventLog.Reg
+
+[AddEventLog.reg]
+HKR, , EventMessageFile, 0x00020000, "%%SystemRoot%%\System32\netevent.dll;%%SystemRoot%%\System32\drivers\aqnic650.sys"
+HKR, , TypesSupported,   0x00010001, 7
+
+[TextModeFlags.reg]
+HKR, , TextModeFlags,    0x00010001, 0x0001
+
+
+[SourceDisksNames]
+1 = %DiskDescription%,,,
+
+[SourceDisksFiles]
+aqnic650.sys  = 1,,
+
+;-----------------------------------------------------------------------------
+; DestinationDirs
+;
+[DestinationDirs]
+CopyFiles = 12
+
+;-----------------------------------------------------------------------------
+; Localizable Strings
+;
+[Strings]
+Aquantia                     = "Aquantia"
+
+LAA                          = "Locally Administered Address"
+LsoV1IPv4                    = "Large Send Offload V1 (IPv4)"
+LsoV2IPv4                    = "Large Send Offload V2 (IPv4)"
+LsoV2IPv6                    = "Large Send Offload V2 (IPv6)"
+CsumOffload.TxRx             = "Rx & Tx Enabled"
+CsumOffload.Tx               = "Tx Enabled"
+CsumOffload.Rx               = "Rx Enabled"
+CsumOffload.IPv4             = "IPv4 Checksum Offload"
+CsumOffload.TCP.IPv6         = "TCP Checksum Offload (IPv6)"
+CsumOffload.UDP.IPv6         = "UDP Checksum Offload (IPv6)"
+CsumOffload.TCPUDP.IPv4      = "TCP/UDP Checksum Offload (IPv4)"
+CsumOffload.TCPUDP.IPv6      = "TCP/UDP Checksum Offload (IPv6)"
+TransmitBuffers              = "Transmit Buffers"
+ReceiveBuffers               = "Receive Buffers"
+RSS                          = "Receive Side Scaling"
+Rss.NumRssQueues             = "Maximum number of RSS Queues"
+Rss.1queue                   = "1 Queue"
+Rss.2queues                  = "2 Queues"
+Rss.4queues                  = "4 Queues"
+Rss.8queues                  = "8 Queues"
+FlowControl                  = "Flow Control"
+FlowControl.RxOnly           = "Rx Enabled"
+FlowControl.TxOnly           = "Tx Enabled"
+FlowControl.Full             = "Rx & Tx Enabled"
+PriorityVlanTag              = "Priority & VLAN"
+PriorityVlanTag.Disabled     = "Priority & VLAN Disabled"
+PriorityVlanTag.Enabled      = "Priority & VLAN Enabled"
+PriorityVlanTag.Priority     = "Packet Priority Enabled"
+PriorityVlanTag.Vlan         = "VLAN Enabled"
+VlanID                       = "VLAN ID"
+MonitorModeEnabled           = "VLAN Monitor mode"
+SpeedDuplex                  = "Speed & Duplex"
+AutoNegotiation              = "Auto Negotiation"
+LinkSpeed                    = "Link Speed"
+AutoDetect                   = "Auto Detect"
+JumboPacket                  = "Jumbo Packet"
+Jumbo.2040bytes              = "2040 Bytes"
+Jumbo.4088bytes              = "4088 Bytes"
+Jumbo.9014bytes              = "9014 Bytes"
+Jumbo.16348bytes             = "16348 Bytes"
+WaitAutoNegComplete          = "Wait for Link"
+LogLinkState                 = "Log Link State Event"
+Downshift                    = "Downshift retries"
+InterruptModeration          = "Interrupt Moderation"
+InterruptThrottleRate        = "Interrupt Moderation Rate"
+InterruptModeration.Adaptive = "Adaptive"
+InterruptModeration.Extreme  = "Extreme"
+InterruptModeration.High     = "High"
+InterruptModeration.Medium   = "Medium"
+InterruptModeration.Low      = "Low"
+ARPOffload                   = "ARP Offload"
+NSOffload                    = "NS Offload"
+WakeOnMagicPacket            = "Wake on Magic Packet"
+WakeOnPattern                = "Wake on Pattern Match"
+WakeOnPing                   = "Wake on Ping"
+WakeOnLink                   = "Wake on Link"
+WakeFromPowerOff             = "Wake from power off state"
+WakeFromPowerOff.Asus        = "Shutdown Wake-On-Lan"
+RscIPv4                      = "Recv Segment Coalescing (IPv4)"
+RscIPv6                      = "Recv Segment Coalescing (IPv6)"
+EEE                          = "Energy-Efficient Ethernet"
+True                         = "True"
+False                        = "False"
+On                           = "On"
+Off                          = "Off"
+Enabled                      = "Enabled"
+Disabled                     = "Disabled"
+Forced                       = "Forced"
+
+ServiceName                  = "aqnic"
+Service.DispName             = "AQtion Network Adapter (NDIS 6.50)"
+DiskDescription              = "AQtion Device Installation Disk"
+
+; DeviceDesc strings
+;------------------------------------------------------------------------------
+Atlantic-10G.DeviceDesc        = "Aquantia AQtion 10Gbit Network Adapter"
+Atlantic-5G.DeviceDesc         = "Aquantia AQtion 5Gbit Network Adapter"
+Atlantic-2.5G.DeviceDesc       = "Aquantia AQtion 2.5Gbit Network Adapter"
+Felicity.DeviceDesc            = "Aquantia Felicity Network Adapter"
+
+; *** PTT
+SANLink3-10G.DeviceDesc        = "SANLink3 N1 10Gbit Network Adapter"
+SANLink3-10G.SFP.DeviceDesc    = "SANLink3 10Gbit SFP+ Network Adapter" 
+
+; *** ASUS
+Asus-10G.DeviceDesc            = "Aquantia 10G Ethernet connection"
+Asus-5G.DeviceDesc             = "Aquantia 5G Ethernet connection"
+Asus.ROG.DeviceDesc            = "ROG AREION 10G"
+Asus.XG.DeviceDesc             = "ASUS XG-C100C 10G PCI-E Network Adapter"
+Asus.SFP.DeviceDesc            = "ASUS XG-C100F 10G SFP+ Network Adapter"
+Asus.AQC111C.DeviceDesc        = "Asus Aquantia AQC111C 5GbE connection"
+Asus.AQC112C.DeviceDesc        = "Asus Aquantia AQC112C 2.5GbE connection"
+
+; *** Caldigit
+Caldigit.AQUA-X-10G.DeviceDesc = "CalDigit 10Gbit Network Adapter over TBT (NDIS 6.50 Miniport)"
+Caldigit.HULK3-10G.DeviceDesc  = "CalDigit 10Gbit Network Adapter over TBT (NDIS 6.50 Miniport)"
+Caldigit.Falcon-10G.DeviceDesc = "CalDigit 10Gbit Network Adapter (NDIS 6.50 Miniport)"

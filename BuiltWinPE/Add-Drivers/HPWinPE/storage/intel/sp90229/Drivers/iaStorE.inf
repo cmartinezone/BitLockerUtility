@@ -1,0 +1,194 @@
+; Copyright (c) 2009-2018 Intel Corporation
+; **********************************************************************************************
+; **********************************************************************************************
+; **    Filename:  iaStorE.inf
+; **    Revision:  DRIVER_INFO
+; **    Abstract:  Windows* INF File for AHCI Intel(R) Rapid Storage Technology Enterprise Driver
+; **               Installs: RSTe AHCI RAID Controller Miniport (without RST Filter Driver)
+; **               Only for Windows 8 releases
+; **********************************************************************************************
+;
+[Version]
+Signature="$Windows NT$"
+Provider=%INTEL%
+ClassGUID={4D36E97B-E325-11CE-BFC1-08002BE10318}
+Class=SCSIAdapter
+CatalogFile=iaStorE.cat
+DriverVer=07/10/2018,5.4.9.1004
+;
+[PackageInfo]
+Name=AHCI
+;
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+;
+[DestinationDirs]
+DefaultDestDir = 12
+;
+[ControlFlags]
+ExcludeFromSelect = *
+;
+[Manufacturer]
+%INTEL% = INTEL, NTamd64.6.3, NTamd64.10.0, NTamd64.10.0...14393
+[iaStorE_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\iaStorE.sys
+LoadOrderGroup = SCSI miniport
+AddReg         = pnpsafe_pci_addreg
+;
+[iaStorE_EventLog_Inst]
+AddReg = iaStorE_EventLog_AddReg
+;
+[iaStorE_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll;%%SystemRoot%%\System32\drivers\iaStorE.sys"
+HKR,,TypesSupported,%REG_TYPE_DWORD%,7
+;
+;********************************************************
+;*
+;* 64-BIT X86 ARCHITECTURE
+;*
+;* This section specifies the 64-bit architecture specific INF file entries
+;* required to install a driver as a 64-bit compatible driver.
+;*
+;******************************************************************************
+[SourceDisksFiles.amd64]
+iaStorE.sys = 1,,,
+;
+[INTEL.ntamd64.10.0...14393]
+;windows 10_64_14393 and later
+%PCI\VEN_8086&DEV_2826&SUBSYS_047D1014.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_047D1014
+%PCI\VEN_8086&DEV_2826&SUBSYS_04811014.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_04811014
+%PCI\VEN_8086&DEV_2826&SUBSYS_04851014.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_04851014
+%PCI\VEN_8086&DEV_2826&SUBSYS_11B61734.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_11B61734
+%PCI\VEN_8086&DEV_2826&SUBSYS_201019E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201019E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201219E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201219E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201319E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201319E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201519E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201519E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201619E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201619E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201B19E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201B19E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201D19E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201D19E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201F19E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201F19E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_28228086.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_28228086
+%PCI\VEN_8086&DEV_2826&SUBSYS_306E1054.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_306E1054
+%PCI\VEN_8086&DEV_2826&SUBSYS_72708086.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_72708086
+%PCI\VEN_8086&DEV_2826&CC_0104.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&CC_0104
+;
+[INTEL.ntamd64.10.0]
+;windows_10_64-bit to windows 10_64_14393
+%PCI\VEN_8086&DEV_2826&SUBSYS_047D1014.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_047D1014
+%PCI\VEN_8086&DEV_2826&SUBSYS_04811014.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_04811014
+%PCI\VEN_8086&DEV_2826&SUBSYS_04851014.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_04851014
+%PCI\VEN_8086&DEV_2826&SUBSYS_11B61734.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_11B61734
+%PCI\VEN_8086&DEV_2826&SUBSYS_201019E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201019E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201219E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201219E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201319E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201319E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201519E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201519E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201619E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201619E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201B19E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201B19E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201D19E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201D19E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201F19E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201F19E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_28228086.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_28228086
+%PCI\VEN_8086&DEV_2826&SUBSYS_306E1054.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_306E1054
+%PCI\VEN_8086&DEV_2826&SUBSYS_72708086.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_72708086
+%PCI\VEN_8086&DEV_2826&CC_0104.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&CC_0104
+;
+[INTEL.ntamd64.6.3]
+;windows_8.1_64-bit
+%PCI\VEN_8086&DEV_2826&SUBSYS_047D1014.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_047D1014
+%PCI\VEN_8086&DEV_2826&SUBSYS_04811014.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_04811014
+%PCI\VEN_8086&DEV_2826&SUBSYS_04851014.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_04851014
+%PCI\VEN_8086&DEV_2826&SUBSYS_11B61734.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_11B61734
+%PCI\VEN_8086&DEV_2826&SUBSYS_201019E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201019E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201219E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201219E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201319E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201319E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201519E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201519E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201619E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201619E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201B19E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201B19E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201D19E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201D19E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_201F19E5.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_201F19E5
+%PCI\VEN_8086&DEV_2826&SUBSYS_28228086.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_28228086
+%PCI\VEN_8086&DEV_2826&SUBSYS_306E1054.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_306E1054
+%PCI\VEN_8086&DEV_2826&SUBSYS_72708086.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&SUBSYS_72708086
+%PCI\VEN_8086&DEV_2826&CC_0104.DeviceDesc% = iaStorE_inst, PCI\VEN_8086&DEV_2826&CC_0104
+;
+[iaStorE_inst.ntamd64]
+CopyFiles=@iaStorE.sys
+FeatureScore=0x80
+;
+[iaStorE_inst.ntamd64.HW]
+AddReg = msi_addreg
+AddReg = storport_addreg
+AddReg = sgpio_addreg
+AddReg = led_addreg
+;
+[iaStorE_inst.ntamd64.Services]
+AddService = iaStorE, %SPSVCINST_ASSOCSERVICE%, iaStorE_Service_Inst, iaStorE_EventLog_Inst
+;
+[pnpsafe_pci_addreg]
+; Use raw values for BusType, not a DEFINE, ChkInf fails on hex alpha chars
+; BusType_ATA == 0x3, BusTypeATA, BusType_RAID == 0x8, BusType_SATA == 0xb
+HKR, Parameters\PnpInterface,  5,                           %REG_TYPE_DWORD%,  0x00000001
+HKR, Parameters,               BusType,                     %REG_TYPE_DWORD%,  0x00000008
+; Tell Storport in Win7/Srv08R2(KB982018) that driver can report 4K sector size (not needed in Win8)
+HKR, Parameters\Device,        EnableQueryAccessAlignment,  %REG_TYPE_DWORD%,  0x00000001
+;
+[Strings]
+; Localizable Strings
+;
+diskId1 = "RSTe Installation Disk"
+;server
+PCI\VEN_8086&DEV_2826&SUBSYS_047D1014.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_04811014.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_04851014.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_11B61734.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_201019E5.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_201219E5.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_201319E5.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_201519E5.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_201619E5.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_201B19E5.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_201D19E5.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_201F19E5.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_28228086.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_306E1054.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&SUBSYS_72708086.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+PCI\VEN_8086&DEV_2826&CC_0104.DeviceDesc = "Intel(R) C600+/C220+ series chipset SATA RAID Controller"
+;
+INTEL = "Intel Corporation"
+;
+; Non-Localizable Strings
+;
+SPSVCINST_ASSOCSERVICE = 0x00000002
+REG_MULTI_SZ           = 0x00010000
+REG_EXPAND_SZ          = 0x00020000
+REG_TYPE_DWORD         = 0x00010001
+SERVICE_KERNEL_DRIVER  = 1
+SERVICE_BOOT_START     = 0
+SERVICE_ERROR_NORMAL   = 1
+;
+; MSI enables.
+;
+[msi_addreg]
+HKR, Interrupt Management, 0x00000010
+HKR, Interrupt Management\MessageSignaledInterruptProperties, 0x00000010
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MSISupported,       %REG_TYPE_DWORD%,   1
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MessageNumberLimit, %REG_TYPE_DWORD%,   1
+;
+[storport_addreg]
+;;; Enables/Disables Idle Power Management for StorPort
+HKR, "StorPort", "EnableIdlePowerManagement", %REG_TYPE_DWORD%, 0x00000001
+;
+[sgpio_addreg]
+;;; Enable/disable SGPIO support
+HKLM, System\CurrentControlSet\Services\iaStorE\Parameters\Device, LED_Supported, %REG_TYPE_DWORD%, 0x00000001
+
+[led_addreg]
+;;; Custimizable LED management
+HKLM, System\CurrentControlSet\Services\iaStorE\Parameters\Device, LedLocateTimeout, %REG_TYPE_DWORD%, 0x0000000C
+HKLM, System\CurrentControlSet\Services\iaStorE\Parameters\Device, LedFaultOnEmptyPortBehavior, %REG_TYPE_DWORD%, 0x00000000
+HKLM, System\CurrentControlSet\Services\iaStorE\Parameters\Device, LedBehaviorForInitilazing, %REG_TYPE_DWORD%, 0x00000001
+HKLM, System\CurrentControlSet\Services\iaStorE\Parameters\Device, LedBehaviorForRebuilding, %REG_TYPE_DWORD%, 0x00000000
+HKLM, System\CurrentControlSet\Services\iaStorE\Parameters\Device, LedBehaviorForMigrating, %REG_TYPE_DWORD%, 0x00000001
+;

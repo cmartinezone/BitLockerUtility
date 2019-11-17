@@ -1,0 +1,83 @@
+;-----------------------------------------------------------------------------
+;
+; rccfg.inf = Installation for AMD-RAID device driver
+;
+; (c)2012-2018 Advanced Micro Devices, Inc.
+;
+;-----------------------------------------------------------------------------
+; - This version supports Windows 10.
+; - Class and ClassGUID specify the type of driver and must match
+;     (see $DDKPATH/inc/api/devguid.h).
+; - Driver provided by Advanced Micro Devices, Inc. for AMD-RAID 7.2 software.
+;   (7.2.0-00057)
+;-----------------------------------------------------------------------------
+
+
+;-----------------------------------------------------------------------------
+[Version]
+Signature = "$Windows NT$"
+Class = System
+ClassGUID = {4d36e97d-e325-11ce-bfc1-08002be10318}
+Provider = %AMD%
+CatalogFile = rccfg.cat
+DriverVer = 05/14/2018,7.2.0.00057
+PnpLockDown = 0
+DriverPackageDisplayName = %rccfg_Desc%
+DriverPackageType = PlugAndPlay
+
+;-----------------------------------------------------------------------------
+[SourceDisksNames]
+1 = %rccfg_Desc%
+
+;-----------------------------------------------------------------------------
+[SourceDisksFiles]
+rccfg.sys = 1
+
+;-----------------------------------------------------------------------------
+[DestinationDirs]
+DefaultDestDir = 12   ;%WinDir%\System32\Drivers directory on NT-based systems
+
+;-----------------------------------------------------------------------------
+[ControlFlags]
+ExcludeFromSelect = *
+
+;-----------------------------------------------------------------------------
+[Manufacturer]
+%AMD% = AMD,ntamd64
+
+;-----------------------------------------------------------------------------
+[AMD.ntamd64]
+%rccfg_Desc% = rccfg_Inst, SCSI\ProcessorAMD-RAIDConfiguration___V7.0
+%multi_Desc% = rccfg_Inst, SCSI\ProcessorAMD-RAIDMultiCard_______V7.0
+
+;-----------------------------------------------------------------------------
+[rcraid_Inst]
+CopyFiles = DefaultDestDir
+
+;-----------------------------------------------------------------------------
+[DefaultDestDir]
+rccfg.sys,,,0x00002004
+
+;-----------------------------------------------------------------------------
+[rccfg_Inst]
+CopyFiles = DefaultDestDir
+
+;-----------------------------------------------------------------------------
+[rccfg_Inst.Services]
+AddService = rccfg,0x00000002,rccfg_Service_Inst
+
+;-----------------------------------------------------------------------------
+[rccfg_Service_Inst]
+ServiceType   = 1                    ; SERVICE_KERNEL_DRIVER
+StartType     = 3                    ; SERVICE_DEMAND_START
+ErrorControl  = 1                    ; SERVICE_ERROR_NORMAL
+ServiceBinary = %12%\rccfg.sys
+DisplayName   = %rccfg_Desc%
+
+;-----------------------------------------------------------------------------
+
+[Strings]
+AMD = "Advanced Micro Devices, Inc."
+rccfg_Desc = "AMD-RAID Config Device"
+multi_Desc = "AMD-RAID Multi Device"
+

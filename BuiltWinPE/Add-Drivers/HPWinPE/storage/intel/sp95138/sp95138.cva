@@ -1,0 +1,194 @@
+﻿[CVA File Information]
+CVATimeStamp=20190311T010651
+CVASyntaxVersion=2.1A6
+
+[Software Title]
+US=Intel Rapid Storage Technology 17 Driver (64bit)
+AR=برنامج تشغيل Intel® Rapid Storage Technology
+CH=Intel® 快速存储技术驱动程序
+CS=Ovladač Intel® Rapid Storage Technology
+DK=Intel® Rapid Storage Technology Driver
+NL=Intel® Rapid Storage Technology-stuurprogramma
+FI=Nopean Intel®-tallennustekniikan ohjain
+FR=Pilote Intel® Rapid Storage Technology
+GR=Intel® Rapid Storage-Technologie-Treiber
+GK=Πρόγραμμα οδήγησης Intel® Rapid Storage Technology
+IL=מנהל התקן של טכנולוגיית ‎Intel® Rapid Storage
+TZ=Intel® 快速儲存技術驅動程式
+HU=Intel® Rapid Storage Technology illesztőprogram
+IT=Driver Intel® Rapid Storage Technology
+JP=インテル® ラピッド・ストレージ・テクノロジー・ドライバー
+KR=Intel® 빠른 스토리지 기술 드라이버
+NO=Intel® Rapid Storage Technology-driver
+PL=Sterownik do obsługi technologii Rapid Storage firmy Intel®
+PT=Controlador Rapid Storage Technology Intel®
+RU=Драйвер Intel® Rapid Storage Technology
+SP=Controlador de la tecnología de almacenamiento rápido de Intel®
+SE=Drivrutin för Intels® snabba lagringsteknik
+TW=Intel® 快速儲存技術驅動程式
+TH=ไดรเวอร์เทคโนโลยี Intel® Rapid Storage
+TR=Intel® Rapid Storage Technology Sürücüsü
+
+[US.Software Description]
+This package contains the Intel Rapid Storage Technology Driver for the supported notebook models and operating systems. The Intel Rapid Storage Technology is designed to provide functionality for the Intel Storage Controllers. The driver improves Serial ATA (SATA) disk performance with Native Command Queuing.
+
+[AR.Software Description]
+تتضمن هذه الحزمة برنامج تشغيل Intel® Rapid Storage Technology، الذي صُمم لتوفير وظيفة "أدوات تحكم تخزين Intel".  يقوم برنامج التشغيل بتحسين أداء قرص Serial ATA (SATA) أثناء "انتظار الأمر الأصلي".
+
+[CH.Software Description]
+此软件包包含 Intel® 快速存储技术驱动程序，它可以为 Intel 存储控制器提供相应的功能。该驱动程序将通过原生指令排序提升串行 ATA (SATA) 磁盘的性能。
+
+[CS.Software Description]
+Tento balík obsahuje ovladač Intel® Rapid Storage Technology navržený tak, aby zajistil funkčnost řadičů úložných zařízení Intel.  Ovladač zvyšuje výkon disků Serial ATA (SATA) s funkcí přirozeného řazení příkazů (NCQ).
+
+[DK.Software Description]
+Denne pakke indeholder en Intel® Rapid Storage Technology Driver, der er skabt til at levere funktioner til Intel Storage Controllere.  Driveren øger Serial ATA (SATA)-diskens ydelse med Native Command Queuing.
+
+[NL.Software Description]
+Dit pakket bevat het Intel® Rapid Storage Technology-stuurprogramma, speciaal ontworpen om functionaliteit te bieden voor Intel-opslagcontrollers.  Het stuurprogramma zorgt voor verbeterde prestaties van seriële ATA-schijven (SATA-schijven) dankzij Native Command Queuing (NCQ).
+
+[FI.Software Description]
+Tämä paketti sisältää nopean Intel®-tallennustekniikan ohjaimen, joka on suunniteltu Intel-tallennusohjainten toiminnan tukemiseen.  Ohjain parantaa sarja-ATA-levyn (SATA-levyn) suorituskykyä NCQ-menetelmällä.
+
+[FR.Software Description]
+Ce package contient le pilote Intel® Rapid Storage Technology, conçu pour fournir les fonctionnalités des contrôleurs de stockage Intel. Ce pilote optimise les performances du disque SATA (Serial ATA) grâce à la technologie NCQ (Native Command Queuing).
+
+[GR.Software Description]
+Dieses Paket enthält den Intel® Rapid Storage-Technologie-Treiber, der Funktionen für die Intel Storage Controller bietet.  Der Treiber verbessert die SATA-Festplattenleistung mit Hilfe von Native Command Queuing
+
+[GK.Software Description]
+Αυτό το πακέτο περιλαμβάνει το πρόγραμμα οδήγησης Intel® Rapid Storage Technology, το οποίο παρέχει λειτουργίες για τους ελεγκτές αποθήκευσης Intel.  Το πρόγραμμα οδήγησης βελτιώνει την απόδοση του δίσκου Serial ATA (SATA) με την εγγενή ουρά εντολών.
+
+[IL.Software Description]
+החבילה כוללת את מנהל ההתקן של טכנולוגיית ‎Intel Rapid Storage, המיועד לספק פונקציונליות עבור בקרי אחסון של Intel®.  מנהל ההתקן משפר את ביצועי הדיסק Serial ATA ‏(SATA) בעזרת Native Command Queuing.
+
+[TZ.Software Description]
+本套件包含 Intel® 快速儲存技術驅動程式，這是專為提供 Intel 儲存控制器所屬功能而設計的。本驅動程式使用「原生指令佇列」，可提升序列 ATA (SATA) 磁碟效能。
+
+[HU.Software Description]
+Ez a csomag az Intel® Rapid Storage Technology illesztőprogramot tartalmazza, amely az Intel tárolásvezérlők számára biztosít szolgáltatásokat.  Az illesztőprogram jobb soros ATA (SATA) lemezes teljesítményt nyújt natív parancs-sorbaállítással.
+
+[IT.Software Description]
+Questo pacchetto contiene il driver Intel® Rapid Storage Technology progettato per offrire funzionalità ai controller di archiviazione Intel.  Il driver migliora le prestazioni del disco Serial ATA (SATA) con la tecnologia NCQ (Native Command Queuing).
+
+[JP.Software Description]
+このパッケージには、インテル® Storage Controller用の機能を提供するよう設計されたインテル® ラピッド・ストレージ・テクノロジー・ドライバーが含まれています。このドライバーによって、NCQ（Native Command Queuing）に対応しているSATA（Serial ATA）ディスクのパフォーマンスが向上します。
+
+[KR.Software Description]
+이 패키지에는 Intel® 스토리지 컨트롤러의 기능을 제공하기 위한 Intel 빠른 스토리지 기술 드라이버가 들어 있습니다.이 드라이버는 NCQ(전용 명령 큐)를 사용하여 SATA(직렬 ATA) 디스크 성능을 향상시킵니다.
+
+[NO.Software Description]
+Denne pakken inneholder Intel® Rapid Storage Technology-driveren, som er utviklet for å gi funksjonalitet for Intel-lagringskontrollerne.  Driveren gir forbedret seriell ATA (SATA) diskytelse ved hjelp av NCQ (Native Command Queuing).
+
+[PL.Software Description]
+W tym pakiecie znajduje się sterownik do obsługi technologii Rapid Storage firmy Intel®, przeznaczony dla kontrolerów pamięci masowych firmy Intel i umożliwiający korzystanie z nowych funkcji. Sterownik usprawnia działanie dysków SATA (Serial ATA) dzięki obsłudze technologii NCQ (Native Command Queuing).
+
+[PT.Software Description]
+Este pacote contém o controlador Rapid Storage Technology Intel®, que foi concebido para proporcionar funcionalidades aos controladores de armazenamento Intel.  O controlador melhora o desempenho do disco Serial ATA (SATA) através da tecnologia NCQ (Native Command Queuing - Fila de comando nativo).
+
+[RU.Software Description]
+Этот пакет содержит драйвер Intel® Rapid Storage Technology, обеспечивающий поддержку контроллеров накопителей Intel.  Драйвер улучшает производительность дисков Serial ATA (SATA) благодаря использованию технологии Native Command Queuing (Аппаратная установка очередности команд).
+
+[SP.Software Description]
+Este paquete contiene el Controlador de la tecnología de almacenamiento rápido de Intel®, que está diseñada para proveer funcionalidad a los controladores de almacenamiento Intel.  El controlador mejora el rendimiento del disco Serial ATA (SATA) con cola de comandos nativos.
+
+[SE.Software Description]
+Det här paketet innehåller drivrutinen till Intels® snabba lagringsteknik, som är utformad för att ge Intels lagringsstyrdon funktioner.  Drivrutinen förbättrar SATA-diskars (serial ATA) prestanda med lokala kommandoköer.
+
+[TW.Software Description]
+本套件包含 Intel 快速儲存技術驅動程式，這是專為提供 Intel® 儲存控制器所屬功能而設計的。本驅動程式使用「原生指令佇列」，可提升序列 ATA (SATA) 磁碟效能。
+
+[TH.Software Description]
+แพ็คเกจนี้ประกอบด้วยไดรเวอร์เทคโนโลยี Intel® Rapid Storage ซึ่งได้รับการออกแบบเป็นพิเศษเพื่อจัดหาฟังก์ชันสำหรับสตอเรจคอนโทรลเลอร์ของ Intel  ไดรเวอร์นี้ปรับปรุงประสิทธิภาพดิสก์ Serial ATA (SATA) ด้วยการจัดคิวคำสั่งแบบเนทีฟ (Native Command Queuing
+
+[TR.Software Description]
+Bu paket Intel® Storage Controller için işlevsellik sağlaması amacıyla tasarlanan Intel Rapid Storage Technology Sürücüsünü içermektedir.   Sürücü, Native Command Queuing ile Serial ATA (SATA) disk performansını geliştirir.
+
+[General]
+PN=000000-000
+Version=17.0.1.1075
+Revision=B
+Pass=1
+Type=Driver
+Category=Driver-Storage
+TargetPartition=PRIMARY
+SystemMustBeRebooted=1
+VendorName=Intel
+VendorVersion=17.0.1.1075_legacy
+
+[SupportedLanguages]
+Languages=GLOBAL
+Countries=GBL
+
+[ProfessionalInnovations]
+HPPI=NO
+LearnMore=
+
+[DetailFileInformation]
+IASTORAC.SYS=<DRIVERS>\,0x0011,0x0000,0x0001,0x0433,WT64
+
+[Softpaq]
+SoftpaqNumber=SP95138
+SupersededSoftpaqNumber=SP94609
+SoftPaqMD5=a38e5834d4f230cd2b50ae6aec8148d2
+
+[Devices]
+PCI\VEN_8086&DEV_9D03="Intel(R) 6th Generation Core Processor Family Platform I/O SATA AHCI Controller"
+PCI\VEN_8086&DEV_A102="Intel(R) 100 Series/C230 Chipset Family SATA AHCI Controller"
+PCI\VEN_8086&DEV_A103="Intel(R) 100 Series/C230 Chipset Family SATA AHCI Controller"
+PCI\VEN_8086&DEV_2822="Intel(R) Chipset SATA/PCIe RST Premium Controller"
+PCI\VEN_8086&DEV_282A="Intel(R) Chipset SATA/PCIe RST Premium Controller"
+PCI\VEN_8086&DEV_A352="Intel(R) 300 Series Chipset Family SATA AHCI Controller"
+PCI\VEN_8086&DEV_A353="Intel(R) 300 Series Chipset Family SATA AHCI Controller"
+PCI\VEN_8086&DEV_9DD3="Intel(R) 300 Series Chipset Family SATA AHCI Controller"
+PCI\VEN_8086&DEV_9D07="Intel(R) Chipset SATA/PCIe RST Premium Controller"
+PCI\VEN_8086&DEV_A107="Intel(R) Chipset SATA/PCIe RST Premium Controller"
+PCI\VEN_8086&DEV_A106="Intel(R) Chipset SATA/PCIe RST Premium Controller"
+PCI\VEN_8086&DEV_A28E="Intel(R) Chipset SATA/PCIe RST Premium Controller"
+PCI\VEN_8086&DEV_A286="Intel(R) Chipset SATA/PCIe RST Premium Controller"
+PCI\VEN_8086&DEV_9DD7="Intel(R) Chipset SATA/PCIe RST Premium Controller"
+PCI\VEN_8086&DEV_A356="Intel(R) Chipset SATA/PCIe RST Premium Controller"
+PCI\VEN_8086&DEV_A357="Intel(R) Chipset SATA/PCIe RST Premium Controller"
+PCI\VEN_8086&DEV_A282="Intel(R) 300 Series Chipset Family SATA AHCI Controller"
+
+[Devices_INFPath]
+WT64_INFPath=Drivers\x64
+
+[System Information]
+SysId01=0x8438
+SysName01=HP ELITEBOOK X360 1030 G3
+
+[Operating Systems]
+WT64=OEM
+
+[Install Execution]
+Install="SetupRST.exe"
+SilentInstall="SetupRST.exe" -s -overwrite -report %temp%
+
+[ReturnCode]
+0:SUCCESS:NOREBOOT=The Intel Rapid Storage Technology Driver installed successfully.
+1641:SUCCESS:NOREBOOT=The installer has initiated a restart. This message is indicative of a success.
+3010:SUCCESS:REBOOT=The Intel Rapid Storage Technology Driver installed successfully.
+1603:SUCCESS:REBOOT=The Intel Rapid Storage Technology Driver installed successfully. Reboot Required
+
+[Private]
+Private_SSMCompliant=1
+DPB_Compliant=1
+Private_ReleaseType=Routine
+Private_ProductType = Notebooks
+
+[Private_SoftpaqInstall]
+
+NOTE: To install the software in this package, you must be logged in with Administrator privileges.
+
+1. Download the file by clicking the Download or Obtain Software button and saving the file to a folder on your hard drive (make a note of the folder where the downloaded file is saved).
+
+2. Double-click the downloaded file and follow the on-screen instructions to unpack the files to C:\SWSETUP\SP95138 or another directory of your choice.
+
+3. Run the setup program from the directory that contains the unpacked files. Use the -? key combination to list the command line options for the setup program.
+
+NOTE: After double-clicking the downloaded file, select This program installed correctly on the Program Compatibility Assistant screen. This message is provided by the protection mechanism of Microsoft Windows.
+
+[CVAToolDocumentStamp]
+Generated by Release CVA Tool Version 1.0 using Syntax Version 2.0 A1 on 3/11/2019 1:06:51 AM
+Copyright (c) 2019 HP Development Company, L.P.
