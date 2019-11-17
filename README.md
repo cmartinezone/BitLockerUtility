@@ -7,7 +7,7 @@
  
  
  ## Features
-* Shows Recovery Password ID Associated with The Reocovery Key Password
+* Shows Recovery Password ID Associated with The Reocovery Key Password.
 * Allows to UnLock Drive BitLocker Encrypted ( RECOVERY KEY PASSWORD REQUIRED )
 * Allows to Suspend BitLocker Drive Unlocked 
 * Allows to Turn OFF (Decrypt) BitLocker Dreve unlocked
