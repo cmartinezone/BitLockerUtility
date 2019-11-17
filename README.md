@@ -1,7 +1,8 @@
 # BitLockerUtility 3.0
  Maging BitLocker From Windows PE (WinPE Enviroment).
  ![""](Screenshots/banner.jpg)
- ![""](Screenshots/001.png)
+ ![""](Screenshots/001.PNG)
+ 
  
  BitLockerUtility has been developed using PowerShell to manipulating BitLocker in a fashion manner.
  
