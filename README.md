@@ -10,7 +10,7 @@
 * Shows Recovery Password ID Associated with The Reocovery Key Password.
 * Allows to UnLock Drive BitLocker Encrypted ( RECOVERY KEY PASSWORD REQUIRED )
 * Allows to Suspend BitLocker Drive Unlocked 
-* Allows to Turn OFF (Decrypt) BitLocker Dreve unlocked
+* Allows to Turn OFF (Decrypt) BitLocker Drive unlocked
 * Shows All Drives Encrypted and not encrypted
 * Allows to Go to the Command Line to access to Drive Unlocked data.
 
