@@ -25,8 +25,8 @@ The Final ISO is generated using [Microsoft ADK Windows 10 v1909](https://docs.m
 HTA, WMI, StorageWMI, Scripting, NetFx, PowerShell, DismCmdlets, FMAPI, SecureBootCmdlets, EnhancedStorage,
 SecureStartup (BitLocker Support)
 ```
-* [Dell WinPE Drives](https://www.dell.com/support/article/us/en/04/how13364/winpe-10-driver-pack?lang=en) - Included
-* [HP WinPE Drives](https://ftp.hp.com/pub/caps-softpaq/cmit/HP_WinPE_DriverPack.html) - Included
+* [Dell WinPE Drivers](https://www.dell.com/support/article/us/en/04/how13364/winpe-10-driver-pack?lang=en) - Included
+* [HP WinPE Drivers](https://ftp.hp.com/pub/caps-softpaq/cmit/HP_WinPE_DriverPack.html) - Included
 
 ## Donation:
 If this project help you, you can give me a cup of coffee :)
