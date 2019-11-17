@@ -15,8 +15,8 @@
 * Allows to Go to the Command Line to acces to Drive Unlocked data.
 
  ## Deployment
-* Use Rufus https://rufus.ie/ to Create Bootable USB Drive, Find the ISO file in the [Release tab](/releases).
-* Uploud the WIM image to your PXE Boot enviroment, find the WIM Image file in the [Release tab](/releases).
+* Use Rufus https://rufus.ie/ to Create Bootable USB Drive, Find the ISO file in the [Release tab](https://github.com/cmartinezone/BitLockerUtility/releases).
+* Uploud the WIM image to your PXE Boot enviroment, find the WIM Image file in the [Release tab](https://github.com/cmartinezone/BitLockerUtility/releases).
 
 ## WinPE Support:
 The Final ISO is generated using [Microsoft ADK Windows 10 v1909](https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install) back compatible with preveus Windows 10 versions and help of one of My Project: [WinPeBuilder](https://github.com/cmartinezone/WinPEBuilder)
