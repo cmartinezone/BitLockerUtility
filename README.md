@@ -1,2 +1,5 @@
-# BitLockerUtility
- BitLocker Utilitity 3.0  WinPE - Manipulating BitLocker From WinPE Enviroment
+# BitLockerUtility 3.0
+ Maging BitLocker From Windows PE (WinPE Enviroment)
+ 
+ 
+
