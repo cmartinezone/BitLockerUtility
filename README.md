@@ -26,7 +26,7 @@ HTA, WMI, StorageWMI, Scripting, NetFx, PowerShell, DismCmdlets, FMAPI, SecureBo
 SecureStartup (BitLocker Support)
 ```
 * [Dell WinPE Drives](https://www.dell.com/support/article/us/en/04/how13364/winpe-10-driver-pack?lang=en) - Included
-* [HP WinPE Drives](https://maven.apache.org/) - Included
+* [HP WinPE Drives](https://ftp.hp.com/pub/caps-softpaq/cmit/HP_WinPE_DriverPack.html) - Included
 
 ## Donation:
 If this project help you, you can give me a cup of coffee :)
