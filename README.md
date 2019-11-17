@@ -19,7 +19,7 @@
 * Uploud the WIM image to your PXE Boot enviroment, find the WIM Image file in the [Release tab](https://github.com/cmartinezone/BitLockerUtility/releases).
 
 ## WinPE Support:
-The Final ISO is generated using [Microsoft ADK Windows 10 v1909](https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install) back compatible with preveus Windows 10 versions and help of one of My Project: [WinPeBuilder](https://github.com/cmartinezone/WinPEBuilder)
+The Final ISO is generated using [Microsoft ADK Windows 10 v1909](https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install) back compatible with preveus Windows 10 versions and the help of one of my Project: [WinPeBuilder](https://github.com/cmartinezone/WinPEBuilder)
 * Packages included: 
 ```
 HTA, WMI, StorageWMI, Scripting, NetFx, PowerShell, DismCmdlets, FMAPI, SecureBootCmdlets, EnhancedStorage,
