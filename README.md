@@ -1,6 +1,5 @@
 # BitLockerUtility 3.0
  Maging BitLocker From Windows PE (WinPE Enviroment).
- ![""](Screenshots/banner.jpg)
  ![""](Screenshots/001.PNG)
  
  
@@ -33,6 +32,9 @@ SecureStartup (BitLocker Support)
 If this project help you, you can give me a cup of coffee :)
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.me/cmartinezone)
+
+
+![""](Screenshots/banner.jpg)
 
 
 
