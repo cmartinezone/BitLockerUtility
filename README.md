@@ -1,6 +1,6 @@
 # BitLockerUtility 3.0
  Maging BitLocker From Windows PE (WinPE Enviroment)
- ![alt test](screenshots/banner.png)
+ ![alt test](screenshots/banner.jpg)
  
 ## Features
 * Shows Recovery Password ID Associated with The Reocovery Key Password
