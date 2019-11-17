@@ -1,5 +1,5 @@
 # BitLockerUtility 3.0
- Maging BitLocker From Windows PE (WinPE Enviroment).
+ Managing BitLocker From Windows PE (WinPE Enviroment).
  ![""](Screenshots/001.PNG)
  
  
