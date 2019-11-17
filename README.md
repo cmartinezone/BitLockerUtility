@@ -5,6 +5,7 @@
  
  BitLockerUtility has been developed using PowerShell to manipulating BitLocker in a fashion manner.
  
+ * YouTube Vide: https://www.youtube.com/watch?v=JgMLRPxh-MI&t=3s
  
  ## Features
 * Shows Recovery Password ID Associated with The Reocovery Key Password.
