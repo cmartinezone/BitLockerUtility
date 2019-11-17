@@ -9,10 +9,10 @@
  ## Features
 * Shows Recovery Password ID Associated with The Reocovery Key Password
 * Allows to UnLock Drive BitLocker Encrypted ( RECOVERY KEY PASSWORD REQUIRED )
-* Allows to SusPend BitLocker Drive Unlocked 
+* Allows to Suspend BitLocker Drive Unlocked 
 * Allows to Turn OFF (Decrypt) BitLocker Dreve unlocked
-* Shows All Drive Encrypted and not encrypted
-* Allows to Go to the Command Line to acces to Drive Unlocked data.
+* Shows All Drives Encrypted and not encrypted
+* Allows to Go to the Command Line to access to Drive Unlocked data.
 
  ## Deployment
 * Use Rufus https://rufus.ie/ to Create Bootable USB Drive, Find the ISO file in the [Release tab](https://github.com/cmartinezone/BitLockerUtility/releases).
