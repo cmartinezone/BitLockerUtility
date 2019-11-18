@@ -21,11 +21,11 @@ If a windows machine is BitLocker Encrypted with Blue screen and the OS doesn't 
 
 ## Deployment:
 * Bootable USB Drive:
-Download and use the ISO File to Create a bootable USB drive, [Download](https://github.com/cmartinezone/BitLockerUtility/releases)
+Download and use the ISO File to Create a bootable USB drive [Download](https://github.com/cmartinezone/BitLockerUtility/releases).
 > Use Rufus https://rufus.ie/ to Create a Bootable USB Drive.
 
 * PXE Boot Server Integration: 
-Download and Upload the WIM image to your PXE Boot environment [Download](https://github.com/cmartinezone/BitLockerUtility/releases).
+Download and Upload the WIM image to your PXE Boot Server [Download](https://github.com/cmartinezone/BitLockerUtility/releases).
 
 ## WinPE Support:
 The Final ISO is generated using [Microsoft ADK Windows 10 v1909](https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install) back-compatible with previous Windows 10 versions, plus the help of my Project : [WinPeBuilder](https://github.com/cmartinezone/WinPEBuilder)
