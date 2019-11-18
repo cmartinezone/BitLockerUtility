@@ -3,17 +3,17 @@
  ![""](Screenshots/001.PNG)
  
  
- BitLockerUtility has been developed using PowerShell to manipulating BitLocker in a fashion manner.
+BitLockerUtility has been developed using PowerShell to manipulating BitLocker in a fashion manner.
  
- * YouTube Vide: https://www.youtube.com/watch?v=JgMLRPxh-MI&t=3s
+ * YouTube Video: https://www.youtube.com/watch?v=JgMLRPxh-MI&t=3s
  
  ## Features
-* Shows Recovery Password ID Associated with The Reocovery Key Password.
-* Allows to UnLock BitLocker Drive ncrypted ( RECOVERY KEY PASSWORD REQUIRED ).
+* Shows Recovery Password ID Associated with The Recovery Key Password.
+* Allows to UnLock BitLocker Drive encrypted ( RECOVERY KEY PASSWORD REQUIRED ).
 * Allows to Suspend BitLocker Drive Unlocked.
 * Allows to Turn OFF (Decrypt) BitLocker Drive Unlocked.
-* Shows All Drives Encrypted and not encrypted.
-* Allows to Go to the Command Line to access to Drive Unlocked Data.
+* Shows All Drives encrypted and not encrypted.
+* Allows to Go to the Command-Line to access to Drive Unlocked Data.
 
  ## Deployment
 * Use Rufus https://rufus.ie/ to Create Bootable USB Drive, Find the ISO file in the [Release tab](https://github.com/cmartinezone/BitLockerUtility/releases).
