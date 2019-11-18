@@ -20,8 +20,12 @@ BitLockerUtility has been developed using PowerShell to manipulating BitLocker i
 If a windows machine is BitLocker Encrypted with Blue screen and the OS doesn't boot, you will be able to Decrypt the Hard Drive "If you have the Recovery Key password store somewhere."  This tool will help you to Unlock the encrypted BitLocker drive and start the Decryption process or suspension through a friendly user experience of multiple selections.
 
 ## Deployment:
-* Use Rufus https://rufus.ie/ to Create a Bootable USB Drive, Find the ISO file in [Release tab](https://github.com/cmartinezone/BitLockerUtility/releases).
-* Upload the WIM image to your PXE Boot environment, find the WIM Image file in [Release tab](https://github.com/cmartinezone/BitLockerUtility/releases).
+* Bootable USB Drive:
+Download and use the ISO File to Create a bootable USB drive, [Download Release](https://github.com/cmartinezone/BitLockerUtility/releases)
+> Use Rufus https://rufus.ie/ to Create a Bootable USB Drive.
+
+* PXE Boot Server Integration: 
+Download and Upload the WIM image to your PXE Boot environment [Download tab](https://github.com/cmartinezone/BitLockerUtility/releases).
 
 ## WinPE Support:
 The Final ISO is generated using [Microsoft ADK Windows 10 v1909](https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install) back-compatible with previous Windows 10 versions, plus the help of my Project : [WinPeBuilder](https://github.com/cmartinezone/WinPEBuilder)
@@ -30,6 +34,10 @@ The Final ISO is generated using [Microsoft ADK Windows 10 v1909](https://docs.m
 SecureStartup (BitLocker Support).
 * [Dell WinPE Drivers](https://www.dell.com/support/article/us/en/04/how13364/winpe-10-driver-pack?lang=en) - Included
 * [HP WinPE Drivers](https://ftp.hp.com/pub/caps-softpaq/cmit/HP_WinPE_DriverPack.html) - Included
+
+## Author:
+
+* **Carlos Martinez** - *Developer* - [Profile](https://github.com/cmartinezone)
 
 ![""](Screenshots/banner.jpg)
 
