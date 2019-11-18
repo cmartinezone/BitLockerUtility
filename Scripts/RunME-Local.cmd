@@ -1,0 +1,3 @@
+@Echo OFF
+title Loading...
+powershell -executionpolicy Unrestricted  -file ".\BitLockerUtility.ps1"
