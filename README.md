@@ -1,6 +1,6 @@
 # BitLockerUtility 3.0
  Managing BitLocker From Windows PE (WinPE Environment).
- ![""](Screenshots/001.PNG)
+ ![""](Screenshots/BitLockerUtilityGif.gif)
  
  
 BitLockerUtility has been developed using PowerShell to manipulating BitLocker in a fashion manner from WinPE Environment.
