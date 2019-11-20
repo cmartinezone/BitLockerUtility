@@ -280,8 +280,7 @@ function MainMenu {
         "-> Press 1: Show All Drives"
         "-> Press 2: UnLock BitLocker Drive"
         "-> Press 3: Turn OFF | Suspend BitLocker"
-        "-> Press 4: Open Explorer++"
-        "-> Press 5: Go to the CMD"
+        "-> Press 4: Go to the CMD"
         "-> Press Q: To Quit" 
     )
 
@@ -303,10 +302,7 @@ while ($UserInput -ne "q") {
               Pause }
         2 { UnLockDrive ; Pause }
         3 { TurnOffBitLockerAndSuspend ; Pause }
-        4 {$GetExplorer = Get-Process -Name *Explorer++* 
-            if ($null -eq $GetExplorer) { .\Explorer++.exe } 
-            else { Write-Host "`nExplorer ++ is already running..." -ForegroundColor Green; Start-Sleep 3 } }
-        5 { $UserInput = "q"; Clear-Host; cmd }
+        4 { $UserInput = "q"; Clear-Host; cmd }
         Default { }
     }
 }
