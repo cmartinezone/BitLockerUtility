@@ -32,7 +32,9 @@ SecureStartup (BitLocker Support).***
 ### Author:
 [**Carlos Martinez**](https://github.com/cmartinezone)
 
-![""](Screenshots/banner.jpg)
+!["Developer Support"](Screenshots/banner.jpg)
+
+[!["Developer Support"](Screenshots/banner.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5NWDHDEXV9582&source=url)
 
 ## Donate:
 If this project helps, you can give me a cup of coffee ;).
