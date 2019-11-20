@@ -4,3 +4,5 @@ Resources/*
 BuiltWinPE/Add-Drivers/DellWinPE/*
 BuiltWinPE/Add-Drivers/HPWinPE/*
 BuiltWinPE/WinPE-ISO/BitLockerUtility.iso
+Scripts/WithExplorer++/BitLockerUtility.ps1
+*.exe
