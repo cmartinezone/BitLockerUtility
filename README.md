@@ -1,23 +1,26 @@
 # BitLockerUtility 3.0
-Managing Bitlocker From Windows PE (Winpe Environment).
+**BitLocker**  Is [the hard disk encryption technology from Microsoft](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview). This technology is included by default in the Professional and Enterprise edition of Windows 10 and allows users to encrypt all data on the drives so that they are stored securely.
+
+*If our computer and the operating system work normally we have nothing to worry about.*
+## BitLockerUtility 3.0 Tool:
 ![""](Screenshots/BitLockerUtilityGif.gif)
-BitLockerUtility 3.0 is developed using PowerShell to manipulating BitLocker in a fashion manner from WinPE Environment with a friendly user experience of multiple chooses.
+The tool that can help the IT Support users, It is designed so that users who have problems starting the computer with an encrypted hard drive can help to retrieve the information in it.
 
-**YouTube Demo Video:** https://www.youtube.com/watch?v=JgMLRPxh-MI&t=7s
+This tool is based on [Windows PE ( WinPE )](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-intro) together with a PowerShell script wrapping  windows [manage-bde command-line tool](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/manage-bde) in a clear and simple terminal interface so that anyone can recover the data if they have problems starting Windows.
 
-### Features:
-- Shows Recovery Password ID Associated with The Recovery Key Password.
-- Allows to **UnLock** BitLocker Drive Encrypted **(YOU MUST HAVE THE RECOVERY KEY PASSWORD)**.
-- Allows to **Suspend** BitLocker.
-- Allows to **Turn OFF** ( Decrypt ) BitLocker.
-- Shows All Drives Encrypted and not Encrypted.
-- Allows to Go to the Command-Line. 
 
-### Use Cases:
-- BitLocker Encrypted Computers.
-- Operating system not booting with BlueScreen.
-- Corrupted Operating system.
-- Recovery tool for attempting to repair a corrupts Operating system or Backup Data.
+## The Main features of this tool:
+-	Generates the recovery ID associated with the encrypted key.
+-	Unlock the units encrypted with BitLocker (**Provided you have the recovery  key**).
+-	It allows you to turn off encryption, and therefore decrypt the entire in it.
+-	Shows all storage units, both encrypted and unencrypted.
+-	Open Command Line to control the system.
+
+**BitLockerUtility 3.0 does not repair corrupted BitLocker encrypted drive units!** for more information about repairing BitLocker from the command-line, you can check [Microsoft repair-bde command-line tool documentation](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/repair-bde) for accessing encrypted data on a severely damaged hard disk if the drive was encrypted by using BitLocker.
+
+## Use Cases:
+- if our **operating system fails** or gets corrupted, we will most likely lose access to the data we had on the hard drive.
+- Windows does not finish booting with a **blue screen**, the operating system is corrupted or when windows has not been able to repair corrupted boot files.
 
 ## Deployment:
 - **PXE Boot Server Integration:** Download and Upload the ***WIM image*** to your PXE\WDS Server [Download](https://github.com/cmartinezone/BitLockerUtility/releases).
@@ -36,6 +39,5 @@ SecureStartup (BitLocker Support).***
 [!["Developer Support"](Screenshots/banner.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5NWDHDEXV9582&source=url)
 
 ## Donate:
-If this project helps, you can give me a cup of coffee ;).
-
+If you wish to support the developer of this project you can donate below, Thanks!
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5NWDHDEXV9582&source=url)
