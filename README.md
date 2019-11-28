@@ -26,7 +26,10 @@ https://youtu.be/JgMLRPxh-MI
 
 ## Deployment:
 - **PXE Boot Server Integration:** Download and Upload the ***WIM image*** to your PXE\WDS Server [Download](https://github.com/cmartinezone/BitLockerUtility/releases).
-- **Bootable USB Drive:** Download the ***ISO File*** to Create a bootable USB Drive [Download](https://github.com/cmartinezone/BitLockerUtility/releases). You can use Rufus https://rufus.ie/ to Create a Bootable USB Drive.
+- **Bootable USB Drive:** Download the ***ISO File*** to Create a bootable USB Drive [Download]
+(https://github.com/cmartinezone/BitLockerUtility/releases). 
+
+You can use Rufus https://rufus.ie/ to Create a Bootable USB Drive.
 
 ### WinPE Support:
 The Final **ISO Image** is generated using [Microsoft Windows ADK](https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install) together with one of my project [WinPeBuilder](https://github.com/cmartinezone/WinPEBuilder) that it helps to create WinPE Images easy and fast!
