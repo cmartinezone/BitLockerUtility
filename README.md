@@ -8,6 +8,8 @@ The tool that can help the IT Support users, It is designed so that users who ha
 
 **BitLockerUtility 3.0 Tool** tool is based on [Windows PE ( WinPE )](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-intro) together with a PowerShell script wrapping  windows [manage-bde command-line tool](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/manage-bde) in a clear and simple terminal interface so that anyone can recover the data if they have problems starting Windows.
 
+***In the following video we can see this tool in action***
+https://youtu.be/JgMLRPxh-MI
 
 ## The Main features of this tool:
 -	Generates the recovery ID associated with the encrypted key.
@@ -27,14 +29,11 @@ The tool that can help the IT Support users, It is designed so that users who ha
 - **Bootable USB Drive:** Download the ***ISO File*** to Create a bootable USB Drive [Download](https://github.com/cmartinezone/BitLockerUtility/releases). You can use Rufus https://rufus.ie/ to Create a Bootable USB Drive.
 
 ### WinPE Support:
-The Final **ISO Image** generates using [Microsoft Windows ADK](https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install) back-compatible with previous Windows 10 versions, plus the help of my Project :) -  [WinPeBuilder](https://github.com/cmartinezone/WinPEBuilder)
-* WinPE Packages included: ***HTA, WMI, StorageWMI, Scripting, NetFx, PowerShell, DismCmdlets, FMAPI, SecureBootCmdlets, EnhancedStorage,
+The Final **ISO Image** is generated using [Microsoft Windows ADK](https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install) together with one of my project [WinPeBuilder](https://github.com/cmartinezone/WinPEBuilder) that it helps to create WinPE Images easy and fast!
+* The Windows WinPE Packages included are: ***HTA, WMI, StorageWMI, Scripting, NetFx, PowerShell, DismCmdlets, FMAPI, SecureBootCmdlets, EnhancedStorage,
 SecureStartup (BitLocker Support).***
-* Included:  [Dell WinPE Drivers](https://www.dell.com/support/article/us/en/04/how13364/winpe-10-driver-pack?lang=en)
-* Included: [HP WinPE Drivers](https://ftp.hp.com/pub/caps-softpaq/cmit/HP_WinPE_DriverPack.html)
-
-### Author:
-[**Carlos Martinez**](https://github.com/cmartinezone)
+* Support included:  [Dell WinPE Drivers](https://www.dell.com/support/article/us/en/04/how13364/winpe-10-driver-pack?lang=en)
+* Support included: [HP WinPE Drivers](https://ftp.hp.com/pub/caps-softpaq/cmit/HP_WinPE_DriverPack.html)
 
 [!["Developer Support"](Screenshots/banner.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5NWDHDEXV9582&source=url)
 
