@@ -1,12 +1,12 @@
 # BitLockerUtility 3.0
+The tool that can help the IT Support users, It is designed so that users who have problems starting the computer with an encrypted hard drive to retrieve the information in it.
+![""](Screenshots/BitLockerUtilityGif.gif)
+
 **BitLocker**  Is [the hard disk encryption technology from Microsoft](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview). This technology is included by default in the Professional and Enterprise edition of Windows 10 and allows users to encrypt all data on the drives so that they are stored securely.
 
 *If our computer and the operating system work normally we have nothing to worry about.*
-## BitLockerUtility 3.0 Tool:
-![""](Screenshots/BitLockerUtilityGif.gif)
-The tool that can help the IT Support users, It is designed so that users who have problems starting the computer with an encrypted hard drive can help to retrieve the information in it.
 
-This tool is based on [Windows PE ( WinPE )](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-intro) together with a PowerShell script wrapping  windows [manage-bde command-line tool](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/manage-bde) in a clear and simple terminal interface so that anyone can recover the data if they have problems starting Windows.
+**BitLockerUtility 3.0 Tool** tool is based on [Windows PE ( WinPE )](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-intro) together with a PowerShell script wrapping  windows [manage-bde command-line tool](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/manage-bde) in a clear and simple terminal interface so that anyone can recover the data if they have problems starting Windows.
 
 
 ## The Main features of this tool:
@@ -27,7 +27,7 @@ This tool is based on [Windows PE ( WinPE )](https://docs.microsoft.com/en-us/wi
 - **Bootable USB Drive:** Download the ***ISO File*** to Create a bootable USB Drive [Download](https://github.com/cmartinezone/BitLockerUtility/releases). You can use Rufus https://rufus.ie/ to Create a Bootable USB Drive.
 
 ### WinPE Support:
-The Final **ISO Image** generates using [Microsoft ADK Windows 10 v1909](https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install) back-compatible with previous Windows 10 versions, plus the help of my Project :) -  [WinPeBuilder](https://github.com/cmartinezone/WinPEBuilder)
+The Final **ISO Image** generates using [Microsoft Windows ADK](https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install) back-compatible with previous Windows 10 versions, plus the help of my Project :) -  [WinPeBuilder](https://github.com/cmartinezone/WinPEBuilder)
 * WinPE Packages included: ***HTA, WMI, StorageWMI, Scripting, NetFx, PowerShell, DismCmdlets, FMAPI, SecureBootCmdlets, EnhancedStorage,
 SecureStartup (BitLocker Support).***
 * Included:  [Dell WinPE Drivers](https://www.dell.com/support/article/us/en/04/how13364/winpe-10-driver-pack?lang=en)
@@ -40,4 +40,5 @@ SecureStartup (BitLocker Support).***
 
 ## Donate:
 If you wish to support the developer of this project you can donate below, Thanks!
+
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5NWDHDEXV9582&source=url)
