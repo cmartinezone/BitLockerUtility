@@ -6,7 +6,7 @@ The tool that can help the IT Support users, It is designed so that users who ha
 
 *If our computer and the operating system work normally we have nothing to worry about.*
 
-**BitLockerUtility 3.0 Tool** tool is based on [Windows PE ( WinPE )](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-intro) together with a PowerShell script wrapping  windows [manage-bde command-line tool](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/manage-bde) in a clear and simple terminal interface so that anyone can recover the data if they have problems starting Windows.
+**BitLockerUtility 3.0 Tool** is based on [Windows PE ( WinPE )](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-intro) together with a PowerShell script wrapping  windows [manage-bde command-line tool](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/manage-bde) in a clear and simple terminal interface so that anyone can recover the data if they have problems starting Windows.
 
 ***In the following video we can see this tool in action***
 https://youtu.be/JgMLRPxh-MI
