@@ -10,7 +10,7 @@ The tool that can help the IT Support users, It is designed so that users who ha
 
 ***In the following video we can see this tool in action***
 
-[https://youtu.be/JgMLRPxh-MI](https://youtu.be/JgMLRPxh-MI)
+[https://youtu.be/U2Z6I8SXYrg](https://youtu.be/U2Z6I8SXYrg)
 
 ## The Main features of this tool:
 -	Generates the recovery ID associated with the encrypted key.
