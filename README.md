@@ -1,46 +1,142 @@
-# BitLockerUtility 3.0
-The tool that can help the IT Support users, It is designed so that users who have problems starting the computer with an encrypted hard drive to retrieve the information in it.
-![""](Screenshots/BitLockerUtilityGif.gif)
+# 🔐 BitLockerUtility 3.0
 
-**BitLocker**  Is [the hard disk encryption technology from Microsoft](https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview). This technology is included by default in the Professional and Enterprise edition of Windows 10 and allows users to encrypt all data on the drives so that they are stored securely.
+A simple WinPE-based recovery tool designed for IT administrators and support technicians to access **BitLocker-encrypted drives** when Windows can no longer boot.
 
-*If our computer and the operating system work normally we have nothing to worry about.*
+![](Screenshots/BitLockerUtilityGif.gif)
 
-**BitLockerUtility 3.0 Tool** is based on [Windows PE ( WinPE )](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-intro) together with a PowerShell script wrapping  windows [manage-bde command-line tool](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/manage-bde) in a clear and simple terminal interface so that anyone can recover the data if they have problems starting Windows.
+---
 
-***In the following video we can see this tool in action***
+## What is BitLocker?
 
-[https://youtu.be/U2Z6I8SXYrg](https://youtu.be/U2Z6I8SXYrg)
+**BitLocker** is Microsoft's built-in drive encryption technology.
 
-## The Main features of this tool:
--	Generates the recovery ID associated with the encrypted key.
--	Unlock the units encrypted with BitLocker (**Provided you have the recovery  key**).
--	It allows you to turn off encryption, and therefore decrypt the entire in it.
--	Shows all storage units, both encrypted and unencrypted.
--	Open Command Line to control the system.
+It is available in **Windows Professional** and **Enterprise** editions and encrypts the entire drive to help protect your data from unauthorized access.
 
-**BitLockerUtility 3.0 does not repair corrupted BitLocker encrypted drive units!** for more information about repairing BitLocker from the command-line, you can check [Microsoft repair-bde command-line tool documentation](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/repair-bde) for accessing encrypted data on a severely damaged hard disk if the drive was encrypted by using BitLocker.
+Learn more about BitLocker:
 
-## Use Cases:
-- if our **operating system fails** or gets corrupted, we will most likely lose access to the data we had on the hard drive.
-- Windows does not finish booting with a **blue screen**, the operating system is corrupted or when windows has not been able to repair corrupted boot files.
+https://docs.microsoft.com/en-us/windows/security/information-protection/bitlocker/bitlocker-overview
 
-## Deployment:
-- **PXE Boot Server Integration:** Download and Upload the ***WIM image*** to your PXE\WDS Server [Download](https://github.com/cmartinezone/BitLockerUtility/releases).
-- **Bootable USB Drive:** Download the ***ISO File*** to Create a bootable USB Drive [Download](https://github.com/cmartinezone/BitLockerUtility/releases). 
+> **If Windows starts normally, your data remains fully accessible and no action is required.**
 
-You can use Rufus [https://rufus.ie](https://rufus.ie) to create a Bootable USB Drive.
+If Windows becomes corrupted or fails to start, BitLocker may prevent access to your files until the drive is unlocked with the recovery key.
 
-### WinPE Support:
-The Final **ISO Image** is generated using [Microsoft Windows ADK](https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install) together with one of my project [WinPeBuilder](https://github.com/cmartinezone/WinPEBuilder) that it helps to create WinPE Images easy and fast!
-* The Windows WinPE Packages included are: ***HTA, WMI, StorageWMI, Scripting, NetFx, PowerShell, DismCmdlets, FMAPI, SecureBootCmdlets, EnhancedStorage,
-SecureStartup (BitLocker Support).***
-* Support included:  [Dell WinPE Drivers](https://www.dell.com/support/article/us/en/04/how13364/winpe-10-driver-pack?lang=en)
-* Support included: [HP WinPE Drivers](https://ftp.hp.com/pub/caps-softpaq/cmit/HP_WinPE_DriverPack.html)
+---
 
-[!["Developer Support"](Screenshots/banner.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5NWDHDEXV9582&source=url)
+## About BitLockerUtility
 
-## Donate:
-If you wish to support the developer of this project you can donate below, Thanks!
+**BitLockerUtility 3.0** is built on **Windows PE (WinPE)** and uses a PowerShell interface around Microsoft's **manage-bde** command-line tool.
+
+The goal is to provide a simple, guided interface that allows anyone with the **BitLocker Recovery Key** to unlock encrypted drives and recover their data.
+
+---
+
+## 🎥 Watch the Tool in Action
+
+The following video demonstrates BitLockerUtility:
+
+https://youtu.be/U2Z6I8SXYrg
+
+---
+
+# ✨ Main Features
+
+- 🔑 Display the **Recovery ID** associated with an encrypted drive.
+- 🔓 Unlock BitLocker-encrypted drives *(Recovery Key required)*.
+- 🔄 Disable BitLocker and decrypt the drive.
+- 💽 Display all storage devices, including encrypted and unencrypted drives.
+- 💻 Open a Command Prompt for advanced troubleshooting.
+
+---
+
+> **Important**
+>
+> BitLockerUtility **does not repair damaged or corrupted BitLocker volumes**.
+>
+> If the encrypted drive itself is damaged, refer to Microsoft's **repair-bde** documentation:
+>
+> https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/repair-bde
+
+---
+
+# 📌 Common Use Cases
+
+BitLockerUtility is useful when:
+
+- Windows fails to start.
+- Windows becomes corrupted.
+- A **Blue Screen (BSOD)** prevents Windows from booting.
+- Startup Repair cannot recover the operating system.
+- You need to recover files before reinstalling Windows.
+- You need to decrypt a BitLocker drive outside of Windows.
+
+---
+
+# 🚀 Deployment
+
+## PXE / WDS Deployment
+
+Download the **WIM image** and add it to your PXE or Windows Deployment Services (WDS) server.
+
+➡️ https://github.com/cmartinezone/BitLockerUtility/releases
+
+---
+
+## Bootable USB
+
+Download the **ISO image** and create a bootable USB drive.
+
+➡️ https://github.com/cmartinezone/BitLockerUtility/releases
+
+We recommend using **Rufus** to create the bootable USB.
+
+https://rufus.ie
+
+---
+
+# 🛠 WinPE Support
+
+The final ISO is built using the **Microsoft Windows ADK** together with my **WinPEBuilder** project, making it easy to create customized WinPE environments.
+
+## Included WinPE Components
+
+- HTA
+- WMI
+- StorageWMI
+- Scripting
+- NetFx
+- PowerShell
+- DISM Cmdlets
+- FMAPI
+- Secure Boot Cmdlets
+- Enhanced Storage
+- Secure Startup (BitLocker Support)
+
+## Included Driver Packs
+
+- Dell WinPE Drivers
+- HP WinPE Drivers
+
+---
+
+# ❤️ Support the Project
+
+If this project has helped you, consider supporting its development.
+
+Your support helps maintain the project and fund future improvements.
+
+[![](Screenshots/banner.jpg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5NWDHDEXV9582&source=url)
+
+---
+
+# ☕ Donate
+
+If you'd like to support the project, you can make a donation using PayPal.
+
+Thank you for your support!
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=5NWDHDEXV9582&source=url)
+
+---
+
+⭐ **If you find BitLockerUtility useful, please consider giving the repository a star on GitHub!**
+```
